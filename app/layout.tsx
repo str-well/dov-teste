@@ -2,8 +2,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Teste de hospedagem — Descubra o Vinho',
-  description: 'Projeto descartável para validar Node.js + ISR na Hostinger.',
+  title: 'Descubra o Vinho',
+  description: 'Portal editorial de vinho.',
+
+  // Site em construção. REMOVER ANTES DO LANÇAMENTO —
+  // está no checklist da Fase 5 do plano.
   robots: { index: false, follow: false },
 };
 

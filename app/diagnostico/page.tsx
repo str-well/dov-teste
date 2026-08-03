@@ -42,10 +42,10 @@ export default async function Page() {
 
   return (
     <main>
-      <h1>Teste de hospedagem — Descubra o Vinho</h1>
+      <h1>Diagnóstico — Descubra o Vinho</h1>
       <p className="sub">
-        Projeto descartável. Serve para provar que o plano Hostinger roda Next.js
-        com ISR antes de começar o portal de verdade.
+        Painel de infraestrutura. Provou que o plano Hostinger roda Next.js com ISR;
+        agora fica como ferramenta de verificação do front. Fora do sitemap e noindex.
       </p>
 
       <section>

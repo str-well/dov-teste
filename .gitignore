@@ -1,0 +1,15 @@
+node_modules/
+.next/
+out/
+build/
+
+# Segredos ficam nas variáveis de ambiente do painel da Hostinger.
+.env
+.env.local
+.env*.local
+
+next-env.d.ts
+*.tsbuildinfo
+
+.DS_Store
+*.log

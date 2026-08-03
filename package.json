@@ -1,6 +1,6 @@
 {
-  "name": "dov-teste-hospedagem",
-  "version": "1.0.0",
+  "name": "descubra-o-vinho",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
