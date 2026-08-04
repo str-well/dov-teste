@@ -3,6 +3,7 @@ import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
 
 import { Cabecalho } from '@/components/cabecalho';
 import { Rodape } from '@/components/rodape';
+import { SITE } from '@/lib/site';
 
 import './globals.css';
 
@@ -33,7 +34,9 @@ const corpo = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Descubra o Vinho',
+  // Necessário para as URLs canônicas e de Open Graph saírem absolutas.
+  metadataBase: new URL(SITE.url),
+  title: SITE.nome,
   description: 'Portal editorial de vinho.',
 
   // Site em construção. REMOVER ANTES DO LANÇAMENTO —

@@ -69,9 +69,14 @@ Conexão do front com a API validada em 226 ms.
 **As três decisões que travavam os componentes foram fechadas** — menu em 1280,
 sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
 
-**Fase 3 é o próximo passo:** os templates de página, na ordem abaixo. Nenhum foi
-codado ainda; o repositório tem a home de placeholder, as duas páginas legais,
-`/componentes` e `/diagnostico`.
+**Fase 3 — templates: em andamento.**
+
+- **Matéria** (`/[categoria]/[slug]`) — pronta. As 20 matérias são pré-geradas no
+  build, e matéria publicada depois aparece na primeira visita sem rebuild. A URL
+  canônica é a da categoria principal; chegar pela categoria secundária
+  redireciona, para não haver conteúdo duplicado.
+
+Próximo: arquivo de categoria, verbete, índice A–Z, home, institucionais.
 
 Único refinamento pendente da Fase 2: os blobs decorativos só entraram no menu
 mobile. Hero, busca e chamada do Almanaque vão querer o seu quando os templates
@@ -180,6 +185,21 @@ As três seguintes vieram de construir os componentes globais.
     "Curiosidades" antes de "Descubra", que é a editoria âncora nas pranchas. A
     ordem editorial está em `ORDEM_EDITORIAS` (`lib/site.ts`), **por slug**, com
     alfabética de reserva para quem não estiver na lista.
+
+As duas seguintes vieram do template de matéria.
+
+14. **O editor de blocos não gera `id` nos títulos.** O sumário "Neste texto"
+    precisa de âncora, e sem `id` não há para onde apontar. `prepararArtigo()`
+    (`lib/artigo.ts`) acrescenta `id` onde falta e devolve a lista de títulos.
+    É a única intervenção no HTML do WordPress, e é intencionalmente mínima —
+    `wp-block-*` fica intacto.
+
+15. **Seletor de filho direto some com o wrapper do `dangerouslySetInnerHTML`.**
+    O CSS do designer usa `.artigo > p` e `.artigo > h2`, mas o HTML injetado
+    vira **neto** do `.artigo`, não filho. O sintoma é silencioso: os títulos
+    saem em tamanho de corpo e os parágrafos sem espaçamento. Os seletores miram
+    `.artigo__texto`, que é o wrapper. Não trocar por descendente: `.artigo p`
+    pegaria também o parágrafo dentro da citação, que tem tipografia própria.
 
 ---
 

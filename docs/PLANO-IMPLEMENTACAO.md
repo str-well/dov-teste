@@ -3,7 +3,8 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v6 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 é o próximo passo.**
+`v7 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** o template
+de matéria está pronto.
 Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
 e `DESIGN.md` para o pacote do designer.
 
@@ -224,19 +225,35 @@ e o Tailwind cuida de grade, espaçamento e responsividade.
 
 ---
 
-## 6. Fase 3 — Templates ← PRÓXIMO PASSO
+## 6. Fase 3 — Templates ← EM ANDAMENTO
 
 A ordem começa pelo template mais complexo, para que os componentes nasçam testados
 no caso difícil.
 
 | # | Template | Rota | Peças específicas |
 |---|---|---|---|
-| 1 | Matéria | `/[categoria]/[slug]` | sumário "Neste texto", citação, imagem com legenda e crédito, caixa "Do Almanaque", newsletter, tags, relacionados |
+| 1 ✅ | Matéria | `/[categoria]/[slug]` | sumário "Neste texto", citação, imagem com legenda e crédito, caixa "Do Almanaque", newsletter, tags, relacionados |
 | 2 | Arquivo de categoria | `/[categoria]` | serve as 7 editorias; chips com rolagem horizontal no mobile, ordenação, paginação |
 | 3 | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
 | 4 | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
 | 5 | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
 | 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
+
+### Notas do template de matéria
+
+- **URL canônica.** Uma matéria em duas editorias seria alcançável por duas URLs,
+  e o buscador leria como conteúdo duplicado. A rota usa a categoria principal;
+  chegar pela secundária redireciona para ela. Categoria que a matéria não tem
+  dá 404. *Este caminho não foi exercitado: nenhuma matéria de teste está em
+  mais de uma editoria.*
+- **Sumário "Neste texto".** Depende de `id` nos títulos, que o editor de blocos
+  não gera — `prepararArtigo()` os acrescenta. Ver a armadilha 14 do `CLAUDE.md`.
+- **Divergência deliberada da prancha mobile.** `06-materia-mobile` descarta a
+  lateral inteira. Sumário e newsletter saem no mobile como na prancha, mas
+  **"Do Almanaque" e compartilhar ficam**: o primeiro é o elo entre matéria e
+  Almanaque, e o segundo é onde o `navigator.share` justamente funciona.
+- **Sem foto de destaque a moldura não aparece.** Nenhuma matéria tem imagem
+  hoje; uma moldura vazia de 1600×1067 no topo seria um buraco, não estado vazio.
 
 - [ ] Script de build gerando `public/almanaque.json` — `indiceDoAlmanaque()` em
       `lib/wp` já devolve o payload enxuto

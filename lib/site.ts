@@ -10,6 +10,12 @@ export type ItemNav = { rotulo: string; href: string };
 export const SITE = {
   nome: 'Descubra o Vinho',
 
+  /**
+   * Domínio de produção. Alimenta o `metadataBase` do Next, e com ele as URLs
+   * canônicas e as de Open Graph — que precisam ser absolutas.
+   */
+  url: 'https://descubraovinho.com.br',
+
   /** Copy do rodapé, do pacote do designer. */
   descricao:
     'Um portal para descobrir o universo do vinho sem solenidade: viagens, ' +

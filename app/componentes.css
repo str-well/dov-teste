@@ -1633,7 +1633,582 @@ a.etiqueta--verde:hover {
 }
 
 /* ==========================================================================
-   15 · CARREGAMENTO
+   15 · MATÉRIA
+
+   Portado de `05-materia-desktop.css` e `06-materia-mobile.css`.
+
+   Uma diferença deliberada em relação às pranchas: **o corpo do artigo é
+   estilizado por elemento, não por classe**. O HTML vem do editor de blocos do
+   WordPress, que devolve `<p>`, `<h2>`, `<blockquote>` e `<figure>` com classes
+   `wp-block-*` e nenhuma classe nossa. Então `.citacao` virou
+   `.artigo blockquote`, `.legenda` virou `.artigo figcaption`, e assim por
+   diante — mesmos valores, seletor que alcança o conteúdo real.
+   ========================================================================== */
+
+/* ---------- Moldura de foto: filete off-white com hairline em volta */
+
+.moldura {
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 6px solid var(--dov-offwhite);
+  outline: var(--dov-borda-fina) solid var(--dov-divisor);
+}
+
+/* O tratamento de cor das fotos é do designer, e vale para toda foto emoldurada. */
+.moldura > img {
+  filter: sepia(0.22) saturate(0.82) contrast(1.05);
+}
+
+.legenda {
+  margin-top: 10px;
+  font-size: var(--dov-t-legenda);
+  color: var(--dov-texto-meta);
+}
+
+@media (max-width: 767px) {
+  .legenda {
+    font-size: var(--dov-t-legenda-mobile);
+  }
+}
+
+/* ---------- Cabeça da matéria */
+
+.materia__cabeca {
+  padding-top: var(--dov-esp-11);
+}
+
+.materia__cabeca-interno {
+  max-width: var(--dov-medida-cabecalho);
+}
+
+.materia__migalhas {
+  margin-bottom: var(--dov-esp-6);
+}
+
+.materia__kicker {
+  margin-bottom: var(--dov-esp-5);
+}
+
+.materia__titulo {
+  margin-bottom: 22px;
+  font-size: var(--dov-t-h1-materia);
+  line-height: var(--dov-lh-h1-materia);
+}
+
+.materia__lead {
+  margin-bottom: 30px;
+  font-size: var(--dov-t-lead);
+  line-height: var(--dov-lh-lead);
+  color: var(--dov-neutro-800);
+}
+
+.materia__destaque {
+  padding-top: var(--dov-esp-8);
+}
+
+@media (max-width: 767px) {
+  .materia__cabeca {
+    padding-top: 26px;
+  }
+  .materia__migalhas {
+    margin-bottom: var(--dov-esp-4);
+  }
+  .materia__kicker {
+    margin-bottom: var(--dov-esp-3);
+  }
+  .materia__titulo {
+    margin-bottom: 14px;
+    font-size: var(--dov-t-h1-materia-mobile);
+    line-height: var(--dov-lh-h1-materia-mobile);
+  }
+  .materia__lead {
+    margin-bottom: var(--dov-esp-5);
+    font-size: var(--dov-t-lead-mobile);
+    line-height: var(--dov-lh-lead-mobile);
+  }
+  .materia__destaque {
+    padding-top: 22px;
+  }
+}
+
+/* ---------- Assinatura do autor */
+
+.assinatura-autor {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-4);
+  padding-bottom: 30px;
+  border-bottom: var(--dov-hairline);
+}
+
+.assinatura-autor__retrato {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  overflow: hidden;
+  border-radius: var(--dov-raio-pilula);
+}
+.assinatura-autor__retrato > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--dov-raio-pilula);
+}
+
+.assinatura-autor__nome {
+  font-size: var(--dov-t-auxiliar);
+  font-weight: var(--dov-peso-corpo-medio);
+}
+
+.assinatura-autor__meta {
+  font-size: var(--dov-t-auxiliar);
+  color: var(--dov-texto-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .assinatura-autor {
+    gap: var(--dov-esp-3);
+    padding-bottom: var(--dov-esp-5);
+  }
+  .assinatura-autor__retrato {
+    width: 44px;
+    height: 44px;
+  }
+  .assinatura-autor__nome,
+  .assinatura-autor__meta {
+    font-size: var(--dov-t-meta);
+  }
+}
+
+/* ---------- Compartilhar */
+
+.compartilhar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.compartilhar__rotulo {
+  margin-right: var(--dov-esp-1);
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta);
+}
+
+.compartilhar .botao-icone__svg {
+  width: 17px;
+  height: 17px;
+}
+
+@media (max-width: 767px) {
+  /* No mobile o rótulo sai e sobra o ícone: o `navigator.share` abre a folha
+     nativa do sistema, e ela já se explica. */
+  .compartilhar__rotulo {
+    display: none;
+  }
+}
+
+/* ---------- Corpo e lateral */
+
+.materia__corpo {
+  display: grid;
+  grid-template-columns: 1fr var(--dov-largura-sidebar);
+  gap: 80px;
+  align-items: start;
+  padding-block: var(--dov-esp-11) var(--dov-esp-13);
+}
+
+/* A lateral acompanha a leitura. Decisão fechada em `docs/DESIGN.md`.
+
+   O `top` **não** é o `--dov-esp-6` das pranchas: lá o cabeçalho não era
+   sticky. Com a barra branca grudada no topo, 24px poriam a lateral por baixo
+   dela. O valor é a altura do cabeçalho reduzido mais o respiro — a mesma conta
+   que a §6 manda fazer na navegação do A–Z. */
+.lateral {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-8);
+  position: sticky;
+  top: calc(var(--dov-altura-cabecalho-reduzido) + var(--dov-esp-6));
+}
+
+@media (max-width: 1024px) {
+  /* Abaixo de 1025 a lateral desce para depois do texto e para de ser sticky. */
+  .materia__corpo {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-9);
+    padding-block: var(--dov-esp-9) var(--dov-esp-11);
+  }
+  .lateral {
+    position: static;
+    max-width: var(--dov-medida-texto);
+  }
+}
+
+@media (max-width: 767px) {
+  .materia__corpo {
+    padding-block: var(--dov-esp-7) var(--dov-esp-9);
+  }
+}
+
+/* ---------- O texto
+
+   Seletores de elemento, porque o conteúdo vem do editor de blocos. */
+
+.artigo {
+  max-width: var(--dov-medida-texto);
+  font-size: var(--dov-t-corpo);
+  line-height: var(--dov-lh-corpo);
+}
+
+.artigo__texto > p {
+  margin-bottom: var(--dov-esp-6);
+}
+
+.artigo__texto > h2 {
+  margin-block: var(--dov-esp-8) var(--dov-esp-4);
+  font-size: var(--dov-t-h2-artigo);
+  line-height: var(--dov-lh-h2-artigo);
+}
+
+.artigo__texto > h3 {
+  margin-block: var(--dov-esp-8) 14px;
+  font-size: var(--dov-t-h3-artigo);
+  line-height: var(--dov-lh-h3-artigo);
+}
+
+.artigo__texto > h2:first-child,
+.artigo__texto > h3:first-child {
+  margin-top: 0;
+}
+
+/* Âncora do sumário: sem isto o cabeçalho sticky cobre o título. [ESPEC] §8 */
+.artigo__texto > h2,
+.artigo__texto > h3 {
+  scroll-margin-top: calc(var(--dov-altura-cabecalho-reduzido) + var(--dov-esp-4));
+}
+
+.artigo__texto > ul,
+.artigo__texto > ol {
+  margin-bottom: var(--dov-esp-8);
+  padding-left: var(--dov-esp-6);
+  list-style: revert;
+}
+
+.artigo__texto > ul li,
+.artigo__texto > ol li {
+  margin-bottom: var(--dov-esp-2);
+}
+
+.artigo__texto > figure {
+  margin-bottom: var(--dov-esp-8);
+}
+
+.artigo figcaption {
+  margin-top: 10px;
+  font-size: var(--dov-t-legenda);
+  color: var(--dov-texto-meta);
+}
+
+.artigo img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--dov-raio);
+}
+
+.artigo strong {
+  font-weight: var(--dov-peso-corpo-forte);
+}
+
+/* Link no corpo: sublinhado limão que vira roxo. [ESPEC] §3 */
+.artigo a {
+  color: var(--dov-roxo-800);
+  text-decoration: underline;
+  text-decoration-color: var(--dov-limao);
+  text-decoration-thickness: var(--dov-borda-media);
+  text-underline-offset: 3px;
+  transition:
+    color var(--dov-duracao-rapida) var(--dov-easing),
+    text-decoration-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.artigo a:hover {
+  color: var(--dov-roxo);
+  text-decoration-color: var(--dov-roxo);
+}
+
+/* Citação. O editor de blocos entrega `<blockquote><p>texto</p><p><cite>autor
+   </cite></p></blockquote>` — daí o `:has()` para separar os dois parágrafos. */
+.artigo blockquote {
+  margin-bottom: var(--dov-esp-8);
+  padding: 26px var(--dov-esp-8);
+  border-left: var(--dov-borda-marcada) solid var(--dov-roxo);
+  border-radius: 0 var(--dov-raio) var(--dov-raio) 0;
+  background: var(--dov-fundo-alternativo);
+}
+
+.artigo blockquote p {
+  margin-bottom: 10px;
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-citacao);
+  line-height: var(--dov-lh-citacao);
+}
+
+.artigo blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/* A linha do autor volta para o corpo: DM Sans, pequena, cinza. */
+.artigo blockquote p:has(> cite),
+.artigo blockquote cite {
+  font-family: var(--dov-fonte-corpo);
+  font-weight: var(--dov-peso-corpo);
+  font-size: var(--dov-t-meta);
+  line-height: var(--dov-lh-meta);
+  font-style: normal;
+  color: var(--dov-texto-suave);
+}
+
+@media (max-width: 767px) {
+  .artigo {
+    font-size: var(--dov-t-corpo-mobile);
+    line-height: var(--dov-lh-corpo-mobile);
+  }
+  .artigo__texto > p {
+    margin-bottom: var(--dov-esp-5);
+  }
+  .artigo__texto > h2 {
+    margin-block: var(--dov-esp-6) var(--dov-esp-3);
+    font-size: var(--dov-t-h2-artigo-mobile);
+    line-height: var(--dov-lh-h2-artigo-mobile);
+  }
+  .artigo__texto > h3 {
+    margin-block: var(--dov-esp-6) var(--dov-esp-3);
+    font-size: var(--dov-t-h3-cartao-mobile);
+    line-height: var(--dov-lh-h3-cartao-mobile);
+  }
+  .artigo__texto > ul,
+  .artigo__texto > ol {
+    margin-bottom: var(--dov-esp-6);
+    padding-left: 22px;
+  }
+  .artigo__texto > ul li,
+  .artigo__texto > ol li {
+    margin-bottom: 6px;
+  }
+  .artigo blockquote {
+    margin-bottom: 22px;
+    padding: var(--dov-esp-5) 22px;
+  }
+  .artigo blockquote p {
+    font-size: var(--dov-t-citacao-mobile);
+    line-height: var(--dov-lh-citacao-mobile);
+  }
+  .artigo blockquote p:has(> cite),
+  .artigo blockquote cite {
+    font-size: var(--dov-t-legenda);
+  }
+  .artigo__texto > h2,
+  .artigo__texto > h3 {
+    scroll-margin-top: var(--dov-esp-4);
+  }
+}
+
+/* ---------- Tags no fim do texto */
+
+.artigo__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dov-esp-2);
+  padding-top: var(--dov-esp-8);
+  border-top: var(--dov-hairline);
+}
+
+.artigo__tags-rotulo {
+  width: 100%;
+  margin-bottom: 6px;
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--dov-texto-meta);
+}
+
+@media (max-width: 767px) {
+  .artigo__tags {
+    padding-top: 22px;
+  }
+}
+
+/* ---------- Caixas da lateral */
+
+.caixa {
+  padding: 26px;
+  border-radius: var(--dov-raio);
+}
+.caixa--alternativa {
+  background: var(--dov-fundo-alternativo);
+}
+.caixa--contorno {
+  border: var(--dov-borda-fina) solid var(--dov-roxo-200);
+}
+.caixa--escura {
+  background: var(--dov-fundo-escuro);
+}
+
+.caixa__titulo {
+  margin-bottom: 14px;
+}
+
+.caixa__verbete {
+  margin-bottom: var(--dov-esp-2);
+  font-size: var(--dov-t-h4-cartao);
+}
+
+.caixa__texto {
+  margin-bottom: 14px;
+  font-size: var(--dov-t-auxiliar);
+  line-height: var(--dov-lh-auxiliar);
+  color: var(--dov-texto-suave);
+}
+
+.caixa--escura .caixa__texto {
+  color: var(--dov-texto-suave-sobre-escuro);
+}
+
+.caixa--escura .rodape__campo {
+  height: 44px;
+  margin-bottom: 10px;
+}
+
+.caixa--escura .botao--verde {
+  width: 100%;
+  height: 44px;
+}
+
+/* ---------- Sumário "Neste texto" */
+
+.indice {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--dov-t-auxiliar);
+  line-height: 1.45;
+}
+
+.indice__link {
+  padding-left: var(--dov-esp-3);
+  border-left: var(--dov-borda-media) solid transparent;
+  color: var(--dov-texto-suave);
+  transition:
+    color var(--dov-duracao-rapida) var(--dov-easing),
+    border-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.indice__link:hover {
+  color: var(--dov-roxo);
+  border-left-color: var(--dov-lilas);
+}
+.indice__link[aria-current='true'] {
+  color: var(--dov-roxo);
+  border-left-color: var(--dov-roxo);
+}
+
+/* Títulos de nível 3 entram recuados, para a hierarquia aparecer. */
+.indice__link--sub {
+  padding-left: var(--dov-esp-6);
+}
+
+/* ---------- Relacionados */
+
+.relacionados {
+  padding-block: var(--dov-esp-13);
+  background: var(--dov-fundo-alternativo);
+}
+
+.relacionados__grade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--dov-gutter);
+}
+
+.relacionados__item {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: var(--dov-raio);
+  background: var(--dov-branco);
+  color: inherit;
+  transition: box-shadow var(--dov-duracao) var(--dov-easing);
+}
+.relacionados__item:hover,
+.relacionados__item:focus-visible {
+  box-shadow: var(--dov-sombra);
+  color: inherit;
+}
+
+.relacionados__midia > * {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.relacionados__texto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-3);
+  padding: var(--dov-esp-6) 26px var(--dov-esp-7);
+}
+
+.relacionados__titulo {
+  font-size: 23px;
+  line-height: 1.18;
+}
+
+@media (max-width: 1024px) {
+  .relacionados__grade {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--dov-gutter-tablet);
+  }
+}
+
+/* No mobile a prancha troca a grade por uma lista horizontal compacta. */
+@media (max-width: 767px) {
+  .relacionados {
+    padding-block: var(--dov-esp-8);
+  }
+  .relacionados__grade {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .relacionados__item {
+    flex-direction: row;
+    gap: 14px;
+    align-items: center;
+    padding: var(--dov-esp-3);
+  }
+  .relacionados__midia {
+    flex: none;
+    width: 96px;
+    overflow: hidden;
+    border-radius: var(--dov-raio-pequeno);
+  }
+  .relacionados__midia > * {
+    aspect-ratio: 1 / 1;
+  }
+  .relacionados__texto {
+    gap: 6px;
+    padding: 0;
+  }
+  .relacionados__titulo {
+    font-size: var(--dov-t-h5-cartao-mobile);
+    line-height: var(--dov-lh-h5-cartao-mobile);
+  }
+}
+
+/* ==========================================================================
+   16 · CARREGAMENTO
 
    Nunca spinner de página inteira: esqueleto com a forma do conteúdo. [ESPEC] §7
    ========================================================================== */
