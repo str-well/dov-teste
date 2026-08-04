@@ -8,6 +8,7 @@ import { BUSCA } from '@/lib/site';
 import type { Sugestao } from '@/lib/wp';
 
 import { IconeBusca } from './icones';
+import { Realce } from './realce';
 
 /** [ESPEC] §5 — o painel abre a partir de 3 caracteres, com 250 ms de debounce. */
 const MINIMO_DE_CARACTERES = 3;
@@ -238,47 +239,4 @@ export function BuscaComSugestoes({
       </ul>
     </form>
   );
-}
-
-/**
- * Envolve em `<mark>` o trecho do título que casa com o que foi digitado.
- *
- * A comparação ignora acento, mas o texto exibido é o original: quem digita
- * "acucar" precisa ver o realce em "açúcar", escrito certo.
- *
- * Para isso a dobra é feita **caractere por caractere**, preservando o mapa
- * 1:1 de índices. Normalizar a string inteira não serve — `"á"` em NFD tem dois
- * caracteres, e todo índice depois dele sairia deslocado.
- */
-function Realce({ texto, termo }: { texto: string; termo: string }) {
-  const alvo = dobrar(termo.trim());
-
-  if (alvo === '') return <>{texto}</>;
-
-  const inicio = dobrar(texto).indexOf(alvo);
-
-  if (inicio === -1) return <>{texto}</>;
-
-  return (
-    <>
-      {texto.slice(0, inicio)}
-      <mark>{texto.slice(inicio, inicio + alvo.length)}</mark>
-      {texto.slice(inicio + alvo.length)}
-    </>
-  );
-}
-
-const COMBINANTES = /[\u0300-\u036f]/g;
-
-function dobrar(texto: string): string {
-  return [...texto]
-    .map((caractere) => {
-      const sem = caractere.normalize('NFD').replace(COMBINANTES, '');
-
-      // Ligaduras e afins viram mais de um caractere e quebrariam o mapa de
-      // índices. Nesses casos o original fica.
-      return sem.length === 1 ? sem : caractere;
-    })
-    .join('')
-    .toLowerCase();
 }

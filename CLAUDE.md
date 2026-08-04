@@ -87,11 +87,15 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   e anterior/próximo alfabético. **Não há campo de classe gramatical** no
   mu-plugin — a prancha pede "substantivo masculino", e isso seria campo novo.
 
-**`/almanaque` ainda dá 404**, e cabeçalho, rodapé e as migalhas do verbete já
-apontam para lá. O índice A–Z é o próximo template por causa disso.
+- **Índice A–Z** (`/almanaque`) — pronto. Tira de letras sticky com as vazias em
+  cinza e fora da tabulação, blocos por letra, e busca com Fuse.js que filtra na
+  hora e tolera erro de digitação. **Sem o `public/almanaque.json`** do plano: a
+  lista vai nas props, e o arquivo estático fica para quando o Almanaque crescer.
 
-Depois: home e institucionais — e as institucionais precisam resolver
+Faltam a **home** e as **institucionais** — e as institucionais precisam resolver
 `/quem-somos` e `/contato`, hoje capturadas pela rota de categoria.
+
+- `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
 
 Único refinamento pendente da Fase 2: os blobs decorativos só entraram no menu
 mobile. Hero, busca e chamada do Almanaque vão querer o seu quando os templates
@@ -215,6 +219,13 @@ As duas seguintes vieram do template de matéria.
     saem em tamanho de corpo e os parágrafos sem espaçamento. Os seletores miram
     `.artigo__texto`, que é o wrapper. Não trocar por descendente: `.artigo p`
     pegaria também o parágrafo dentro da citação, que tem tipografia própria.
+
+16. **A tira de letras do A–Z não cabe em `flex-wrap`.** 26 itens de 40px com
+    6px de vão pedem 1190px; a faixa de conteúdo tem 1185px quando há barra de
+    rolagem. A prancha é um artboard de 1440 **sem barra**, então lá cabia, e o
+    "Z" caía sozinho na segunda linha na vida real. É grade de 26 colunas.
+    Vale a lição geral: medida que fecha justinho na prancha não fecha no
+    navegador, porque a barra de rolagem come 15px.
 
 ---
 

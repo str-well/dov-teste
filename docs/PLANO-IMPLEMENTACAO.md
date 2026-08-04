@@ -3,10 +3,9 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v9 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria,
-arquivo de categoria e verbete prontos. **O índice A–Z é o próximo, e é urgente:**
-`/almanaque` ainda dá 404, e cabeçalho, rodapé e as migalhas do verbete já apontam
-para lá.
+`v10 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria,
+arquivo de categoria, verbete e índice A–Z prontos. Faltam a home e as
+institucionais.
 Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
 e `DESIGN.md` para o pacote do designer.
 
@@ -237,9 +236,32 @@ no caso difícil.
 | 1 ✅ | Matéria | `/[categoria]/[slug]` | sumário "Neste texto", citação, imagem com legenda e crédito, caixa "Do Almanaque", newsletter, tags, relacionados |
 | 2 ✅ | Arquivo de categoria | `/[categoria]` | serve as 7 editorias; chips com rolagem horizontal no mobile, ordenação, paginação |
 | 3 ✅ | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
-| 4 | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
+| 4 ✅ | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
 | 5 | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
 | 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
+
+### Notas do índice A–Z
+
+- **A tira de letras é grade, não `flex-wrap`.** 26 itens de 40px com 6px de vão
+  pedem 1190px, e a faixa de conteúdo tem 1185px quando existe barra de rolagem —
+  a prancha é um artboard de 1440 sem barra, então lá cabia. Na vida real o "Z"
+  caía sozinho numa segunda linha por 5px. Com grade de 26 colunas a tira é
+  sempre uma linha.
+- **No mobile são duas linhas de 13, com vão zero.** A §6 pede duas linhas *e*
+  alvos de 36px, e as duas coisas não cabem: com 4px de vão a célula fica com
+  22px de largura, abaixo do mínimo de 24×24 do WCAG 2.5.8. Sem vão dá 25,8px em
+  tela de 375px, e a altura de 36px é preservada. **Em telas de 360px ou menos
+  nem isso alcança 24px** — aí só três linhas resolveriam, e é uma pergunta para
+  o designer.
+- **A tira gruda abaixo do cabeçalho reduzido** (68px) no desktop e no topo no
+  mobile, onde o cabeçalho rola com a página. A âncora das seções desconta
+  cabeçalho + tira + 16px: 160px no desktop, 116px no mobile.
+- **Percorrer o alfabeto não empilha histórico.** `history.replaceState`, como a
+  §6 manda: sem isso o botão voltar precisaria de 26 toques para sair da página.
+- **A busca filtra o índice na hora, e é tolerante a erro.** `batonage` encontra
+  "Bâtonnage" — é por isso que vale o Fuse.js em vez de um `includes`. Sem
+  JavaScript o campo leva para a busca geral. As letras da tira acompanham o
+  filtro: buscar "espuman" deixa só B e E clicáveis.
 
 ### Notas do verbete
 
@@ -301,8 +323,13 @@ no caso difícil.
 - **Sem foto de destaque a moldura não aparece.** Nenhuma matéria tem imagem
   hoje; uma moldura vazia de 1600×1067 no topo seria um buraco, não estado vazio.
 
-- [ ] Script de build gerando `public/almanaque.json` — `indiceDoAlmanaque()` em
-      `lib/wp` já devolve o payload enxuto
+- [x] **Busca do Almanaque, sem o `public/almanaque.json`.** O arquivo exigiria um
+      passo de build próprio, e o projeto tem como preferência minimizar
+      infraestrutura. A lista vai nas props do componente cliente: com 22 verbetes
+      são ~3 kB, na única página que precisa dela. **Perto dos 418 verbetes
+      prometidos (~80 kB) vale voltar para o arquivo estático**, que o navegador
+      cacheia independente do HTML. `indiceDoAlmanaque()` em `lib/wp` continua
+      disponível para esse dia
       (≈80 kB para 418 verbetes)
 
 ---
