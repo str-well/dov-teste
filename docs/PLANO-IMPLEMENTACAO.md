@@ -3,8 +3,8 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v7 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** o template
-de matéria está pronto.
+`v8 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria e
+arquivo de categoria prontos.
 Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
 e `DESIGN.md` para o pacote do designer.
 
@@ -233,11 +233,33 @@ no caso difícil.
 | # | Template | Rota | Peças específicas |
 |---|---|---|---|
 | 1 ✅ | Matéria | `/[categoria]/[slug]` | sumário "Neste texto", citação, imagem com legenda e crédito, caixa "Do Almanaque", newsletter, tags, relacionados |
-| 2 | Arquivo de categoria | `/[categoria]` | serve as 7 editorias; chips com rolagem horizontal no mobile, ordenação, paginação |
+| 2 ✅ | Arquivo de categoria | `/[categoria]` | serve as 7 editorias; chips com rolagem horizontal no mobile, ordenação, paginação |
 | 3 | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
 | 4 | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
 | 5 | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
 | 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
+
+### Notas do arquivo de categoria
+
+- **"Mais lidas" saiu da ordenação.** A prancha oferece essa opção, e ela exige
+  contagem de visualização — não há analytics nem plugin de contador, por decisão
+  de não instalar nada. Ficaram "Mais recentes", "Mais antigas" e "Título A–Z",
+  que a API entrega com `orderby`. Se o cliente quiser "Mais lidas", é preciso
+  decidir de onde vem o número.
+- **As tags do filtro são só as usadas naquela editoria.** A API não cruza
+  taxonomias, então `tagsDaCategoria()` levanta as tags das matérias da
+  categoria. Sem isso a tira mostraria as 16 tags do site e a maioria daria lista
+  vazia — o filtro prometeria resultado inexistente.
+- **A ordenação funciona sem JavaScript.** É um `<form method="get">` com um botão
+  "Aplicar" visível só para leitor de tela e teclado. Com JavaScript, trocar a
+  opção navega na hora.
+- **`/quem-somos` e `/contato` passam por esta rota.** Hoje caem no `notFound()`,
+  o mesmo 404 de antes. Quando o template institucional entrar (item 6), as duas
+  precisam de rota estática própria, que vence a dinâmica por precedência. As
+  páginas legais já são estáticas e não passam por aqui.
+- **Fora de alcance é 404, não estado vazio.** `?pagina=99` numa editoria com
+  conteúdo é URL digitada errada; `?tag=inexistente` também. Estado vazio é para
+  editoria sem matéria e para filtro que não casa.
 
 ### Notas do template de matéria
 

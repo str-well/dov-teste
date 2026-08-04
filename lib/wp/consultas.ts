@@ -448,6 +448,33 @@ export async function tagPorSlug(slug: string): Promise<Termo | null> {
   return tags.find((tag) => tag.slug === slug) ?? null;
 }
 
+/**
+ * As tags que aparecem nas matérias de uma categoria.
+ *
+ * Alimenta a tira de filtros do arquivo. Existe porque a API **não sabe** cruzar
+ * taxonomias: não há como pedir "as tags usadas na editoria Viaje". Sem isso a
+ * tira mostraria as 16 tags do site, e clicar na maioria daria lista vazia — o
+ * filtro prometeria resultado que não existe.
+ *
+ * O custo é uma requisição com `_fields=tags`, que devolve só arrays de id.
+ * Passando de 100 matérias por editoria, isto precisa virar um endpoint no
+ * mu-plugin; hoje a maior tem 6.
+ */
+export async function tagsDaCategoria(categoriaId: number): Promise<Termo[]> {
+  const [{ dados }, tags] = await Promise.all([
+    buscarLista<{ tags: number[] }>('posts', {
+      categories: categoriaId,
+      per_page: MAXIMO_POR_PAGINA,
+      _fields: 'tags',
+    }),
+    listarTags(),
+  ]);
+
+  const usadas = new Set(dados.flatMap((post) => post.tags ?? []));
+
+  return tags.filter((tag) => usadas.has(tag.id));
+}
+
 export async function tagsPorIds(ids: number[]): Promise<Termo[]> {
   if (ids.length === 0) return [];
 

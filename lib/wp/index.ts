@@ -44,6 +44,7 @@ export {
   paginaPorSlug,
   sugestoes,
   tagPorSlug,
+  tagsDaCategoria,
   tagsPorIds,
   verbetePorSlug,
   verbetesPorIds,

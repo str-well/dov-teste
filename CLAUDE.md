@@ -75,8 +75,13 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   build, e matéria publicada depois aparece na primeira visita sem rebuild. A URL
   canônica é a da categoria principal; chegar pela categoria secundária
   redireciona, para não haver conteúdo duplicado.
+- **Arquivo de categoria** (`/[categoria]`) — pronto. Serve as 7 editorias, com
+  filtro por tag, ordenação que funciona sem JavaScript, paginação e os dois
+  estados vazios da §7. **Atenção:** esta rota captura `/quem-somos` e
+  `/contato`, que hoje caem no 404 dela. Quando o template institucional entrar,
+  as duas precisam de rota estática própria.
 
-Próximo: arquivo de categoria, verbete, índice A–Z, home, institucionais.
+Próximo: verbete, índice A–Z, home, institucionais.
 
 Único refinamento pendente da Fase 2: os blobs decorativos só entraram no menu
 mobile. Hero, busca e chamada do Almanaque vão querer o seu quando os templates

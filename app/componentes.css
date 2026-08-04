@@ -2208,7 +2208,232 @@ a.etiqueta--verde:hover {
 }
 
 /* ==========================================================================
-   16 · CARREGAMENTO
+   16 · ARQUIVO DE CATEGORIA
+
+   Portado de `03-categoria-desktop.css` e `04-categoria-mobile.css`. Serve as
+   7 editorias — o template é único e resolve pela URL.
+   ========================================================================== */
+
+.cabeca-categoria {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--dov-esp-11) var(--dov-esp-10);
+  background: var(--dov-fundo-alternativo);
+}
+
+.cabeca-categoria__blob {
+  width: 420px;
+  right: -140px;
+  top: -130px;
+}
+
+.cabeca-categoria__titulo {
+  margin-block: 22px var(--dov-esp-4);
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-h1-pagina);
+  line-height: var(--dov-lh-h1-pagina);
+}
+
+.cabeca-categoria__descricao {
+  max-width: 620px;
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--dov-texto-suave);
+}
+
+.cabeca-categoria__contagem {
+  margin-top: var(--dov-esp-5);
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 767px) {
+  .cabeca-categoria {
+    padding-block: 26px var(--dov-esp-7);
+  }
+  .cabeca-categoria__titulo {
+    margin-block: 14px var(--dov-esp-3);
+    font-size: var(--dov-t-h1-pagina-mobile);
+    line-height: var(--dov-lh-h1-pagina-mobile);
+  }
+  .cabeca-categoria__descricao {
+    font-size: var(--dov-t-corpo-compacto-mobile);
+  }
+  .cabeca-categoria__blob {
+    width: 260px;
+    right: -100px;
+    top: -80px;
+  }
+}
+
+/* ---------- Filtros e ordenação */
+
+.filtros {
+  padding-block: 26px;
+  border-bottom: var(--dov-hairline);
+}
+
+.filtros__interno {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-4);
+  flex-wrap: wrap;
+}
+
+.filtros__rotulo {
+  margin-right: 6px;
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--dov-texto-meta);
+}
+
+.ordenacao {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta);
+}
+
+.ordenacao__campo {
+  padding: 8px 14px;
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+  border-radius: var(--dov-raio-pilula);
+  background: var(--dov-branco);
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto);
+  cursor: pointer;
+  transition: border-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.ordenacao__campo:hover {
+  border-color: var(--dov-roxo);
+}
+
+@media (max-width: 767px) {
+  /* No mobile a tira de chips já traz o próprio padding e a própria borda:
+     o invólucro sai de cena para não somar duas linhas. */
+  .filtros {
+    padding-block: 0;
+    border-bottom: 0;
+  }
+  .filtros__interno {
+    display: block;
+  }
+  .filtros__rotulo {
+    padding: var(--dov-esp-4) var(--dov-margem-mobile) 0;
+  }
+  .ordenacao {
+    margin: 0;
+    padding: var(--dov-esp-4) var(--dov-margem-mobile);
+    border-bottom: var(--dov-hairline);
+  }
+}
+
+/* ---------- Grade do arquivo */
+
+.arquivo {
+  padding-block: var(--dov-esp-11) var(--dov-esp-9);
+}
+
+.arquivo__grade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 44px var(--dov-gutter);
+}
+
+.arquivo__paginacao {
+  margin-top: var(--dov-esp-11);
+}
+
+@media (max-width: 1024px) {
+  .arquivo__grade {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--dov-esp-9) var(--dov-gutter-tablet);
+  }
+}
+
+/* No mobile a prancha troca a grade por uma lista com filete entre os itens. */
+@media (max-width: 767px) {
+  .arquivo {
+    padding-block: 22px var(--dov-esp-8);
+  }
+  .arquivo__grade {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .arquivo__grade > * + * {
+    padding-top: 26px;
+    border-top: var(--dov-hairline);
+  }
+  .arquivo__paginacao {
+    margin-top: var(--dov-esp-7);
+  }
+}
+
+/* ---------- Estado vazio
+
+   Portado da tela 15. Nunca uma tela só com "nada encontrado": título,
+   uma frase de orientação, atalhos em chips e um botão. [ESPEC] §7 */
+
+.vazio {
+  padding-block: var(--dov-esp-11) var(--dov-esp-13);
+  max-width: var(--dov-medida-texto);
+}
+
+.vazio__titulo {
+  margin-bottom: var(--dov-esp-4);
+  font-size: var(--dov-t-h2-secao);
+  line-height: var(--dov-lh-h2-secao);
+}
+
+.vazio__texto {
+  margin-bottom: var(--dov-esp-6);
+  font-size: var(--dov-t-corpo-compacto);
+  line-height: var(--dov-lh-corpo-compacto);
+  color: var(--dov-texto-suave);
+}
+
+.vazio__rotulo {
+  margin-bottom: var(--dov-esp-4);
+}
+
+.vazio__chips {
+  margin-bottom: 26px;
+}
+
+/* Chip de atalho: sem borda, fundo off-white — é sugestão, não filtro ativo. */
+.vazio__chips .chip {
+  padding: 9px 16px;
+  border-color: transparent;
+  background: var(--dov-fundo-alternativo);
+  color: var(--dov-roxo);
+}
+.vazio__chips .chip:hover {
+  border-color: var(--dov-roxo);
+}
+
+@media (max-width: 767px) {
+  .vazio {
+    padding-block: var(--dov-esp-7) var(--dov-esp-9);
+  }
+  .vazio__titulo {
+    font-size: var(--dov-t-h2-secao-mobile);
+    line-height: var(--dov-lh-h2-secao-mobile);
+  }
+  .vazio__texto {
+    font-size: var(--dov-t-corpo-compacto-mobile);
+    line-height: var(--dov-lh-corpo-compacto-mobile);
+  }
+}
+
+/* ==========================================================================
+   17 · CARREGAMENTO
 
    Nunca spinner de página inteira: esqueleto com a forma do conteúdo. [ESPEC] §7
    ========================================================================== */
