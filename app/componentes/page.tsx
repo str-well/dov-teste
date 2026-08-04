@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 
 import { Busca } from '@/components/busca';
+import { BuscaComSugestoes } from '@/components/busca-com-sugestoes';
 import { CartaoCompacto, CartaoMateria } from '@/components/cartao';
+import { ChipsRolagem } from '@/components/chips-rolagem';
 import { IconeSetaDireita } from '@/components/icones';
 import { Paginacao } from '@/components/paginacao';
-import { listarMaterias } from '@/lib/wp';
+import { listarMaterias, listarTags } from '@/lib/wp';
 
 export const metadata: Metadata = {
   title: 'Componentes · Descubra o Vinho',
@@ -23,9 +25,16 @@ export const metadata: Metadata = {
  * Sai antes do lançamento, junto com a `/diagnostico`.
  */
 export default async function Page() {
-  const { itens: materias, totalPaginas } = await listarMaterias({ porPagina: 6 });
+  const [{ itens: materias, totalPaginas }, tags] = await Promise.all([
+    listarMaterias({ porPagina: 6 }),
+    listarTags(),
+  ]);
 
   const [primeira, segunda, terceira] = materias;
+
+  // O último da lista, de propósito: fora da tela no mobile, é o que prova que
+  // a tira rola até o chip aceso ao carregar.
+  const tagDeTeste = tags.at(-1);
 
   return (
     <main className="limite secao">
@@ -102,17 +111,48 @@ export default async function Page() {
         </div>
       </Secao>
 
-      <Secao titulo="03 · Barra de busca">
-        <Busca id="busca-prancha-hero" />
-        <div style={{ marginTop: 'var(--dov-esp-5)' }}>
-          <Busca id="busca-prancha-media" tamanho="media" valor="enoturismo na serra" />
-        </div>
+      <Secao titulo="03 · Barra de busca com sugestões">
+        <BuscaComSugestoes id="busca-prancha-hero" />
         <p className="cartao__meta" style={{ marginTop: 'var(--dov-esp-3)' }}>
-          O painel de sugestões é um componente cliente separado, ainda por fazer.
+          Digite 3 letras — tente <strong>terr</strong>, <strong>vinh</strong> ou{' '}
+          <strong>queij</strong>. Setas circulam, Enter sem item em foco vai para a busca
+          completa, Esc fecha mantendo o texto.
         </p>
+
+        <div style={{ marginTop: 'var(--dov-esp-8)' }}>
+          <Busca id="busca-prancha-media" tamanho="media" valor="enoturismo na serra" />
+          <p className="cartao__meta" style={{ marginTop: 'var(--dov-esp-3)' }}>
+            A versão sem sugestões, para onde não faz sentido — funciona sem JavaScript.
+          </p>
+        </div>
       </Secao>
 
-      <Secao titulo="04 · Cartão — padrão, destaque e compacto">
+      <Secao titulo="04 · Tira de chips com rolagem">
+        <p className="cartao__meta" style={{ marginBottom: 'var(--dov-esp-4)' }}>
+          No desktop os chips quebram em linhas. Estreite a janela para menos de 768px e a
+          tira passa a rolar, com o último chip cortado na borda. O chip aceso é
+          o <strong>{tagDeTeste?.nome ?? 'último'}</strong>, e ao carregar a página a tira
+          rola até ele.
+        </p>
+
+        <ChipsRolagem>
+          <button className="chip" type="button">
+            Tudo
+          </button>
+          {tags.map((tag) => (
+            <button
+              key={tag.slug}
+              className="chip"
+              type="button"
+              aria-current={tag.slug === tagDeTeste?.slug ? 'true' : undefined}
+            >
+              {tag.nome}
+            </button>
+          ))}
+        </ChipsRolagem>
+      </Secao>
+
+      <Secao titulo="05 · Cartão — padrão, destaque e compacto">
         <p className="cartao__meta" style={{ marginBottom: 'var(--dov-esp-5)' }}>
           Nenhuma matéria tem imagem destacada hoje, então todos os cartões estão no
           estado vazio — é o comportamento correto, não uma falha de carregamento.
@@ -142,7 +182,7 @@ export default async function Page() {
         )}
       </Secao>
 
-      <Secao titulo="05 · Carregamento">
+      <Secao titulo="06 · Carregamento">
         <div className="grade-cartoes">
           {[0, 1, 2].map((i) => (
             <div key={i} aria-busy="true">

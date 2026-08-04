@@ -522,6 +522,100 @@ export async function buscar(
   };
 }
 
+/** Um item do painel de sugestões. Já pronto para renderizar — sem resolver nada. */
+export type Sugestao = {
+  tipo: 'materia' | 'verbete';
+  /** O que aparece à direita do item: nome da editoria, ou "Almanaque". */
+  rotulo: string;
+  titulo: string;
+  href: string;
+};
+
+/** Sem acento, sem caixa, sem espaço nas pontas. Para comparar, não para exibir. */
+function normalizar(texto: string): string {
+  return texto
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
+/**
+ * As sugestões do combobox da busca.
+ *
+ * Devolve no máximo `limite` itens **intercalando matéria e verbete**, e não os
+ * 8 primeiros de um tipo só: a especificação pede a lista misturada, e sem
+ * intercalar uma editoria movimentada enterraria o Almanaque.
+ *
+ * A exceção é o acerto exato: se o termo digitado for o título de um verbete,
+ * aquele verbete vem primeiro. Quem digita "terroir" inteiro quer a definição.
+ *
+ * Devolve `href` montado, então o cliente não resolve categoria nem rota.
+ */
+export async function sugestoes(termo: string, limite = 8): Promise<Sugestao[]> {
+  const limpo = termo.trim();
+
+  if (limpo === '') return [];
+
+  const [materias, brutosVerbetes, categorias] = await Promise.all([
+    listarMaterias({ busca: limpo, porPagina: limite }),
+    buscarLista<BrutoVerbete>('verbetes', {
+      search: limpo,
+      per_page: limite,
+      orderby: 'title',
+      order: 'asc',
+      _fields: CAMPOS.verbete,
+    }),
+    listarCategorias(),
+  ]);
+
+  const porId = new Map(categorias.map((categoria) => [categoria.id, categoria]));
+
+  const deMaterias: Sugestao[] = materias.itens.flatMap((materia) => {
+    const categoria = porId.get(materia.categorias[0] ?? -1);
+
+    // Sem categoria não existe rota `/{categoria}/{slug}`. Fora da lista.
+    return categoria
+      ? [
+          {
+            tipo: 'materia' as const,
+            rotulo: categoria.nome,
+            titulo: materia.titulo,
+            href: `/${categoria.slug}/${materia.slug}`,
+          },
+        ]
+      : [];
+  });
+
+  const deVerbetes: Sugestao[] = brutosVerbetes.dados.map(mapearVerbete).map((verbete) => ({
+    tipo: 'verbete' as const,
+    rotulo: 'Almanaque',
+    titulo: verbete.titulo,
+    href: `/almanaque/${verbete.slug}`,
+  }));
+
+  const alvo = normalizar(limpo);
+  const exato = deVerbetes.findIndex((item) => normalizar(item.titulo) === alvo);
+
+  const misturadas: Sugestao[] = [];
+
+  if (exato !== -1) {
+    misturadas.push(deVerbetes.splice(exato, 1)[0]);
+  }
+
+  for (let i = 0; misturadas.length < limite; i += 1) {
+    const proximos = [deMaterias[i], deVerbetes[i]].filter(Boolean) as Sugestao[];
+
+    if (proximos.length === 0) break;
+
+    for (const item of proximos) {
+      if (misturadas.length < limite) misturadas.push(item);
+    }
+  }
+
+  return misturadas;
+}
+
 /**
  * Dados para o JSON estático da busca do Almanaque, gerado no build.
  *

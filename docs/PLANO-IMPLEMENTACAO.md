@@ -3,9 +3,9 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v5 · 03/08/2026` — Fases 0 e 1 concluídas; Fase 2 com a camada de dados e os
-componentes globais em pé. Ver `../CLAUDE.md` para o resumo de decisões,
-`BACKEND.md` para o contrato da API e `DESIGN.md` para o pacote do designer.
+`v6 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 é o próximo passo.**
+Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
+e `DESIGN.md` para o pacote do designer.
 
 ---
 
@@ -15,8 +15,8 @@ componentes globais em pé. Ver `../CLAUDE.md` para o resumo de decisões,
 2. [Stack](#2-stack)
 3. [Fase 0 — Validação da infraestrutura](#3-fase-0--validação-da-infraestrutura) ✅
 4. [Fase 1 — WordPress do zero](#4-fase-1--wordpress-do-zero) ✅
-5. [Fase 2 — Fundações do front](#5-fase-2--fundações-do-front) ◐
-6. [Fase 3 — Templates](#6-fase-3--templates)
+5. [Fase 2 — Fundações do front](#5-fase-2--fundações-do-front) ✅
+6. [Fase 3 — Templates](#6-fase-3--templates) ←
 7. [Fase 4 — Deploy e revalidação](#7-fase-4--deploy-e-revalidação)
 8. [Fase 5 — Antes de entregar](#8-fase-5--antes-de-entregar)
 9. [Riscos e planos B](#9-riscos-e-planos-b)
@@ -192,7 +192,7 @@ Sem isso, os templates são construídos contra dados falsos e quebram na virada
 
 ---
 
-## 5. Fase 2 — Fundações do front ← EM ANDAMENTO
+## 5. Fase 2 — Fundações do front ✅ CONCLUÍDA
 
 - [x] Projeto Next + TypeScript + **Tailwind v4**, com `design/dov-tokens.css`
       importado e exposto pelo `@theme` do `app/globals.css`.
@@ -207,10 +207,14 @@ Sem isso, os templates são construídos contra dados falsos e quebram na virada
 - [x] Barra de busca — o `<form>` GET, que funciona sem JavaScript
 - [x] Área de toque mínima de 48×48 no mobile, nos ícones do cabeçalho e nos chips
 - [x] `prefers-reduced-motion` respeitado — já vem dos tokens
-- [ ] **Painel de sugestões da busca** — §5 da especificação: combobox com
-      `downshift`, 3 caracteres, 250 ms de debounce, `<mark>` no trecho que casa.
-      Precisa de uma rota que devolva as sugestões
-- [ ] Rolagem da tira de chips no mobile — §4: `scrollLeft` do chip ativo ao carregar
+- [x] **Painel de sugestões da busca** — combobox com `downshift` em
+      `components/busca-com-sugestoes.tsx`, servido por `GET /api/sugestoes`.
+      3 caracteres, 250 ms de debounce, no máximo 8 itens **intercalando** matéria
+      e verbete, acerto exato de verbete no topo, `<mark>` no trecho que casa,
+      setas circulando, `Esc` mantendo o texto, e os três estados (carregando,
+      vazio, erro). Sem JavaScript o campo continua submetendo para `/busca`
+- [x] Rolagem da tira de chips no mobile — `components/chips-rolagem.tsx`, com
+      `scrollLeft` e não `scrollIntoView`, que rolaria o documento inteiro
 - [ ] Blobs como componentes SVG — no máximo um por seção, e só em hero, busca e
       chamada do Almanaque. Hoje só o do menu mobile está em uso
 
@@ -220,7 +224,7 @@ e o Tailwind cuida de grade, espaçamento e responsividade.
 
 ---
 
-## 6. Fase 3 — Templates
+## 6. Fase 3 — Templates ← PRÓXIMO PASSO
 
 A ordem começa pelo template mais complexo, para que os componentes nasçam testados
 no caso difícil.

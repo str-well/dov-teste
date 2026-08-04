@@ -48,7 +48,7 @@ Instalado em `wp.`, fuso São Paulo, permalinks `/%postname%/`, mu-plugin ativo,
 7 categorias, 16 tags, 20 matérias, 22 verbetes, 3 eventos, 2 páginas.
 Conexão do front com a API validada em 226 ms.
 
-**Fase 2 — fundações do front: quase toda pronta.**
+**Fase 2 — fundações do front: concluída.**
 
 - **Camada de dados** — `lib/wp/`, entrada única em `lib/wp/index.ts`.
   ~25 funções tipadas, verificadas contra a API de produção. Detalhe abaixo.
@@ -60,15 +60,22 @@ Conexão do front com a API validada em 226 ms.
   chips e etiquetas. Prancha viva em **`/componentes`**, para comparar com o
   HTML do designer.
 
-**Falta da Fase 2:** o painel de sugestões da busca (§5 da especificação, com
-`downshift` já instalado — precisa de uma rota que devolva sugestões) e o ajuste
-de rolagem da tira de chips no mobile (§4).
+- **Busca com sugestões** — `components/busca-com-sugestoes.tsx`, combobox com
+  `downshift` servido por `GET /api/sugestoes`. Tira de chips com rolagem em
+  `components/chips-rolagem.tsx`.
+- **Páginas institucionais** — a casca em `components/pagina-institucional.tsx`,
+  já usada pelas duas páginas legais. Serve Quem Somos e Contato na Fase 3.
 
 **As três decisões que travavam os componentes foram fechadas** — menu em 1280,
 sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
 
-**Depois:** os templates de página, na ordem abaixo. Nenhum foi codado ainda; o
-repositório tem a home de placeholder, `/componentes` e `/diagnostico`.
+**Fase 3 é o próximo passo:** os templates de página, na ordem abaixo. Nenhum foi
+codado ainda; o repositório tem a home de placeholder, as duas páginas legais,
+`/componentes` e `/diagnostico`.
+
+Único refinamento pendente da Fase 2: os blobs decorativos só entraram no menu
+mobile. Hero, busca e chamada do Almanaque vão querer o seu quando os templates
+chegarem — no máximo um por seção.
 
 ---
 
@@ -327,3 +334,13 @@ Nada disso precisa ser lembrado componente por componente:
   lista de categorias em 20 cards faz **uma** requisição.
 - Tipos de item completo (`MateriaCompleta`, `VerbeteCompleto`) só vêm das
   consultas de item único — um card não consegue depender do corpo do texto.
+- `sugestoes()` devolve item pronto, com `href` montado, porque quem consome é o
+  cliente pela rota `/api/sugestoes` e não deve resolver categoria nem rota.
+
+### Rotas de API
+
+| Rota | Papel |
+|---|---|
+| `/api/revalidate` | Chamada pelo mu-plugin no `transition_post_status` |
+| `/api/sugestoes` | Sugestões do combobox. `GET ?q=`, mínimo 3 caracteres, `s-maxage=300` |
+| `/api/health` | Versão do Node, uptime e `pid`. Alvo do monitor externo |

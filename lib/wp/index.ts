@@ -42,6 +42,7 @@ export {
   materiasQueCitam,
   materiasRelacionadas,
   paginaPorSlug,
+  sugestoes,
   tagPorSlug,
   tagsPorIds,
   verbetePorSlug,
@@ -50,7 +51,7 @@ export {
   verbeteVizinhos,
 } from './consultas';
 
-export type { FiltroMaterias, Ordenacao, ResultadoBusca } from './consultas';
+export type { FiltroMaterias, Ordenacao, ResultadoBusca, Sugestao } from './consultas';
 
 // --- Auxiliares ------------------------------------------------------------
 

@@ -647,6 +647,21 @@ a.etiqueta--verde:hover {
   border-radius: var(--dov-raio-grande);
   background: var(--dov-branco);
   box-shadow: var(--dov-sombra);
+  animation: dov-sugestoes-entra var(--dov-duracao-media) var(--dov-easing);
+}
+
+/* O painel é escondido por `hidden`, não desmontado: o downshift exige que
+   `getMenuProps` seja aplicado em todo render. Sem isto o `display` do flex
+   venceria o atributo e o painel vazio ficaria visível. */
+.sugestoes[hidden] {
+  display: none;
+}
+
+@keyframes dov-sugestoes-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
 }
 
 .sugestoes__item {

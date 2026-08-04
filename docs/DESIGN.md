@@ -27,7 +27,8 @@ O pedido foi **portar sem redesenhar**. Os CSS das telas não têm um único hex
 tudo sai de `dov-tokens.css`. Isso significa que a fidelidade se preserva sozinha
 **se os valores vierem dos tokens**.
 
-- Os tokens viram variáveis CSS em `globals.css` e alimentam o `tailwind.config`
+- `app/globals.css` **importa** `design/dov-tokens.css` — não copia — e o `@theme`
+  do Tailwind v4 consome as variáveis direto. Não existe `tailwind.config`
 - Tailwind cuida de grade, espaçamento e responsividade
 - **Tipografia e componentes visuais herdam o CSS do mockup**, não são retipados em
   utilitários — é aí que a fidelidade escorre
@@ -92,12 +93,15 @@ Em `components/`, com o CSS em `app/componentes.css` e uma prancha viva em
 | Cartão · padrão, destaque, compacto | `cartao.tsx` | Resolve a própria URL pela categoria |
 | Imagem com estado vazio | `imagem-wp.tsx` | Trata os **dois** níveis de `null` |
 | Paginação | `paginacao.tsx` | Reticências, e número em vez de reticência para buraco de 1 |
-| Barra de busca | `busca.tsx` | Sem sugestões ainda — falta o combobox |
+| Barra de busca | `busca.tsx` | O `<form>` GET, que funciona sem JavaScript |
+| Busca com sugestões | `busca-com-sugestoes.tsx` | Combobox `downshift` + `GET /api/sugestoes` |
+| Tira de chips | `chips-rolagem.tsx` | Rola até o chip aceso ao carregar |
+| Página institucional | `pagina-institucional.tsx` | Cabeça sobre off-white e prosa em 720px |
 | Botões, chips, etiquetas | só CSS | Sem componente React: são classes |
 
-**Falta da tela 00:** o painel de sugestões da busca (§5 da especificação, com
-`downshift` já instalado) e o ajuste de rolagem da tira de chips no mobile
-(§4 — `scrollLeft` do chip ativo ao carregar).
+**A tela 00 está inteira.** O que sobra da Fase 2 é um refinamento: os blobs
+decorativos só entraram no menu mobile; hero, busca e chamada do Almanaque vão
+querer o seu quando os templates chegarem.
 
 ## Interação
 
