@@ -25,7 +25,19 @@
    de classes que não existem no front. As fontes ficam explícitas abaixo. */
 @import 'tailwindcss' source(none);
 
-@import '../design/dov-tokens.css';
+/* Em `layer(base)`, junto do preflight do Tailwind e depois dele — assim o reset
+   do designer vence o preflight, que é o que preserva a fidelidade.
+
+   A camada **não** é opcional: o arquivo do designer traz `a { color: … }`,
+   `button { font: inherit }` e `h1…h6 { … }`. CSS sem camada vence qualquer
+   `@layer`, então sem isto o reset derrota o CSS dos componentes — e
+   `.botao--primario` sai com texto marinho em vez de branco. */
+@import '../design/dov-tokens.css' layer(base);
+
+/* Em `layer(components)`, entre o reset e as utilidades. A ordem final é:
+   base (preflight + reset) < components < utilities < regras sem camada.
+   Assim `class="cartao__titulo mt-4"` funciona, e o componente vence o reset. */
+@import './componentes.css' layer(components);
 
 @source '../app';
 @source '../lib';
@@ -166,11 +178,15 @@
      Tailwind são zerados para `md:` e `lg:` não virarem uma quarta e quinta
      faixa que ninguém desenhou.
 
-     Falta aqui o breakpoint do menu desktop (~1280px): é uma das três
-     decisões em aberto de `docs/DESIGN.md`. Entra quando for decidida. */
+     `menu:` é um limite **diferente** e vale só para o cabeçalho. As 7 editorias
+     mais Almanaque e busca não cabem abaixo de 1280px — a linha quebra. Então o
+     menu em tela cheia vale até 1279 e o cabeçalho desktop começa em 1280,
+     enquanto a escala tipográfica continua virando em 1025. Confundir os dois é
+     o erro fácil aqui: `desktop:` é tipografia, `menu:` é cabeçalho. */
   --breakpoint-*: initial;
   --breakpoint-tablet: 768px;
   --breakpoint-desktop: 1025px;
+  --breakpoint-menu: 1280px;
 
   /* ------------------------------------------------------------- movimento */
   --ease-*: initial;

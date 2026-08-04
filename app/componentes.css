@@ -1,0 +1,1480 @@
+/* ==========================================================================
+   Componentes globais — portados de `design/telas/00-fundamentos-componentes.css`.
+   ==========================================================================
+
+   Resolve o item "duplicação de CSS" de `docs/DESIGN.md`: cada prancha repetia
+   ~11 kB de cabeçalho, rodapé, cartão, botões e chips. Aqui existe uma vez.
+
+   Três regras seguidas ao portar:
+
+   1. **Nenhum valor novo.** Todo número sai de `dov-tokens.css`. As duas
+      exceções estão marcadas com `[ESPEC]` e vêm de
+      `design/ESPECIFICACAO-DE-INTERACAO.md`, que é normativa e vence o CSS das
+      pranchas quando divergem.
+
+   2. **Um componente, não dois.** As pranchas têm `.cartao__titulo` e
+      `.cartao-mobile__titulo` porque cada uma é um artboard de largura fixa.
+      Em produção é uma classe só, com o valor mobile do token entrando por
+      media query. Os valores são idênticos; o que muda é não haver duas
+      classes para manter em sincronia.
+
+   3. **Fronteiras.** 767px é a virada da escala tipográfica (seções 5 e 6 dos
+      tokens). 1024px é a virada de margem para tablet. 1279px é a virada do
+      cabeçalho — decisão fechada: o menu vira hambúrguer abaixo de 1280,
+      porque as 7 editorias mais Almanaque e busca não caberiam.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · ESTRUTURA
+   ========================================================================== */
+
+.limite {
+  width: 100%;
+  max-width: calc(var(--dov-largura-conteudo) + 2 * var(--dov-margem-desktop));
+  margin-inline: auto;
+  padding-inline: var(--dov-margem-desktop);
+}
+
+@media (max-width: 1024px) {
+  .limite {
+    padding-inline: var(--dov-margem-tablet);
+  }
+}
+
+@media (max-width: 767px) {
+  .limite {
+    padding-inline: var(--dov-margem-mobile);
+  }
+}
+
+.secao {
+  padding-block: var(--dov-secao-y-desktop);
+}
+
+@media (max-width: 767px) {
+  .secao {
+    padding-block: var(--dov-secao-y-mobile);
+  }
+}
+
+.secao--alternativa {
+  background: var(--dov-fundo-alternativo);
+}
+
+.secao--escura {
+  background: var(--dov-fundo-escuro);
+  color: var(--dov-texto-sobre-escuro);
+}
+
+.secao--empilhada {
+  position: relative;
+  overflow: hidden;
+}
+
+.secao__cabeca {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--dov-esp-6);
+  margin-bottom: var(--dov-esp-9);
+}
+
+@media (max-width: 767px) {
+  .secao__cabeca {
+    align-items: baseline;
+    gap: var(--dov-esp-4);
+    margin-bottom: var(--dov-esp-5);
+  }
+}
+
+.secao__conteudo {
+  position: relative;
+  z-index: var(--dov-z-conteudo);
+}
+
+.divisor {
+  height: 1px;
+  border: 0;
+  margin: 0;
+  background: var(--dov-divisor);
+}
+
+/* Rótulo só para leitor de tela. */
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ==========================================================================
+   2 · BLOBS DECORATIVOS
+
+   Os SVGs não têm width/height — a proporção é fixada aqui, senão o navegador
+   cai em 300×150. Sempre dentro de um contêiner com `overflow: hidden`, no
+   máximo um por seção. São decorativos: `alt=""` e `aria-hidden`.
+   ========================================================================== */
+
+.blob {
+  position: absolute;
+  z-index: var(--dov-z-blob);
+  aspect-ratio: 1 / 1;
+  pointer-events: none;
+}
+
+.blob--lilas {
+  opacity: var(--dov-blob-lilas-opacidade);
+}
+.blob--menta {
+  opacity: var(--dov-blob-menta-opacidade);
+}
+.blob--roxo {
+  opacity: var(--dov-blob-roxo-opacidade);
+}
+
+/* ==========================================================================
+   3 · RÓTULOS E TEXTO
+   ========================================================================== */
+
+.kicker {
+  font-size: var(--dov-t-kicker);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--dov-roxo);
+}
+
+@media (max-width: 767px) {
+  .kicker {
+    font-size: var(--dov-t-kicker-mobile);
+  }
+}
+
+.kicker--pequeno {
+  font-size: var(--dov-t-kicker-pequeno);
+}
+.kicker--mini {
+  font-size: var(--dov-t-kicker-mini);
+}
+.kicker--verde {
+  color: var(--dov-verde);
+}
+.kicker--menta {
+  color: var(--dov-menta);
+}
+.kicker--neutro {
+  color: var(--dov-texto-meta);
+}
+
+.lead {
+  font-size: var(--dov-t-lead);
+  line-height: var(--dov-lh-lead);
+  color: var(--dov-texto-suave);
+}
+
+@media (max-width: 767px) {
+  .lead {
+    font-size: var(--dov-t-lead-mobile);
+    line-height: var(--dov-lh-lead-mobile);
+  }
+}
+
+.titulo-secao {
+  font-size: var(--dov-t-h2-secao);
+  line-height: var(--dov-lh-h2-secao);
+}
+
+@media (max-width: 767px) {
+  .titulo-secao {
+    font-size: var(--dov-t-h2-secao-mobile);
+    line-height: var(--dov-lh-h2-secao-mobile);
+  }
+}
+
+/* ==========================================================================
+   4 · IMAGEM AUSENTE
+
+   Nenhum conteúdo tem imagem destacada hoje, e `dov_imagens` volta `null`.
+   Este é o estado vazio, não um andaime: fica no lugar da moldura, com a mesma
+   proporção e o mesmo raio, e é invisível para leitor de tela.
+   ========================================================================== */
+
+.sem-imagem {
+  display: grid;
+  place-items: center;
+  border-radius: var(--dov-raio);
+  background: var(--dov-roxo-100);
+}
+
+.sem-imagem__cacho {
+  width: 22%;
+  max-width: 64px;
+  opacity: 0.5;
+}
+
+.sem-imagem--16x9 {
+  aspect-ratio: 16 / 9;
+}
+.sem-imagem--3x2 {
+  aspect-ratio: 3 / 2;
+}
+.sem-imagem--4x3 {
+  aspect-ratio: 4 / 3;
+}
+.sem-imagem--1x1 {
+  aspect-ratio: 1 / 1;
+}
+
+/* ==========================================================================
+   5 · BOTÕES
+   ========================================================================== */
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: var(--dov-raio-pilula);
+  font-family: var(--dov-fonte-corpo);
+  font-weight: var(--dov-peso-corpo-medio);
+  font-size: var(--dov-t-botao);
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color var(--dov-duracao-rapida) var(--dov-easing),
+    border-color var(--dov-duracao-rapida) var(--dov-easing),
+    color var(--dov-duracao-rapida) var(--dov-easing);
+}
+
+.botao:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.botao--primario {
+  height: var(--dov-altura-botao);
+  padding-inline: 30px;
+  background: var(--dov-roxo);
+  color: var(--dov-branco);
+}
+.botao--primario:hover {
+  background: var(--dov-roxo-600);
+  color: var(--dov-branco);
+}
+.botao--primario:active {
+  background: var(--dov-roxo-800);
+}
+
+.botao--contorno {
+  height: var(--dov-altura-botao);
+  padding-inline: 30px;
+  background: transparent;
+  color: var(--dov-roxo);
+  border: var(--dov-borda-fina) solid var(--dov-roxo);
+}
+.botao--contorno:hover {
+  background: var(--dov-roxo-100);
+  color: var(--dov-roxo);
+}
+.botao--contorno:active {
+  background: var(--dov-roxo-200);
+}
+
+.botao--claro {
+  height: var(--dov-altura-botao);
+  padding-inline: 30px;
+  background: var(--dov-branco);
+  color: var(--dov-roxo);
+}
+.botao--claro:hover {
+  background: var(--dov-lilas);
+  color: var(--dov-roxo-800);
+}
+
+.botao--verde {
+  height: 48px;
+  padding-inline: 22px;
+  background: var(--dov-verde);
+  color: var(--dov-branco);
+  font-size: var(--dov-t-botao-pequeno);
+}
+.botao--verde:hover {
+  background: var(--dov-verde-600);
+  color: var(--dov-branco);
+}
+/* [ESPEC] §3 — o pressionado do verde não está nas pranchas. */
+.botao--verde:active {
+  background: var(--dov-verde-700);
+}
+
+.botao--pequeno {
+  height: var(--dov-altura-botao-pequena);
+  padding-inline: 26px;
+  font-size: var(--dov-t-botao-pequeno);
+}
+.botao--mini {
+  height: auto;
+  padding: 9px 18px;
+  font-size: var(--dov-t-botao-pequeno);
+}
+.botao--bloco {
+  width: 100%;
+  height: var(--dov-altura-botao-media);
+}
+.botao__icone {
+  flex: none;
+  width: 17px;
+  height: 17px;
+}
+
+.botao-icone {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--dov-raio-pilula);
+  background: transparent;
+  color: var(--dov-roxo);
+  cursor: pointer;
+  transition: background-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.botao-icone:hover {
+  background: var(--dov-roxo-100);
+}
+.botao-icone:active {
+  background: var(--dov-roxo-200);
+}
+.botao-icone--contorno {
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+}
+/* Alvo de toque de 48×48 no mobile. */
+.botao-icone--toque {
+  width: var(--dov-alvo-toque);
+  height: var(--dov-alvo-toque);
+}
+.botao-icone__svg {
+  width: 19px;
+  height: 19px;
+}
+.botao-icone--toque .botao-icone__svg {
+  width: 21px;
+  height: 21px;
+}
+
+.link-texto {
+  align-self: flex-start;
+  padding-bottom: 3px;
+  border-bottom: var(--dov-borda-media) solid var(--dov-limao);
+  font-size: var(--dov-t-botao-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  color: var(--dov-roxo);
+}
+.link-texto:hover {
+  color: var(--dov-roxo-600);
+  border-bottom-color: var(--dov-roxo);
+}
+
+/* Spinner do botão em carregamento — [ESPEC] §3: mantém a largura, troca o
+   rótulo, 16px em currentColor girando em 700ms linear. */
+.botao__spinner {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  border: var(--dov-borda-media) solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--dov-raio-pilula);
+  animation: dov-girar 700ms linear infinite;
+}
+
+@keyframes dov-girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ==========================================================================
+   6 · CHIPS E ETIQUETAS
+   ========================================================================== */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dov-esp-2);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 18px;
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+  border-radius: var(--dov-raio-pilula);
+  background: transparent;
+  color: var(--dov-texto);
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-chip);
+  font-weight: var(--dov-peso-corpo-medio);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    background-color var(--dov-duracao-rapida) var(--dov-easing),
+    border-color var(--dov-duracao-rapida) var(--dov-easing),
+    color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.chip:hover {
+  border-color: var(--dov-roxo);
+  color: var(--dov-roxo);
+}
+
+.chip--ativo,
+.chip[aria-current='true'] {
+  padding: 9px 18px;
+  border-color: var(--dov-roxo);
+  background: var(--dov-roxo);
+  color: var(--dov-branco);
+}
+.chip--ativo:hover,
+.chip[aria-current='true']:hover {
+  color: var(--dov-branco);
+}
+
+.chip--sugestao {
+  padding: 7px 16px;
+  border-color: var(--dov-roxo-200);
+  background: var(--dov-branco);
+  color: var(--dov-roxo);
+}
+.chip--sugestao:hover {
+  border-color: var(--dov-roxo);
+}
+
+/* Tira de chips com rolagem horizontal no mobile — [ESPEC] §4.
+   No desktop os mesmos chips quebram em linhas, sem rolagem. */
+.chips-rolagem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dov-esp-2);
+}
+
+@media (max-width: 767px) {
+  .chips-rolagem {
+    flex-wrap: nowrap;
+    padding-block: var(--dov-esp-4);
+    padding-inline: var(--dov-margem-mobile);
+    /* A tira sangra até a borda: cancela o padding do contêiner pai. */
+    margin-inline: calc(-1 * var(--dov-margem-mobile));
+    border-bottom: var(--dov-hairline);
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    /* [ESPEC] §4 — sem isto o último chip cola na borda ao fim do arrasto. */
+    scroll-padding-inline-end: var(--dov-margem-mobile);
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .chips-rolagem::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chips-rolagem .chip {
+    flex: none;
+    scroll-snap-align: start;
+    /* Alvo de toque: 48px de altura sem mexer no desenho do chip. */
+    min-height: var(--dov-alvo-toque);
+  }
+}
+
+.etiqueta {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 15px;
+  border-radius: var(--dov-raio-pilula);
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+}
+.etiqueta--roxa {
+  background: var(--dov-roxo-100);
+  color: var(--dov-roxo-800);
+}
+.etiqueta--verde {
+  background: var(--dov-verde-100);
+  color: var(--dov-verde-800);
+}
+.etiqueta--neutra {
+  background: var(--dov-neutro-200);
+  color: var(--dov-neutro-800);
+}
+.etiqueta--contorno {
+  background: transparent;
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+  color: var(--dov-texto);
+}
+a.etiqueta--roxa:hover {
+  background: var(--dov-roxo-200);
+  color: var(--dov-roxo-900);
+}
+a.etiqueta--verde:hover {
+  background: var(--dov-verde-200);
+  color: var(--dov-verde-900);
+}
+
+/* ==========================================================================
+   7 · BUSCA
+   ========================================================================== */
+
+.busca {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: var(--dov-altura-busca);
+  padding-left: 26px;
+  padding-right: 10px;
+  border: var(--dov-borda-fina) solid var(--dov-lilas);
+  border-radius: var(--dov-raio-pilula);
+  background: var(--dov-branco);
+  box-shadow: var(--dov-sombra-pequena);
+  transition: border-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+
+/* A borda engorda de 1px para 2px, e o padding perde 1px para compensar —
+   sem isso o conteúdo pula ao focar. */
+.busca:focus-within {
+  border-width: var(--dov-borda-media);
+  border-color: var(--dov-roxo);
+  padding-left: 25px;
+  padding-right: 9px;
+  outline: var(--dov-foco-espessura) solid var(--dov-roxo-300);
+  outline-offset: var(--dov-foco-offset);
+}
+
+.busca--media {
+  height: var(--dov-altura-busca-media);
+}
+.busca--compacta {
+  height: var(--dov-altura-busca-compacta);
+}
+
+.busca__icone {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--dov-roxo);
+}
+
+.busca__campo {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font-family: var(--dov-fonte-corpo);
+  font-size: 17px;
+  color: var(--dov-texto);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.busca__campo::placeholder {
+  color: var(--dov-texto-meta);
+}
+.busca__campo:focus {
+  outline: none;
+}
+.busca__campo::-webkit-search-cancel-button {
+  display: none;
+}
+
+.busca__botao {
+  flex: none;
+  height: var(--dov-altura-botao-media);
+  padding-inline: 30px;
+  border: 0;
+  border-radius: var(--dov-raio-pilula);
+  background: var(--dov-roxo);
+  color: var(--dov-branco);
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-botao);
+  font-weight: var(--dov-peso-corpo-medio);
+  cursor: pointer;
+  transition: background-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.busca__botao:hover {
+  background: var(--dov-roxo-600);
+}
+.busca__botao:active {
+  background: var(--dov-roxo-800);
+}
+
+@media (max-width: 767px) {
+  .busca {
+    height: var(--dov-altura-busca-mobile);
+    padding-inline: 16px;
+    box-shadow: none;
+  }
+  .busca:focus-within {
+    padding-inline: 15px;
+  }
+  .busca__icone {
+    width: 18px;
+    height: 18px;
+  }
+  .busca__campo {
+    font-size: 15px;
+  }
+  /* No mobile o campo ocupa a largura toda; o envio é pelo teclado. */
+  .busca__botao {
+    display: none;
+  }
+}
+
+/* Painel de sugestões — [ESPEC] §5. */
+.sugestoes {
+  position: absolute;
+  top: calc(100% + var(--dov-esp-2));
+  left: 0;
+  right: 0;
+  z-index: var(--dov-z-sugestoes);
+  overflow: hidden;
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+  border-radius: var(--dov-raio-grande);
+  background: var(--dov-branco);
+  box-shadow: var(--dov-sombra);
+}
+
+.sugestoes__item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--dov-esp-4);
+  padding: 14px 26px;
+  color: var(--dov-texto);
+  font-size: 15px;
+  cursor: pointer;
+}
+.sugestoes__item + .sugestoes__item {
+  border-top: var(--dov-hairline);
+}
+/* O realce é por classe, não por :hover: no teclado quem manda é o downshift,
+   e mouse e seta precisam pintar o mesmo item. */
+.sugestoes__item--realcado {
+  background: var(--dov-roxo-100);
+  color: var(--dov-roxo);
+}
+.sugestoes__tipo {
+  flex: none;
+  color: var(--dov-texto-meta);
+  font-size: var(--dov-t-meta);
+}
+.sugestoes__vazio {
+  padding: 14px 26px;
+  color: var(--dov-texto-meta);
+  font-size: 15px;
+}
+.sugestoes mark {
+  background: var(--dov-roxo-200);
+  color: var(--dov-roxo-800);
+}
+
+/* ==========================================================================
+   8 · CARTÃO DE NOTÍCIA
+   ========================================================================== */
+
+.cartao {
+  display: flex;
+  flex-direction: column;
+}
+
+/* O alvo clicável é o <a> inteiro — uma área de clique, um item na navegação
+   por teclado. [ESPEC] §3 */
+.cartao__link {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-4);
+  color: inherit;
+}
+
+/* A proporção fica na moldura, não na imagem: assim o estado vazio ocupa
+   exatamente o mesmo espaço da foto e a página não pula quando a foto entrar. */
+.cartao__midia {
+  overflow: hidden;
+  border-radius: var(--dov-raio);
+  transition: box-shadow var(--dov-duracao) var(--dov-easing);
+}
+.cartao__midia--16x9 {
+  aspect-ratio: 16 / 9;
+}
+.cartao__midia--3x2 {
+  aspect-ratio: 3 / 2;
+}
+.cartao__midia--4x3 {
+  aspect-ratio: 4 / 3;
+}
+.cartao__midia--1x1 {
+  aspect-ratio: 1 / 1;
+}
+.cartao__midia > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dov-duracao) var(--dov-easing);
+}
+
+.cartao__titulo {
+  font-size: var(--dov-t-h3-cartao);
+  line-height: var(--dov-lh-h3-cartao);
+  transition: color var(--dov-duracao-rapida) var(--dov-easing);
+}
+
+.cartao__resumo {
+  font-size: var(--dov-t-cartao);
+  line-height: var(--dov-lh-cartao);
+  color: var(--dov-texto-suave);
+}
+
+.cartao__meta {
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+/* O hover não move o bloco: sem translateY, sem sombra ao redor. [ESPEC] §3 */
+.cartao__link:hover .cartao__titulo,
+.cartao__link:focus-visible .cartao__titulo {
+  color: var(--dov-roxo);
+}
+.cartao__link:hover .cartao__midia,
+.cartao__link:focus-visible .cartao__midia {
+  box-shadow: var(--dov-filete-hover);
+}
+.cartao__link:hover .cartao__midia > *,
+.cartao__link:focus-visible .cartao__midia > * {
+  transform: scale(var(--dov-escala-hover-imagem));
+}
+
+/* Cartão de fundo branco sobre off-white: ganha sombra, e nada mais. */
+.cartao--sobre-alternativa .cartao__link {
+  padding: var(--dov-esp-5);
+  border-radius: var(--dov-raio);
+  background: var(--dov-branco);
+  transition: box-shadow var(--dov-duracao) var(--dov-easing);
+}
+.cartao--sobre-alternativa .cartao__link:hover {
+  box-shadow: var(--dov-sombra);
+}
+
+@media (max-width: 767px) {
+  .cartao__link {
+    gap: var(--dov-esp-3);
+  }
+  .cartao__titulo {
+    font-size: var(--dov-t-h3-cartao-mobile);
+    line-height: var(--dov-lh-h3-cartao-mobile);
+  }
+  .cartao__resumo {
+    font-size: var(--dov-t-cartao-mobile);
+    line-height: var(--dov-lh-cartao-mobile);
+  }
+  .cartao__meta {
+    font-size: var(--dov-t-meta-mobile);
+  }
+}
+
+/* Variação em destaque — título maior, imagem 4:3. */
+.cartao--destaque .cartao__titulo {
+  font-size: var(--dov-t-h3-destaque);
+  line-height: var(--dov-lh-h3-destaque);
+}
+
+@media (max-width: 767px) {
+  .cartao--destaque .cartao__titulo {
+    font-size: var(--dov-t-h3-destaque-mobile);
+    line-height: var(--dov-lh-h3-destaque-mobile);
+  }
+}
+
+/* Variação compacta — listas laterais e relacionados. */
+.cartao-compacto__link {
+  display: flex;
+  gap: var(--dov-esp-4);
+  color: inherit;
+}
+.cartao-compacto__midia {
+  flex: none;
+  width: 112px;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: var(--dov-raio);
+}
+.cartao-compacto__midia > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cartao-compacto__titulo {
+  margin-block: var(--dov-esp-2);
+  font-size: var(--dov-t-h4-cartao);
+  line-height: var(--dov-lh-h4-cartao);
+  transition: color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.cartao-compacto__meta {
+  font-size: var(--dov-t-legenda);
+  color: var(--dov-texto-meta);
+  font-variant-numeric: tabular-nums;
+}
+.cartao-compacto__link:hover .cartao-compacto__titulo,
+.cartao-compacto__link:focus-visible .cartao-compacto__titulo {
+  color: var(--dov-roxo);
+}
+
+@media (max-width: 767px) {
+  .cartao-compacto__link {
+    gap: 14px;
+  }
+  .cartao-compacto__midia {
+    width: 96px;
+  }
+  .cartao-compacto__titulo {
+    margin-block: 6px;
+    font-size: var(--dov-t-h4-cartao-mobile);
+    line-height: var(--dov-lh-h4-cartao-mobile);
+  }
+  .cartao-compacto__meta {
+    font-size: var(--dov-t-legenda-mobile);
+  }
+}
+
+/* Grade de cartões: 3 na listagem, 2 em destaques, 1 no mobile. */
+.grade-cartoes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--dov-gutter);
+}
+.grade-cartoes--duplo {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 1024px) {
+  .grade-cartoes,
+  .grade-cartoes--duplo {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--dov-gutter-tablet);
+  }
+}
+
+@media (max-width: 767px) {
+  .grade-cartoes,
+  .grade-cartoes--duplo {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-8);
+  }
+}
+
+/* ==========================================================================
+   9 · PAGINAÇÃO
+   ========================================================================== */
+
+.paginacao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dov-esp-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.paginacao__item {
+  display: grid;
+  place-items: center;
+  width: var(--dov-alvo-paginacao);
+  height: var(--dov-alvo-paginacao);
+  border-radius: var(--dov-raio-pilula);
+  font-size: var(--dov-t-botao);
+  color: var(--dov-texto);
+  transition:
+    background-color var(--dov-duracao-rapida) var(--dov-easing),
+    color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.paginacao__item:hover {
+  background: var(--dov-roxo-100);
+  color: var(--dov-roxo);
+}
+.paginacao__item--ativo,
+.paginacao__item--ativo:hover {
+  background: var(--dov-roxo);
+  color: var(--dov-branco);
+  font-weight: var(--dov-peso-corpo-medio);
+}
+
+.paginacao__reticencias {
+  padding-inline: var(--dov-esp-1);
+  color: var(--dov-neutro-500);
+}
+
+.paginacao__proxima,
+.paginacao__anterior {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-2);
+  height: var(--dov-alvo-paginacao);
+  padding-inline: var(--dov-esp-5);
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+  border-radius: var(--dov-raio-pilula);
+  font-size: var(--dov-t-botao-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  color: var(--dov-texto);
+  transition:
+    border-color var(--dov-duracao-rapida) var(--dov-easing),
+    color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.paginacao__proxima {
+  margin-left: 10px;
+}
+.paginacao__anterior {
+  margin-right: 10px;
+}
+.paginacao__proxima:hover,
+.paginacao__anterior:hover {
+  border-color: var(--dov-roxo);
+  color: var(--dov-roxo);
+}
+.paginacao__proxima svg,
+.paginacao__anterior svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* ==========================================================================
+   10 · MIGALHAS
+   ========================================================================== */
+
+.migalhas {
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta);
+}
+.migalhas__lista {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--dov-esp-2);
+}
+.migalhas__link {
+  color: var(--dov-texto-meta);
+}
+.migalhas__link:hover {
+  color: var(--dov-roxo);
+}
+.migalhas__atual {
+  color: var(--dov-roxo);
+}
+.migalhas__separador {
+  color: var(--dov-neutro-400);
+}
+
+/* ==========================================================================
+   11 · CABEÇALHO
+
+   As pranchas põem altura e borda no `.limite`. Aqui elas sobem para uma faixa
+   de largura total, porque o fundo branco e o hairline atravessam a tela e o
+   elemento sticky precisa ser esse — não o contêiner centralizado. Os valores
+   são os mesmos.
+   ========================================================================== */
+
+.cabecalho {
+  position: relative;
+  z-index: var(--dov-z-cabecalho);
+  background: var(--dov-fundo);
+}
+
+/* Sentinelas de 1px: o IntersectionObserver observa elas, não o scroll.
+   [ESPEC] §1 — entra em Reduzido a 40px e só volta a Repouso abaixo de 24px.
+   Duas posições, e a histerese cai fora da geometria: entre 24 e 40 nenhuma das
+   duas dispara, então o estado atual se mantém e o cabeçalho não vibra. */
+.cabecalho__sentinela {
+  position: absolute;
+  height: 1px;
+  width: 1px;
+  pointer-events: none;
+}
+
+.cabecalho__sentinela--entra {
+  top: 40px;
+}
+.cabecalho__sentinela--sai {
+  top: 24px;
+}
+
+/* A faixa utilitária rola para fora e não volta. */
+.faixa-utilitaria {
+  background: var(--dov-fundo-alternativo);
+}
+.faixa-utilitaria__interno {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dov-esp-6);
+  height: var(--dov-altura-faixa-utilitaria);
+}
+
+.assinatura {
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-assinatura);
+  text-transform: uppercase;
+  color: var(--dov-roxo);
+}
+
+.links-utilitarios {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-6);
+}
+.links-utilitarios__link {
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-suave);
+}
+.links-utilitarios__link:hover {
+  color: var(--dov-roxo);
+}
+.links-utilitarios__link[aria-current='page'] {
+  color: var(--dov-roxo);
+  font-weight: var(--dov-peso-corpo-medio);
+}
+
+.redes {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--dov-roxo);
+}
+.redes__link {
+  color: inherit;
+}
+.redes__link:hover {
+  color: var(--dov-roxo-secundario);
+}
+.redes__icone {
+  width: 16px;
+  height: 16px;
+}
+
+/* Só a barra branca é sticky. Ela encolhe e fica — não se esconde ao rolar. */
+.cabecalho__barra {
+  position: sticky;
+  top: 0;
+  z-index: var(--dov-z-cabecalho);
+  background: var(--dov-fundo);
+  border-bottom: var(--dov-hairline);
+  transition: box-shadow var(--dov-duracao-media) var(--dov-easing);
+}
+
+.barra-principal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dov-esp-8);
+  height: var(--dov-altura-cabecalho);
+  transition: height var(--dov-duracao-media) var(--dov-easing);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+/* Dimensionar SEMPRE pela altura; a proporção do lockup é 900 × 418.
+   Sem `aspect-ratio` o navegador cai em 300×150 e o logo colapsa no flex. */
+.marca__logo {
+  flex: none;
+  height: var(--dov-logo-altura-desktop);
+  width: auto;
+  aspect-ratio: 900 / 418;
+  transition: height var(--dov-duracao-media) var(--dov-easing);
+}
+
+/* Estado reduzido: 92px → 68px, logo 58px → 44px, sombra aparece. [ESPEC] §1
+   O 44px do logo é da especificação, que vence as pranchas. */
+.cabecalho--reduzido .cabecalho__barra {
+  box-shadow: var(--dov-sombra-pequena);
+}
+.cabecalho--reduzido .barra-principal {
+  height: var(--dov-altura-cabecalho-reduzido);
+}
+.cabecalho--reduzido .marca__logo {
+  height: 44px;
+}
+
+.menu-principal {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-7);
+  justify-content: flex-end;
+}
+.menu-principal__lista {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-7);
+}
+.menu-principal__link {
+  display: block;
+  padding-block: var(--dov-esp-2);
+  border-bottom: var(--dov-borda-media) solid transparent;
+  font-size: var(--dov-t-navegacao);
+  font-weight: var(--dov-peso-corpo-medio);
+  color: var(--dov-texto);
+  white-space: nowrap;
+  transition:
+    color var(--dov-duracao-rapida) var(--dov-easing),
+    border-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.menu-principal__link:hover {
+  color: var(--dov-roxo);
+  border-bottom-color: var(--dov-limao);
+}
+/* O item ativo já tem filete roxo e não muda no hover. */
+.menu-principal__link[aria-current='page'],
+.menu-principal__link[aria-current='page']:hover {
+  color: var(--dov-roxo);
+  border-bottom-color: var(--dov-roxo);
+}
+.menu-principal__divisor {
+  width: 1px;
+  height: 22px;
+  background: var(--dov-divisor);
+}
+
+/* A troca de cabeçalho acontece em 1280px, não em 1025: abaixo disso as 7
+   editorias mais Almanaque e busca não caberiam na linha. */
+.cabecalho__desktop {
+  display: none;
+}
+.cabecalho__mobile {
+  display: block;
+}
+
+@media (min-width: 1280px) {
+  .cabecalho__desktop {
+    display: block;
+  }
+  .cabecalho__mobile {
+    display: none;
+  }
+}
+
+/* ---------- Cabeçalho mobile — não é sticky, rola com a página. [ESPEC] §1 */
+
+.cabecalho-mobile {
+  position: relative;
+  z-index: var(--dov-z-cabecalho);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--dov-altura-cabecalho-mobile);
+  padding-inline: var(--dov-margem-mobile);
+  border-bottom: var(--dov-hairline);
+  background: var(--dov-fundo);
+}
+.cabecalho-mobile__logo {
+  height: var(--dov-logo-altura-mobile);
+  width: auto;
+  aspect-ratio: 900 / 418;
+}
+.cabecalho-mobile__acoes {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-1);
+}
+
+@media (min-width: 768px) {
+  .cabecalho-mobile {
+    padding-inline: var(--dov-margem-tablet);
+  }
+}
+
+/* ==========================================================================
+   12 · MENU EM TELA CHEIA
+
+   Fundo off-white **opaco**, não overlay translúcido. O painel é do Radix
+   Dialog: focus trap, aria-modal, Esc e travamento de scroll vêm dele.
+   ========================================================================== */
+
+.menu-tela-cheia {
+  position: fixed;
+  inset: 0;
+  z-index: var(--dov-z-menu-mobile);
+  overflow: hidden auto;
+  background: var(--dov-fundo-alternativo);
+}
+
+.menu-tela-cheia[data-state='open'] {
+  animation: dov-menu-entra var(--dov-duracao-lenta) var(--dov-easing-saida);
+}
+/* `forwards` não é detalhe: o Radix só desmonta o painel no `animationend`, e
+   sem o fill-mode a opacidade volta para 1 no último quadro — um piscar do menu
+   inteiro depois de fechado. */
+.menu-tela-cheia[data-state='closed'] {
+  animation: dov-menu-sai var(--dov-duracao-lenta) var(--dov-easing-entrada) forwards;
+}
+
+@keyframes dov-menu-entra {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes dov-menu-sai {
+  to {
+    opacity: 0;
+  }
+}
+
+.menu-tela-cheia__blob {
+  width: 420px;
+  right: -160px;
+  bottom: -120px;
+}
+
+.menu-tela-cheia__topo {
+  position: relative;
+  z-index: var(--dov-z-conteudo);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--dov-altura-cabecalho-mobile);
+  padding-inline: var(--dov-margem-mobile);
+}
+
+.menu-tela-cheia__corpo {
+  position: relative;
+  z-index: var(--dov-z-conteudo);
+  padding: var(--dov-esp-2) var(--dov-margem-mobile) var(--dov-esp-8);
+}
+
+.menu-tela-cheia__busca {
+  margin-bottom: var(--dov-esp-6);
+  height: var(--dov-altura-campo);
+}
+
+.menu-tela-cheia__lista {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Altura de toque de ~54px: 13px de padding sobre 27px de line-height. */
+.menu-tela-cheia__link {
+  padding-block: 13px;
+  border-bottom: var(--dov-hairline);
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo);
+  font-size: var(--dov-t-menu-mobile);
+  line-height: 1;
+  color: var(--dov-texto);
+}
+.menu-tela-cheia__link[aria-current='page'] {
+  color: var(--dov-roxo);
+}
+
+/* O Almanaque é o único item com botão cheio. */
+.menu-tela-cheia__cta {
+  margin-top: var(--dov-esp-6);
+}
+
+.menu-tela-cheia__utilitarios {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--dov-esp-5);
+  margin-top: var(--dov-esp-6);
+  font-size: var(--dov-t-auxiliar);
+}
+.menu-tela-cheia__utilitarios a {
+  color: var(--dov-texto-suave);
+}
+
+@media (min-width: 768px) {
+  .menu-tela-cheia__topo,
+  .menu-tela-cheia__corpo {
+    padding-inline: var(--dov-margem-tablet);
+  }
+  /* Em tablet o menu não precisa ocupar a largura toda da tela. */
+  .menu-tela-cheia__corpo {
+    max-width: 560px;
+  }
+}
+
+/* ==========================================================================
+   13 · RODAPÉ
+   ========================================================================== */
+
+.rodape {
+  background: var(--dov-fundo-escuro);
+  color: var(--dov-texto-sobre-escuro);
+}
+
+.rodape__grade {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.6fr;
+  gap: var(--dov-esp-10);
+  padding-block: var(--dov-esp-12) var(--dov-esp-9);
+}
+
+.rodape__logo {
+  height: var(--dov-logo-altura-rodape);
+  width: auto;
+  aspect-ratio: 900 / 418;
+}
+
+.rodape__descricao {
+  max-width: 300px;
+  margin-top: var(--dov-esp-5);
+  font-size: var(--dov-t-auxiliar);
+  line-height: 1.7;
+  color: var(--dov-texto-suave-sobre-escuro);
+}
+
+.rodape__titulo {
+  margin-bottom: var(--dov-esp-4);
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--dov-menta);
+}
+
+.rodape__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: var(--dov-t-auxiliar);
+}
+.rodape__link {
+  color: var(--dov-texto-sobre-escuro);
+}
+.rodape__link:hover {
+  color: var(--dov-menta);
+}
+
+.rodape__texto {
+  margin-bottom: var(--dov-esp-4);
+  font-size: var(--dov-t-auxiliar);
+  line-height: 1.7;
+  color: var(--dov-texto-suave-sobre-escuro);
+}
+
+.rodape__form {
+  display: flex;
+  gap: var(--dov-esp-2);
+}
+.rodape__campo {
+  flex: 1;
+  min-width: 0;
+  height: 48px;
+  padding-inline: 18px;
+  border: var(--dov-borda-fina) solid var(--dov-borda-campo-escuro);
+  border-radius: var(--dov-raio-pilula);
+  background: transparent;
+  color: var(--dov-texto-sobre-escuro);
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-auxiliar);
+}
+.rodape__campo::placeholder {
+  color: var(--dov-texto-meta-sobre-escuro);
+}
+.rodape__campo:focus-visible {
+  outline-color: var(--dov-menta);
+}
+
+.rodape__base {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dov-esp-6);
+  padding-block: 22px;
+  border-top: var(--dov-borda-fina) solid var(--dov-divisor-sobre-escuro);
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta-sobre-escuro);
+}
+.rodape__legais {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--dov-esp-6);
+}
+.rodape__legais a {
+  color: var(--dov-texto-meta-sobre-escuro);
+}
+.rodape__legais a:hover {
+  color: var(--dov-menta);
+}
+/* Exigência legal, não decoração: fica sempre visível. */
+.rodape__aviso {
+  color: var(--dov-menta);
+}
+
+@media (max-width: 1024px) {
+  .rodape__grade {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--dov-esp-9);
+    padding-block: var(--dov-esp-11) var(--dov-esp-8);
+  }
+}
+
+@media (max-width: 767px) {
+  .rodape__grade {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-8);
+    padding-block: var(--dov-esp-9) var(--dov-esp-6);
+  }
+  .rodape__logo {
+    height: 46px;
+  }
+  .rodape__descricao {
+    margin-top: var(--dov-esp-4);
+  }
+  .rodape__base {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: var(--dov-t-legenda);
+    line-height: 1.6;
+  }
+  .rodape__legais {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+}
+
+/* ==========================================================================
+   14 · CARREGAMENTO
+
+   Nunca spinner de página inteira: esqueleto com a forma do conteúdo. [ESPEC] §7
+   ========================================================================== */
+
+.esqueleto {
+  border-radius: var(--dov-raio);
+  background: var(--dov-neutro-200);
+  animation: dov-pulso 1400ms ease-in-out infinite;
+}
+
+.esqueleto--texto {
+  height: var(--dov-esp-4);
+  border-radius: var(--dov-raio-pequeno);
+}
+
+@keyframes dov-pulso {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}

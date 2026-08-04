@@ -43,7 +43,7 @@ export default async function Page() {
   const resultado = await buscarPosts();
 
   return (
-    <main>
+    <main className="diagnostico">
       <h1>Diagnóstico — Descubra o Vinho</h1>
       <p className="sub">
         Painel de infraestrutura. Provou que o plano Hostinger roda Next.js com ISR;

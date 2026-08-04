@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
+
+import { Cabecalho } from '@/components/cabecalho';
+import { Rodape } from '@/components/rodape';
+
 import './globals.css';
 
 /**
@@ -46,7 +50,11 @@ export default function RootLayout({
     // As duas classes publicam `--fonte-titulo` e `--fonte-corpo`, que o
     // `globals.css` liga em `--dov-fonte-titulo` e `--dov-fonte-corpo`.
     <html lang="pt-BR" className={`${titulo.variable} ${corpo.variable}`}>
-      <body>{children}</body>
+      <body>
+        <Cabecalho />
+        {children}
+        <Rodape />
+      </body>
     </html>
   );
 }
