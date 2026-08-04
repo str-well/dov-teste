@@ -2433,7 +2433,310 @@ a.etiqueta--verde:hover {
 }
 
 /* ==========================================================================
-   17 · CARREGAMENTO
+   17 · VERBETE
+
+   Portado de `09-verbete-desktop.css` e `10-verbete-mobile.css`.
+
+   O corpo do verbete vem do editor de blocos, então `.verbete__texto` da prancha
+   virou `.verbete__corpo > p` — mesmo valor, seletor que alcança o conteúdo real.
+   ========================================================================== */
+
+.verbete {
+  display: grid;
+  grid-template-columns: 1fr var(--dov-largura-sidebar-larga);
+  gap: 80px;
+  align-items: start;
+  padding-block: var(--dov-esp-11) var(--dov-esp-13);
+}
+
+.verbete__principal {
+  max-width: var(--dov-medida-texto);
+}
+
+.verbete__migalhas {
+  margin-bottom: 26px;
+}
+
+.verbete__titulo-linha {
+  display: flex;
+  align-items: baseline;
+  gap: 22px;
+  margin-bottom: var(--dov-esp-2);
+}
+
+/* A inicial gigante em lilás é decorativa: a letra já está no `<h1>` e nas
+   migalhas, e ouvi-la três vezes seria ruído. */
+.verbete__inicial {
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-letra-verbete);
+  line-height: var(--dov-lh-letra-verbete);
+  color: var(--dov-lilas);
+}
+
+.verbete__termo {
+  font-size: var(--dov-t-h1-materia);
+  line-height: 1;
+}
+
+/* Etimologia e pronúncia. Desaparece inteira quando as duas estão vazias. */
+.verbete__gramatica {
+  margin-bottom: var(--dov-esp-7);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--dov-texto-meta);
+}
+
+.verbete__definicao {
+  margin-bottom: var(--dov-esp-7);
+  padding-bottom: var(--dov-esp-7);
+  border-bottom: var(--dov-hairline);
+  font-size: var(--dov-t-lead);
+  line-height: 1.65;
+  color: var(--dov-neutro-800);
+}
+
+.verbete__corpo > p {
+  margin-bottom: 22px;
+  font-size: var(--dov-t-corpo);
+  line-height: var(--dov-lh-corpo);
+}
+
+.verbete__corpo > ul,
+.verbete__corpo > ol {
+  margin-bottom: 22px;
+  padding-left: var(--dov-esp-6);
+  list-style: revert;
+  font-size: var(--dov-t-corpo);
+  line-height: var(--dov-lh-corpo);
+}
+
+.verbete__corpo a {
+  color: var(--dov-roxo-800);
+  text-decoration: underline;
+  text-decoration-color: var(--dov-limao);
+  text-decoration-thickness: var(--dov-borda-media);
+  text-underline-offset: 3px;
+  transition:
+    color var(--dov-duracao-rapida) var(--dov-easing),
+    text-decoration-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.verbete__corpo a:hover {
+  color: var(--dov-roxo);
+  text-decoration-color: var(--dov-roxo);
+}
+
+.verbete__corpo strong {
+  font-weight: var(--dov-peso-corpo-forte);
+}
+
+/* ---------- Caixa "Na prática" */
+
+.na-pratica {
+  margin-bottom: var(--dov-esp-7);
+  padding: var(--dov-esp-6) var(--dov-esp-7);
+  border-radius: var(--dov-raio);
+  background: var(--dov-fundo-alternativo);
+}
+
+.na-pratica__titulo {
+  margin-bottom: 10px;
+}
+
+.na-pratica__texto {
+  font-size: var(--dov-t-corpo-compacto);
+  line-height: 1.7;
+}
+
+/* ---------- Anterior / próximo */
+
+.percurso {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dov-esp-6);
+  padding-top: var(--dov-esp-7);
+  border-top: var(--dov-hairline);
+}
+
+.percurso__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--dov-texto);
+}
+.percurso__link:hover {
+  color: var(--dov-roxo);
+}
+
+/* Empurra o "Próximo" para a direita quando não há "Anterior" — no primeiro
+   verbete do alfabeto, senão ele apareceria colado à esquerda. */
+.percurso__link--proximo {
+  text-align: right;
+  margin-left: auto;
+}
+
+.percurso__rotulo {
+  display: block;
+  font-size: var(--dov-t-legenda);
+  color: var(--dov-texto-meta);
+}
+
+.percurso__termo {
+  display: block;
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo);
+  font-size: 20px;
+}
+
+.percurso svg {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+/* ---------- Lateral do verbete */
+
+/* Mesma correção da matéria: o `top` da prancha era 24px porque lá o cabeçalho
+   não era sticky. */
+.lateral-verbete {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-7);
+  position: sticky;
+  top: calc(var(--dov-altura-cabecalho-reduzido) + var(--dov-esp-6));
+}
+
+.vizinhos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-3);
+}
+
+.vizinhos__link {
+  padding-bottom: var(--dov-esp-3);
+  border-bottom: var(--dov-hairline);
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo);
+  font-size: 20px;
+  color: var(--dov-texto);
+}
+.vizinhos__link:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+.vizinhos__link:hover {
+  color: var(--dov-roxo);
+}
+
+.mencoes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-4);
+}
+
+.mencoes__link {
+  color: var(--dov-texto);
+}
+.mencoes__link + .mencoes__link {
+  padding-top: 14px;
+  border-top: var(--dov-hairline);
+}
+.mencoes__link:hover {
+  color: var(--dov-roxo);
+}
+
+.mencoes__titulo {
+  margin-top: 6px;
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo);
+  font-size: var(--dov-t-h5-cartao);
+  line-height: var(--dov-lh-h5-cartao);
+}
+
+@media (max-width: 1024px) {
+  .verbete {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-9);
+    padding-block: var(--dov-esp-9) var(--dov-esp-11);
+  }
+  .lateral-verbete {
+    position: static;
+    max-width: var(--dov-medida-texto);
+  }
+}
+
+@media (max-width: 767px) {
+  .verbete {
+    padding-block: var(--dov-esp-6) var(--dov-esp-8);
+    gap: var(--dov-esp-8);
+  }
+  .verbete__migalhas {
+    margin-bottom: var(--dov-esp-4);
+    font-size: var(--dov-t-legenda-mobile);
+  }
+  .verbete__titulo-linha {
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .verbete__inicial {
+    font-size: var(--dov-t-letra-verbete-mobile);
+    line-height: 0.9;
+  }
+  .verbete__termo {
+    font-size: var(--dov-t-h1-pagina-mobile);
+  }
+  .verbete__gramatica {
+    margin-bottom: var(--dov-esp-5);
+    font-size: var(--dov-t-auxiliar);
+  }
+  .verbete__definicao {
+    margin-bottom: 22px;
+    padding-bottom: 22px;
+    font-size: var(--dov-t-lead-mobile);
+  }
+  .verbete__corpo > p,
+  .verbete__corpo > ul,
+  .verbete__corpo > ol {
+    margin-bottom: 18px;
+    font-size: var(--dov-t-corpo-mobile);
+    line-height: var(--dov-lh-corpo-mobile);
+  }
+  .na-pratica {
+    margin-bottom: var(--dov-esp-6);
+    padding: var(--dov-esp-5);
+  }
+  .na-pratica__titulo {
+    margin-bottom: var(--dov-esp-2);
+  }
+  .na-pratica__texto {
+    font-size: var(--dov-t-cartao-mobile);
+  }
+  .percurso {
+    gap: var(--dov-esp-4);
+    padding-top: var(--dov-esp-5);
+  }
+  /* No mobile a seta sai e sobra o rótulo com o termo, como na prancha. */
+  .percurso svg {
+    display: none;
+  }
+  .percurso__rotulo {
+    font-size: var(--dov-t-kicker-pequeno);
+  }
+  .percurso__termo {
+    font-size: var(--dov-t-h5-cartao-mobile);
+  }
+  .lateral-verbete {
+    gap: var(--dov-esp-6);
+  }
+  .vizinhos__link,
+  .percurso__termo {
+    font-size: var(--dov-t-h5-cartao-mobile);
+  }
+}
+
+/* ==========================================================================
+   18 · CARREGAMENTO
 
    Nunca spinner de página inteira: esqueleto com a forma do conteúdo. [ESPEC] §7
    ========================================================================== */

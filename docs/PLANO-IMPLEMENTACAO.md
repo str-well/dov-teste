@@ -3,8 +3,10 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v8 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria e
-arquivo de categoria prontos.
+`v9 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria,
+arquivo de categoria e verbete prontos. **O índice A–Z é o próximo, e é urgente:**
+`/almanaque` ainda dá 404, e cabeçalho, rodapé e as migalhas do verbete já apontam
+para lá.
 Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
 e `DESIGN.md` para o pacote do designer.
 
@@ -234,10 +236,32 @@ no caso difícil.
 |---|---|---|---|
 | 1 ✅ | Matéria | `/[categoria]/[slug]` | sumário "Neste texto", citação, imagem com legenda e crédito, caixa "Do Almanaque", newsletter, tags, relacionados |
 | 2 ✅ | Arquivo de categoria | `/[categoria]` | serve as 7 editorias; chips com rolagem horizontal no mobile, ordenação, paginação |
-| 3 | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
+| 3 ✅ | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
 | 4 | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
 | 5 | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
 | 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
+
+### Notas do verbete
+
+- **Não existe campo de classe gramatical.** A prancha abre a linha com
+  "substantivo masculino", e os campos do verbete no mu-plugin são definição
+  curta, etimologia, pronúncia, "na prática" e relacionados. A linha é montada
+  com o que existe. Se a classe gramatical importar, é um campo novo — decisão do
+  cliente.
+- **A linha desaparece inteira** quando etimologia e pronúncia estão as duas
+  vazias, como manda o `BACKEND.md` — o que é o caso da maioria dos 22 verbetes.
+  Com só uma das duas, ela aparece com o que tem: `brut` mostra apenas a pronúncia.
+- **A busca da lateral aponta para a busca geral.** A prancha diz "Buscar outro
+  verbete", e uma busca restrita ao Almanaque é a do índice A–Z com Fuse.js. Até
+  ela existir, o texto da caixa foi ajustado para não prometer um escopo que não
+  há.
+- **"Matérias que usam o termo" fica no mobile**, ao contrário da prancha
+  `10-verbete-mobile`, que a descarta. É o elo do Almanaque de volta para as
+  matérias. Costuma vir vazia: `terroir` não aparece escrito em nenhuma matéria,
+  e a caixa então não é renderizada.
+- **`/almanaque` ainda dá 404.** As migalhas do verbete e o link da letra
+  apontam para lá, e ficam mortos até o índice A–Z entrar. É o próximo template
+  justamente por isso.
 
 ### Notas do arquivo de categoria
 

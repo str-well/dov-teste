@@ -14,6 +14,12 @@ type Props = {
   rotulo?: string;
   /** Foco automático ao montar. Só na página de resultados vazia. */
   focoInicial?: boolean;
+  /**
+   * Esconde o botão. A busca compacta da lateral do verbete não tem botão nas
+   * pranchas — o campo ocupa a caixa toda e o envio é pelo teclado, como no
+   * mobile.
+   */
+  semBotao?: boolean;
 };
 
 /**
@@ -34,6 +40,7 @@ export function Busca({
   id = 'busca',
   rotulo = 'Buscar no portal',
   focoInicial = false,
+  semBotao = false,
 }: Props) {
   const modificador =
     tamanho === 'media' ? ' busca--media' : tamanho === 'compacta' ? ' busca--compacta' : '';
@@ -57,9 +64,11 @@ export function Busca({
         autoFocus={focoInicial}
       />
 
-      <button className="busca__botao" type="submit">
-        Buscar
-      </button>
+      {!semBotao && (
+        <button className="busca__botao" type="submit">
+          Buscar
+        </button>
+      )}
     </form>
   );
 }

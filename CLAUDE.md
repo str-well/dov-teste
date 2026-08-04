@@ -81,7 +81,17 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   `/contato`, que hoje caem no 404 dela. Quando o template institucional entrar,
   as duas precisam de rota estática própria.
 
-Próximo: verbete, índice A–Z, home, institucionais.
+- **Verbete** (`/almanaque/[termo]`) — pronto. Os 22 verbetes pré-gerados, com
+  etimologia e pronúncia compondo uma linha que desaparece quando as duas faltam,
+  caixa "Na prática", relacionados na ordem editorial, matérias que citam o termo
+  e anterior/próximo alfabético. **Não há campo de classe gramatical** no
+  mu-plugin — a prancha pede "substantivo masculino", e isso seria campo novo.
+
+**`/almanaque` ainda dá 404**, e cabeçalho, rodapé e as migalhas do verbete já
+apontam para lá. O índice A–Z é o próximo template por causa disso.
+
+Depois: home e institucionais — e as institucionais precisam resolver
+`/quem-somos` e `/contato`, hoje capturadas pela rota de categoria.
 
 Único refinamento pendente da Fase 2: os blobs decorativos só entraram no menu
 mobile. Hero, busca e chamada do Almanaque vão querer o seu quando os templates
