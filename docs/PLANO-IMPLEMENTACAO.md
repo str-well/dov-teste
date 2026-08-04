@@ -3,8 +3,9 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v4 · 03/08/2026` — Fases 0 e 1 concluídas. Ver `../CLAUDE.md` para o resumo
-de decisões e `BACKEND.md` para o contrato da API.
+`v5 · 03/08/2026` — Fases 0 e 1 concluídas; Fase 2 com a camada de dados e os
+componentes globais em pé. Ver `../CLAUDE.md` para o resumo de decisões,
+`BACKEND.md` para o contrato da API e `DESIGN.md` para o pacote do designer.
 
 ---
 
@@ -13,8 +14,8 @@ de decisões e `BACKEND.md` para o contrato da API.
 1. [Arquitetura](#1-arquitetura)
 2. [Stack](#2-stack)
 3. [Fase 0 — Validação da infraestrutura](#3-fase-0--validação-da-infraestrutura) ✅
-4. [Fase 1 — WordPress do zero](#4-fase-1--wordpress-do-zero)
-5. [Fase 2 — Fundações do front](#5-fase-2--fundações-do-front)
+4. [Fase 1 — WordPress do zero](#4-fase-1--wordpress-do-zero) ✅
+5. [Fase 2 — Fundações do front](#5-fase-2--fundações-do-front) ◐
 6. [Fase 3 — Templates](#6-fase-3--templates)
 7. [Fase 4 — Deploy e revalidação](#7-fase-4--deploy-e-revalidação)
 8. [Fase 5 — Antes de entregar](#8-fase-5--antes-de-entregar)
@@ -36,7 +37,7 @@ de decisões e `BACKEND.md` para o contrato da API.
             ┌──────────────────┴──────────────────┐
             │                                     │
     dominio.com                           wp.dominio.com
-    Next.js · Node App                    WordPress + JetEngine
+    Next.js · Node App                    WordPress + mu-plugin próprio
     ISR em disco                          admin · REST API · uploads
             │                                     │
             └──── mesmo plano Hostinger Cloud ────┘
@@ -59,12 +60,13 @@ de decisões e `BACKEND.md` para o contrato da API.
 ## 2. Stack
 
 **Backend**
-WordPress headless · JetEngine (Crocoblock) · LiteSpeed Cache · REST API em
-`/wp-json/wp/v2/` e endpoints do JetEngine.
-Elementor não participa da entrega do front.
+WordPress headless · **mu-plugin próprio** (`wordpress/dov-headless.php`) · REST API
+em `/wp-json/wp/v2/`.
+Nenhum plugin de terceiro. Elementor não participa da entrega do front.
 
 **Frontend**
-Next.js 15 · App Router · TypeScript · Tailwind CSS · shadcn/ui ·
+Next.js 15 · App Router · TypeScript · **Tailwind CSS v4** (configuração em CSS, sem
+`tailwind.config`) · Radix (Dialog e combobox, só os primitivos) · `downshift` ·
 Cormorant Garamond + DM Sans via `next/font` (self-hosted) · Fuse.js ·
 `generateMetadata` nativo · `output: 'standalone'`.
 
@@ -104,53 +106,55 @@ e troca de endereço de admin. Instala-se direto no lugar definitivo.
 
 ### 4.1 Instalação
 
-- [ ] Criar o subdomínio `wp.dominio.com` no hPanel
-- [ ] Instalar WordPress nele (hPanel → Add Website → WordPress)
-- [ ] Usuário administrador com login **não óbvio** — nada de `admin`
-- [ ] Idioma pt-BR, fuso `America/Sao_Paulo`, formato de data brasileiro
-- [ ] Permalinks em `/%postname%/`
-- [ ] SSL ativo e forçado
+- [x] Criar o subdomínio `wp.dominio.com` no hPanel
+- [x] Instalar WordPress nele (hPanel → Add Website → WordPress)
+- [x] Usuário administrador com login **não óbvio** — nada de `admin`
+- [x] Idioma pt-BR, fuso `America/Sao_Paulo`, formato de data brasileiro
+- [x] Permalinks em `/%postname%/`
+- [x] SSL ativo e forçado
 
 ### 4.2 Higiene inicial
 
-- [ ] Remover temas e plugins que vêm por padrão (Hello Dolly, Akismet se não usar,
+- [x] Remover temas e plugins que vêm por padrão (Hello Dolly, Akismet se não usar,
       temas Twenty*)
-- [ ] Tema: um único tema leve ativo. O front do WordPress não será visto por
+- [x] Tema: um único tema leve ativo. O front do WordPress não será visto por
       ninguém — opcionalmente, redirecionar todo o front do WP para `dominio.com`
-- [ ] Desativar comentários globalmente
-- [ ] Desativar XML-RPC
-- [ ] Desabilitar edição de arquivos pelo painel: `define('DISALLOW_FILE_EDIT', true);`
-- [ ] Criar **Application Password** para o Next consumir endpoints protegidos, se
-      houver
+- [x] Desativar comentários globalmente
+- [x] Desativar XML-RPC
+- [x] Desabilitar edição de arquivos pelo painel: `define('DISALLOW_FILE_EDIT', true);`
+- [x] Nenhum endpoint protegido: a leitura é toda pública. Sem Application Password
 
 ### 4.3 Plugins
 
-| Plugin | Para quê | Custo |
-|---|---|---|
-| JetEngine | CPTs, campos, relações | licença já existente |
-| LiteSpeed Cache | cache de página e de REST API | free |
-| Relevanssi | busca cruzando matérias e verbetes | free |
-| Conversor WebP | geração automática dos formatos | free |
+**Nenhum.** O que estava previsto aqui foi todo substituído — ver a tabela de
+decisões fechadas no `CLAUDE.md`:
 
-Nada além disso sem motivo forte. Cada plugin é peso no mesmo plano que hospeda o front.
+| Previsto | O que ficou no lugar |
+|---|---|
+| JetEngine | `wordpress/dov-headless.php`: CPTs, campos, tamanhos de imagem, CORS e revalidação. A licença expirou, e o mu-plugin faz o necessário em 626 linhas |
+| LiteSpeed Cache (REST) | O ISR do Next **é** o cache. Cachear a REST API cria corrida com a revalidação: o webhook dispara no save, o Next busca antes do purge e recebe conteúdo velho, sem erro visível |
+| Relevanssi | O `search` nativo da REST API resolve. `lib/wp` já cruza matérias e verbetes numa consulta |
+| Conversor WebP | `add_image_size` no mu-plugin gera os tamanhos nomeados |
+
+Cada plugin é peso no mesmo plano que hospeda o front. Zero é o número certo.
 
 ### 4.4 Modelo de conteúdo
 
 Registrar tudo com **`show_in_rest: true`** — é o passo que mais gente esquece, e sem
 ele nada aparece na API. Detalhamento no [Anexo B](#anexo-b--modelo-de-conteúdo).
 
-- [ ] `post` nativo para matérias
-- [ ] Categorias: as 7 editorias
-- [ ] Tags: os temas dos chips de filtro
-- [ ] CPT `verbete` — Almanaque, com campos e relação de verbetes vizinhos
-- [ ] CPT `evento` — agenda do Programe-se
-- [ ] Páginas nativas: Quem Somos, Contato
-- [ ] Campos de autor: retrato 1:1 e minibio
-- [ ] Conferir cada endpoint no navegador antes de seguir
+- [x] `post` nativo para matérias
+- [x] Categorias: as 7 editorias
+- [x] Tags: os temas dos chips de filtro
+- [x] CPT `verbete` — Almanaque, com campos e relação de verbetes vizinhos
+- [x] CPT `evento` — agenda do Programe-se
+- [x] Páginas nativas: Quem Somos, Contato
+- [x] Campos de autor: retrato 1:1 e minibio
+- [x] Conferir cada endpoint no navegador antes de seguir
 
 ### 4.5 Imagens
 
-- [ ] Registrar os tamanhos em `functions.php`, todos exportados em WebP:
+- [x] Tamanhos registrados no mu-plugin (`add_image_size`), com os nomes `dov_*`:
 
 | Uso | Proporção | Dimensão | Peso alvo |
 |---|---|---|---|
@@ -161,52 +165,58 @@ ele nada aparece na API. Detalhamento no [Anexo B](#anexo-b--modelo-de-conteúdo
 | Imagem no corpo | 3:2 ou 4:5 | 1200 de largura | ≤ 120 kB |
 | Retrato / autor | 1:1 | 240×240 | ≤ 20 kB |
 
-- [ ] Desativar os tamanhos padrão do WordPress que não serão usados
-- [ ] Cloudflare na frente de `wp.dominio.com` com cache agressivo em `/wp-content/uploads`
+- [x] Desativar os tamanhos padrão do WordPress que não serão usados
+- [ ] Cloudflare na frente de `wp.descubraovinho.com.br` com cache agressivo em
+      `/wp-content/uploads` — hoje o Cloudflare é **só DNS**. A avaliar depois do lançamento
 
 ### 4.6 API e performance
 
-- [ ] CORS liberando `dominio.com` nos headers da REST API
-- [ ] LiteSpeed Cache com **cache de REST API ligado** — deixa de ser refinamento e
-      passa a ser requisito, já que WordPress e Next dividem CPU e RAM
-- [ ] Bloquear indexação do subdomínio: `noindex` no `wp.`
-- [ ] Testar tempo de resposta dos endpoints principais
+- [x] CORS liberando `dominio.com` nos headers da REST API
+- [x] **Sem cache de REST API.** Era o plano, e foi descartado: cria corrida com a
+      revalidação. Quem economiza consulta é o ISR, mais o `_fields` explícito e o
+      `cache()` por render em `lib/wp`
+- [x] Bloquear indexação do subdomínio: `noindex` no `wp.`
+- [x] Testar tempo de resposta dos endpoints principais
 
 ### 4.7 Conteúdo mínimo para desenvolver
 
-- [ ] 2 matérias por editoria (14 no total), com foto, olho, tags e autor
-- [ ] 30 verbetes cobrindo letras variadas, incluindo alguma sem verbete para testar
-      o estado cinza no índice A–Z
-- [ ] 3 eventos na agenda
-- [ ] Quem Somos e Contato preenchidas
+- [x] **20 matérias** distribuídas nas 7 editorias, com olho, tags e autor —
+      **sem foto**: nenhum conteúdo tem imagem destacada ainda, e é por isso que
+      todo componente de imagem nasceu com estado vazio
+- [x] **22 verbetes**, cobrindo A B C D E M S T V. **K, Q, W, X, Y e Z ficaram
+      vazias de propósito** — é o que permite testar a letra em cinza e sem link
+- [x] 3 eventos na agenda, em setembro e outubro de 2026
+- [x] Quem Somos e Contato preenchidas
 
 Sem isso, os templates são construídos contra dados falsos e quebram na virada.
 
 ---
 
-## 5. Fase 2 — Fundações do front ← PRÓXIMO PASSO
+## 5. Fase 2 — Fundações do front ← EM ANDAMENTO
 
-- [ ] Projeto Next + TypeScript + Tailwind com os tokens do [Anexo A](#anexo-a--design-tokens)
-- [ ] Escala tipográfica desktop e mobile no `tailwind.config`
-- [ ] Grade: 12 colunas · conteúdo 1200 · gutter 32 · margem 120 (ref. 1440)
+- [x] Projeto Next + TypeScript + **Tailwind v4**, com `design/dov-tokens.css`
+      importado e exposto pelo `@theme` do `app/globals.css`.
+      **Não existe `tailwind.config`** — a configuração é o CSS
+- [x] Grade: 12 colunas · conteúdo 1200 · gutter 32 · margem 120 (ref. 1440)
+- [x] **Camada de dados** — `lib/wp/`, entrada única em `index.ts`, ~25 funções
+      tipadas, tipos derivados da resposta real da API. Verificada contra
+      produção. Ver `CLAUDE.md`
+- [x] **Componentes globais** — cabeçalho nos dois estados, cabeçalho mobile,
+      menu em tela cheia, rodapé, cartão nas 3 variações, imagem com estado
+      vazio, paginação, botões, chips, etiquetas. Prancha viva em `/componentes`
+- [x] Barra de busca — o `<form>` GET, que funciona sem JavaScript
+- [x] Área de toque mínima de 48×48 no mobile, nos ícones do cabeçalho e nos chips
+- [x] `prefers-reduced-motion` respeitado — já vem dos tokens
+- [ ] **Painel de sugestões da busca** — §5 da especificação: combobox com
+      `downshift`, 3 caracteres, 250 ms de debounce, `<mark>` no trecho que casa.
+      Precisa de uma rota que devolva as sugestões
+- [ ] Rolagem da tira de chips no mobile — §4: `scrollLeft` do chip ativo ao carregar
 - [ ] Blobs como componentes SVG — no máximo um por seção, e só em hero, busca e
-      chamada do Almanaque
-- [ ] **Camada de dados**: um módulo único com funções tipadas (`getPosts`,
-      `getPostBySlug`, `getCategory`, `getVerbetes`, `getEventos`, `search`), com
-      tipos derivados da resposta real da API — não inventados
-- [ ] **Componentes globais**
-  - Cabeçalho desktop: fixo no scroll, 92 px encolhendo para 68 px; ativo com filete
-    roxo 2 px; hover com filete verde-limão, transição 150 ms
-  - Cabeçalho mobile: overlay em tela cheia, itens em Cormorant, busca no topo,
-    Almanaque como único item com botão cheio
-  - Rodapé, idêntico em todas as telas
-  - Barra de busca: 72 px de altura, raio 999 px, borda lilás 1 px; foco com borda
-    roxa 2 px e anel visível
-  - Card de notícia: padrão, hover (título roxo, filete sob a imagem, foto 1,03× em
-    250 ms) e compacto para listas laterais
-  - Paginação, chips de filtro, tags
-- [ ] Área de toque mínima de 48×48 no mobile
-- [ ] `prefers-reduced-motion` respeitado nas transições
+      chamada do Almanaque. Hoje só o do menu mobile está em uso
+
+**Escala tipográfica fora do Tailwind, de propósito.** Retipá-la em utilitários é
+onde o designer avisa que a fidelidade escorre; tipografia herda o CSS do mockup,
+e o Tailwind cuida de grade, espaçamento e responsividade.
 
 ---
 
@@ -224,7 +234,8 @@ no caso difícil.
 | 5 | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
 | 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
 
-- [ ] Script de build gerando `public/almanaque.json` a partir da API do JetEngine
+- [ ] Script de build gerando `public/almanaque.json` — `indiceDoAlmanaque()` em
+      `lib/wp` já devolve o payload enxuto
       (≈80 kB para 418 verbetes)
 
 ---
@@ -267,10 +278,10 @@ oficial. Sem OpenNext, sem KV, sem wrangler.
 | Risco | Sinal | Plano B |
 |---|---|---|
 | Processo Node cai e não volta | Site fora do ar sem aviso | Monitor externo; se recorrente, mover front para Cloudflare free |
-| WordPress e Next disputando recursos | Lentidão simultânea nos dois | LiteSpeed mais agressivo; imagens 100% via Cloudflare |
-| REST API do JetEngine limitada | Campos ausentes na resposta | Endpoint customizado em `functions.php` |
+| WordPress e Next disputando recursos | Lentidão simultânea nos dois | Aumentar o `revalidate`; imagens 100% via Cloudflare |
+| Campo novo não aparece na API | Ausente no JSON, sem erro | Conferir `custom-fields` em `supports` e a lista `CAMPOS` de `lib/wp/consultas.ts` |
 | Publicação não reflete no site | Conteúdo novo invisível | Conferir o hook; fallback por tempo já previsto |
-| Busca da home mais ampla que o combinado | Precisa cruzar CPTs | Relevanssi (free), já previsto |
+| Busca da home mais ampla que o combinado | Precisa cruzar CPTs | `buscar()` já consulta matérias e verbetes juntos |
 | Fotografia não chega a tempo | Placeholders na véspera | Definir com o cliente uma data-limite, não a data de lançamento |
 
 **Saída de emergência, gratuita:** o mesmo repositório sobe no Cloudflare free com o
@@ -281,45 +292,46 @@ adaptador OpenNext. Por isso: nada de código específico de host, nenhuma depen
 
 ## Anexo A — Design tokens
 
-**Cores** — valores lidos por amostragem da prancha em baixa resolução.
-**Substituir pelos hex exatos do arquivo original antes de codar.**
+> **Este anexo não é fonte de valor.** A fonte única é `design/dov-tokens.css`,
+> que chegou com o pacote do designer e está importado no `app/globals.css`.
+>
+> A tabela de cores que ficava aqui vinha de amostragem de imagem em baixa
+> resolução, e **5 dos 8 hex estavam errados** — `#6B1775` no lugar de `#681775`,
+> `#F3EFEA` no lugar de `#F3E8E8`, `#9BBA36` no lugar de `#95BA34`, `#212D45` no
+> lugar de `#202D42`, `#9155A4` no lugar de `#9158A4`. Foi removida em vez de
+> corrigida: duas cópias do mesmo valor divergem de novo, e essa já é a
+> armadilha nº 5 do `CLAUDE.md`.
+>
+> O `@theme` do Tailwind não deixa mais o erro passar: a paleta padrão está
+> zerada, então só compila utilitário que aponte para um token de verdade.
 
-| Token | Aprox. | Uso |
-|---|---|---|
-| `roxo-primario` | `#6B1775` | marca, CTAs, links, categoria ativa |
-| `roxo-secundario` | `#9155A4` | hover de links, blobs, gradações |
-| `lilas-claro` | `#CDB2D2` | bordas, filetes, blobs, placeholders |
-| `off-white` | `#F3EFEA` | fundo de respiro entre seções |
-| `azul-marinho` | `#212D45` | faixa do Almanaque e rodapé |
-| `verde-escuro` | `#009559` | acento de destaque, ícones |
-| `verde-limao` | `#9BBA36` | filete de hover, detalhes finos |
-| `verde-menta` | `#74C29A` | blob secundário, fundo de tag |
+O que consultar, e onde:
 
-Regra de contraste: verde-limão nunca com texto branco — usar sobre marinho.
+| Assunto | Onde |
+|---|---|
+| Cor, tipografia, espaçamento, movimento, camadas | `design/dov-tokens.css` |
+| Como os tokens entram no Tailwind | `app/globals.css`, bloco `@theme` |
+| Componentes globais em CSS | `app/componentes.css` |
+| Mapa tela → template, decisões, o que já está em pé | `docs/DESIGN.md` |
+| Comportamento que os mockups não mostram | `design/ESPECIFICACAO-DE-INTERACAO.md` |
 
-**Tipografia**
+Regra de contraste que vale repetir: **verde-limão nunca com texto branco** —
+usar sobre marinho.
 
-| Papel | Fonte | Desktop | Mobile ≤767 |
-|---|---|---|---|
-| Display / H1 hero | Cormorant 400 | 64 / 68 | 38 / 42 |
-| H1 matéria | Cormorant 500 | 48 / 52 | 32 / 36 |
-| H2 seção | Cormorant 500 | 38 / 42 | 27 / 31 |
-| H3 / card | Cormorant 500 | 24 / 28 | 20 / 24 |
-| Kicker | DM Sans 500 | 12, tracking largo | 11 / 13 |
-| Lead | DM Sans 400 | 21 / 32 | 18 / 28 |
-| Corpo | DM Sans 400 | 18 / 30 | 17 / 29 |
-| Meta / data | DM Sans 400 | 13 | 11 / 13 |
+**Um H1 por página.** Cormorant nunca em bold — máximo 500. Números tabulares em
+datas, letras do Almanaque e paginação.
 
-Um H1 por página. Cormorant nunca em bold — máximo 500, e só em títulos pequenos.
-Números tabulares em datas, letras do Almanaque e paginação.
-
-**Breakpoints**
+**Breakpoints** — três faixas, e uma quarta fronteira só para o cabeçalho:
 
 | Faixa | Margem | Colunas | Gutter |
 |---|---|---|---|
 | Desktop (ref. 1440) | 120 | 12 de 68 · conteúdo 1200 | 32 |
-| Tablet 768–1024 | 48 | cards em 2 colunas · menu vira hambúrguer em 1024 | 24 |
-| Mobile 375–390 | 20 | 1 | 32 vertical |
+| Tablet 768–1024 | 48 | cards em 2 colunas | 24 |
+| Mobile ≤ 767 | 20 | 1 | 32 vertical |
+
+A escala tipográfica vira em **767**. O menu vira hambúrguer em **1280**, não em
+1024: abaixo disso as 7 editorias mais Almanaque e busca não caberiam na linha.
+São dois limites diferentes — `desktop:` é tipografia, `menu:` é cabeçalho.
 
 Cards: 3 colunas (4+4+4) em listagem, 2 (6+6) em destaques, 8+4 na matéria com sidebar.
 
@@ -342,8 +354,8 @@ Data de início e fim · cidade ou "online" · descrição curta · link externo
 **Autor** (usuário do WP)
 Retrato 1:1 · minibio
 
-Tudo com `show_in_rest: true`, incluindo os campos do JetEngine — que precisam ser
-marcados individualmente.
+Tudo com `show_in_rest: true`. **E o CPT precisa declarar `custom-fields` em
+`supports`** — sem isso o `meta` grava no banco e desaparece da resposta, sem erro.
 
 ---
 

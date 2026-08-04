@@ -27,8 +27,12 @@ Custo adicional do projeto: zero.
 ## Stack
 
 - Next.js 15 · App Router · TypeScript · `output: 'standalone'`
-- Tailwind CSS **v4** + shadcn/ui — a configuração é o `@theme` do
-  `app/globals.css`. **Não existe `tailwind.config`**; não criar um.
+- Tailwind CSS **v4** — a configuração é o `@theme` do `app/globals.css`.
+  **Não existe `tailwind.config`**; não criar um.
+- **Radix só nos dois primitivos** que a especificação de interação exige:
+  `@radix-ui/react-dialog` no menu mobile e `downshift` no combobox da busca.
+  Não instalar o shadcn inteiro — ele traz componentes já estilizados, e o
+  estilo já vem do designer.
 - Cormorant Garamond + DM Sans via `next/font`, self-hosted
 - Fuse.js para a busca do Almanaque (JSON estático gerado no build)
 - Resend para e-mail transacional
@@ -44,19 +48,27 @@ Instalado em `wp.`, fuso São Paulo, permalinks `/%postname%/`, mu-plugin ativo,
 7 categorias, 16 tags, 20 matérias, 22 verbetes, 3 eventos, 2 páginas.
 Conexão do front com a API validada em 226 ms.
 
-**Fase 2 — fundações do front: as duas frentes de base estão prontas.**
+**Fase 2 — fundações do front: quase toda pronta.**
 
 - **Camada de dados** — `lib/wp/`, entrada única em `lib/wp/index.ts`.
   ~25 funções tipadas, verificadas contra a API de produção. Detalhe abaixo.
 - **Fundações visuais** — Tailwind v4 com `@theme` no `app/globals.css`,
   `design/dov-tokens.css` importado, fontes por `next/font`.
+- **Componentes globais** — em `components/`, CSS em `app/componentes.css`.
+  Cabeçalho nos dois estados, cabeçalho mobile, menu em tela cheia com Radix,
+  rodapé, cartão nas 3 variações, imagem com estado vazio, paginação, botões,
+  chips e etiquetas. Prancha viva em **`/componentes`**, para comparar com o
+  HTML do designer.
 
-**Próximo passo: os componentes globais**, a partir de
-`design/telas/00-fundamentos-componentes.html`. Nenhum template de página foi
-codado ainda; o repositório tem a home de placeholder e a `/diagnostico`.
+**Falta da Fase 2:** o painel de sugestões da busca (§5 da especificação, com
+`downshift` já instalado — precisa de uma rota que devolva sugestões) e o ajuste
+de rolagem da tira de chips no mobile (§4).
 
-As três decisões em aberto de `docs/DESIGN.md` batem direto nesses componentes —
-o breakpoint do menu desktop trava o cabeçalho.
+**As três decisões que travavam os componentes foram fechadas** — menu em 1280,
+sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
+
+**Depois:** os templates de página, na ordem abaixo. Nenhum foi codado ainda; o
+repositório tem a home de placeholder, `/componentes` e `/diagnostico`.
 
 ---
 
@@ -76,6 +88,10 @@ o breakpoint do menu desktop trava o cabeçalho.
 | **Tailwind v3 com `tailwind.config.ts`** | Exigiria reescrever cada token na config, criando a mesma duplicação de valores que já custou 6 hex errados. O `@theme` do v4 consome as variáveis CSS direto. Custo aceito: v4 pede Chrome 111+ / Safari 16.4+. |
 | **Copiar os tokens para o `globals.css`** | Mesmo motivo: duas cópias divergem. O arquivo do designer é importado. |
 | **Escala tipográfica como utilitário Tailwind** | É onde o designer avisa que a fidelidade escorre. Tipografia herda o CSS do mockup; Tailwind faz grade, espaçamento e responsividade. |
+| **shadcn/ui completo** | Traz componentes já estilizados, e o estilo vem do designer. Só os primitivos: Radix Dialog e `downshift`. |
+| **`cmdk` no combobox da busca** | É paleta de comandos: filtra a própria lista em memória. A §5 pede busca no servidor com debounce e `<mark>` no trecho que casa — `downshift` é agnóstico a async. |
+| **Lib de compartilhamento** | `navigator.share` é API nativa. Reserva no desktop: copiar-link e WhatsApp, cujos ícones já existem no pacote. |
+| **`next/image` para logo e blobs** | O dimensionamento é por altura com `aspect-ratio`, e o `next/image` insere `width`/`height` que brigam com isso. Não há o que otimizar num SVG. `next/image` é para as fotos do WordPress. |
 
 **Regra que sustenta a saída de emergência:** nada de código específico de host,
 nenhuma dependência `@vercel/*`. `next/image` e `revalidatePath` padrão. Se a
@@ -137,6 +153,26 @@ estão resolvidas dentro do módulo — só importam para quem for mexer nele.
     `null`: o mu-plugin só inclui a chave se `wp_get_attachment_image_src`
     devolver algo, e ele falha quando o original é menor que o tamanho pedido.
     O estado vazio tem dois níveis, não um — usar `imagem()`, que trata os dois.
+
+As três seguintes vieram de construir os componentes globais.
+
+11. **A camada do `@import` dos tokens não é opcional.** `dov-tokens.css` traz
+    `a { color: … }`, `button { font: inherit }` e `h1…h6 { … }`. CSS sem camada
+    vence qualquer `@layer`, então importar os tokens sem `layer(base)` faz o
+    reset derrotar o CSS dos componentes — e `.botao--primario` sai com texto
+    marinho em vez de branco, "Com ícone" fica roxo sobre roxo. A ordem correta
+    é `base` (preflight + reset) < `components` < `utilities` < sem camada.
+
+12. **Datas: formatar a partir de `dataUtc`, nunca de `data`.** O `data` é o
+    horário de São Paulo mas vem **sem** fuso, e o servidor da Hostinger roda em
+    UTC — uma matéria publicada 00:30 apareceria com a data do dia anterior, sem
+    erro nenhum. Toda formatação está em `lib/formato.ts` e parte do `date_gmt`.
+
+13. **A ordem das editorias não vem da API.** Ordenar termos exige plugin; sem
+    ele o `orderby` só oferece nome, id e contagem — e alfabética poria
+    "Curiosidades" antes de "Descubra", que é a editoria âncora nas pranchas. A
+    ordem editorial está em `ORDEM_EDITORIAS` (`lib/site.ts`), **por slug**, com
+    alfabética de reserva para quem não estiver na lista.
 
 ---
 
@@ -200,6 +236,18 @@ O `@theme` zera cada namespace com `initial` antes de preencher. **`bg-slate-500
 - A escala tipográfica **não** está no `@theme`, de propósito
 - `app/diagnostico/diagnostico.css` é o estilo da ferramenta interna, carregado
   só naquela rota. Não é design system.
+- **`app/componentes.css` tem os componentes globais**, extraídos da tela 00 —
+  uma vez, não uma por tela. Duas regras ao mexer nele: nenhum valor novo, e um
+  componente responsivo em vez de um par desktop/mobile. As poucas exceções
+  estão marcadas com `[ESPEC]` e vêm da especificação de interação, que é
+  normativa e vence as pranchas quando divergem.
+- **`/componentes` é a prancha viva.** Os mesmos componentes com dados reais,
+  para comparar com `design/telas/00-fundamentos-componentes.html`. Sai antes do
+  lançamento, junto com a `/diagnostico`.
+- Constantes de marca, navegação e ordem das editorias em `lib/site.ts`.
+  Perfis de rede e páginas legais estão vazios ali de propósito: enquanto
+  estiverem, os links não são renderizados — melhor faltar um ícone no rodapé do
+  que entregar link morto num site de cliente.
 
 Resumo do que não pode ser esquecido:
 

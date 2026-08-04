@@ -78,6 +78,27 @@ Só existe versão mobile das telas 15 e 16 — derivar o desktop dos tokens.
 2. Depois a ordem do plano: matéria → categoria → verbete → índice A–Z → home →
    institucionais.
 
+### O que da tela 00 já está em pé
+
+Em `components/`, com o CSS em `app/componentes.css` e uma prancha viva em
+`/componentes` para comparar com o HTML do designer:
+
+| Componente | Arquivo | Observação |
+|---|---|---|
+| Cabeçalho desktop, 92→68 | `cabecalho-interativo.tsx` | Sticky com histerese por `IntersectionObserver` |
+| Cabeçalho mobile | idem | Não é sticky, conforme a especificação |
+| Menu em tela cheia | idem | Radix Dialog: focus trap, `Esc`, scroll travado |
+| Rodapé | `rodape.tsx` | Editorias divididas pela metade da lista real |
+| Cartão · padrão, destaque, compacto | `cartao.tsx` | Resolve a própria URL pela categoria |
+| Imagem com estado vazio | `imagem-wp.tsx` | Trata os **dois** níveis de `null` |
+| Paginação | `paginacao.tsx` | Reticências, e número em vez de reticência para buraco de 1 |
+| Barra de busca | `busca.tsx` | Sem sugestões ainda — falta o combobox |
+| Botões, chips, etiquetas | só CSS | Sem componente React: são classes |
+
+**Falta da tela 00:** o painel de sugestões da busca (§5 da especificação, com
+`downshift` já instalado) e o ajuste de rolagem da tira de chips no mobile
+(§4 — `scrollLeft` do chip ativo ao carregar).
+
 ## Interação
 
 `ESPECIFICACAO-DE-INTERACAO.md` cobre, com valores exatos: cabeçalho encolhendo
@@ -90,20 +111,24 @@ nada disso.
 
 ---
 
-## Decisões em aberto
+## Decisões — as três que travavam os componentes estão fechadas
 
-O designer listou o que ele mudaria e **não aplicou**. Três precisam de resposta
-antes de codar os componentes correspondentes:
+| # | Questão | Decisão |
+|---|---|---|
+| **Menu desktop** | 7 editorias + Almanaque + busca não cabem abaixo de ~1280px; a linha quebra | **Hambúrguer a partir de 1280.** O menu em tela cheia já estava desenhado e especificado; um "Mais ⌄" seria componente novo sem prancha, e esconderia duas editorias em tela de notebook. Implementado: `--breakpoint-menu` em `globals.css` e `LARGURA_MENU_DESKTOP` em `lib/site.ts` |
+| **Sidebar da matéria** | Ele deixou `position: sticky`; nas pranchas é estática | **Manter sticky.** A barra carrega "Do Almanaque" e a newsletter, que ganham em acompanhar a leitura de um texto longo. São 2 linhas para reverter se não agradar ao ver montado |
+| **Botão de Instagram** | Instagram não aceita compartilhamento por URL a partir da web — o botão não funciona | **`navigator.share` nativo**, com copiar-link e WhatsApp como reserva no desktop. Trocar por X/Facebook exigiria SVG novo — o pacote só tem Instagram, YouTube e WhatsApp |
+
+O designer listou outros pontos que ele mudaria e não aplicou:
 
 | # | Questão | Status |
 |---|---|---|
-| **Menu desktop** | 7 editorias + Almanaque + busca não cabem abaixo de ~1280px; a linha quebra | **Decidir:** hambúrguer a partir de 1280, ou duas editorias num "Mais ⌄" |
-| **Sidebar da matéria** | Ele deixou `position: sticky`; nas pranchas é estática | **Decidir:** manter sticky, ou remover as 2 linhas em `05-materia-desktop.css` e `09-verbete-desktop.css` |
-| **Botão de Instagram** | Instagram não aceita compartilhamento por URL a partir da web — o botão não funciona | **Decidir:** trocar por X/Facebook, ou usar `navigator.share` nativo |
 | Faixa 768–1024 | Não desenhada, derivada dos tokens de tablet | Aceitável; pedir prancha só se o tráfego de tablet importar |
 | Nome | O logotipo diz "Descubra o Vinho"; o projeto foi pedido como "Descobrindo o Vinho" | O domínio `descubraovinho.com.br` já seguiu o logotipo. Confirmar com o cliente |
-| Duplicação de CSS | Cada tela repete ~11 kB de cabeçalho, rodapé, card, botões e chips | Resolve na Fase 2, ao extrair os componentes |
+| Duplicação de CSS | Cada tela repete ~11 kB de cabeçalho, rodapé, card, botões e chips | **Resolvido.** Extraído para `app/componentes.css`, uma vez só |
 | Conteúdo dos mockups | Datas, "418 verbetes", "128 matérias", "Ana Ferraz" são fictícios | Vêm da API. Nunca chumbar |
+| Ordem das editorias | As pranchas abrem por "Descubra"; a API só ordena por nome, id ou contagem | Ordem editorial em `ORDEM_EDITORIAS`, por slug, com alfabética de reserva para editoria nova |
+| Perfis de rede e páginas legais | Os endereços não vieram, e política de privacidade e termos não existem | Em `lib/site.ts`, vazios. Enquanto vazios os links não são renderizados — melhor faltar ícone que entregar link morto |
 
 ## Cores do logo — pendência real
 
