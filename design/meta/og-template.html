@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Template Open Graph 1200×630 · Descubra o Vinho</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap">
+  <link rel="stylesheet" href="../dov-tokens.css">
+  <style>
+    /* O cartão TEM que medir exatamente 1200 × 630 — não usar unidades de viewport. */
+    body {
+      display: grid;
+      place-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #E7E2E4;
+    }
+    .og {
+      position: relative;
+      box-sizing: border-box;
+      width: 1200px;
+      height: 630px;
+      padding: 72px 80px;
+      overflow: hidden;
+      background: var(--dov-marinho);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .og__blob {
+      position: absolute;
+      right: -170px;
+      bottom: -230px;
+      width: 620px;
+      aspect-ratio: 1 / 1;
+      opacity: 0.28;
+    }
+    .og__topo { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+    .og__logo { height: 72px; width: auto; aspect-ratio: 900 / 418; }
+
+    /* Slot 1 — editoria. Some se o texto estiver vazio. */
+    .og__kicker {
+      margin: 0;
+      font-family: var(--dov-fonte-corpo);
+      font-size: 20px;
+      font-weight: 500;
+      letter-spacing: var(--dov-tracking-kicker);
+      text-transform: uppercase;
+      color: var(--dov-menta);
+    }
+
+    .og__meio { position: relative; }
+
+    /* Slot 2 — título. Até 90 caracteres em 3 linhas; acima disso, reduzir para 54px. */
+    .og__titulo {
+      margin: 0;
+      max-width: 900px;
+      font-family: var(--dov-fonte-titulo);
+      font-weight: 400;
+      font-size: 68px;
+      line-height: 1.06;
+      letter-spacing: -0.01em;
+      color: #FFFFFF;
+      text-wrap: pretty;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .og__titulo--longo { font-size: 54px; }
+
+    .og__rodape {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      font-family: var(--dov-fonte-corpo);
+      font-size: 20px;
+      color: #D8D2D6;
+    }
+
+    /* Slot 3 — assinatura / data. */
+    .og__assinatura { margin: 0; }
+    .og__site { margin: 0; color: var(--dov-menta); font-weight: 500; }
+
+    .instrucoes {
+      max-width: 1200px;
+      margin: 40px auto 64px;
+      font-family: var(--dov-fonte-corpo);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--dov-neutro-700);
+    }
+    .instrucoes h2 { font-family: var(--dov-fonte-titulo); font-size: 26px; margin: 0 0 12px; color: var(--dov-marinho); }
+    .instrucoes code { background: #fff; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    .instrucoes ul { margin: 12px 0 0; padding-left: 20px; }
+    .instrucoes li { margin-bottom: 6px; }
+    @media print { .instrucoes { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="og" id="og-card">
+    <img class="og__blob" src="../assets/blobs/dov-blob-menta.svg" alt="" aria-hidden="true">
+
+    <div class="og__topo">
+      <img class="og__logo" src="../assets/logos/dov-logo-horizontal-branco.svg" alt="Descubra o Vinho">
+      <p class="og__kicker">Viaje · Brasil</p>
+    </div>
+
+    <div class="og__meio">
+      <h1 class="og__titulo">Serra Gaúcha em três dias: o roteiro sem pressa</h1>
+    </div>
+
+    <div class="og__rodape">
+      <p class="og__assinatura">por Ana Ferraz · 12 de março de 2026</p>
+      <p class="og__site">descubraovinho.com.br</p>
+    </div>
+  </div>
+
+  <div class="instrucoes">
+    <h2>Como usar</h2>
+    <p>O cartão acima é o template de Open Graph em <strong>1200 × 630</strong>. Três slots variáveis: <code>.og__kicker</code> (editoria), <code>.og__titulo</code> e <code>.og__assinatura</code>. O resto é fixo.</p>
+    <ul>
+      <li><strong>Geração dinâmica (recomendado):</strong> porte esta marcação para uma rota <code>opengraph-image.tsx</code> com <code>ImageResponse</code> do <code>next/og</code>. Ele não suporta <code>-webkit-line-clamp</code> nem <code>aspect-ratio</code> — corte o título no servidor (90 caracteres) e dê <code>width</code>/<code>height</code> explícitos ao logo (155 × 72) e ao blob (620 × 620).</li>
+      <li><strong>Fontes:</strong> carregue Cormorant Garamond 400 e DM Sans 400/500 como <code>ArrayBuffer</code> na opção <code>fonts</code> do <code>ImageResponse</code>; o serviço não lê <code>@font-face</code> remoto.</li>
+      <li><strong>Títulos longos:</strong> acima de 90 caracteres, acrescente a classe <code>og__titulo--longo</code> (54px).</li>
+      <li><strong>Fallback estático:</strong> <code>meta/og-padrao.png</code>, para a home e páginas sem título próprio.</li>
+      <li><strong>Twitter:</strong> a mesma imagem serve para <code>summary_large_image</code>.</li>
+    </ul>
+  </div>
+</body>
+</html>

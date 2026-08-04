@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Página não encontrada · Descubra o Vinho</title>
+  <meta name="description" content="Essa garrafa não está na adega.">
+  <!-- Apenas para o preview estático. Em Next.js remova e carregue via next/font
+       (Cormorant_Garamond 400/500 + DM_Sans 400/500/700). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="16-404-mobile.css">
+</head>
+<body>
+  <header class="cabecalho-mobile">
+    <a class="marca" href="02-home-mobile.html" aria-label="Descubra o Vinho — página inicial">
+      <img class="cabecalho-mobile__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+    </a>
+    <div class="cabecalho-mobile__acoes">
+      <button class="botao-icone botao-icone--toque" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">
+        <svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="erro" aria-labelledby="erro-titulo">
+      <img class="blob blob--lilas erro__blob" src="../assets/blobs/dov-blob-lilas.svg" alt="" aria-hidden="true">
+      <div class="secao__conteudo">
+        <p class="erro__numero" aria-hidden="true">404</p>
+        <h1 class="erro__titulo" id="erro-titulo">Essa garrafa não está na adega</h1>
+        <p class="erro__texto">A página que você procurava saiu de linha — mas há muito para descobrir.</p>
+        <div class="erro__acoes">
+          <a class="botao botao--primario botao--bloco" href="02-home-mobile.html">Voltar para a home</a>
+          <a class="botao botao--contorno botao--bloco" href="08-almanaque-indice-mobile.html">Abrir o Almanaque</a>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

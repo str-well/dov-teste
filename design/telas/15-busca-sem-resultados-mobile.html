@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nada encontrado · Descubra o Vinho</title>
+  <meta name="description" content="Nenhum resultado para a busca.">
+  <!-- Apenas para o preview estático. Em Next.js remova e carregue via next/font
+       (Cormorant_Garamond 400/500 + DM_Sans 400/500/700). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="15-busca-sem-resultados-mobile.css">
+</head>
+<body>
+  <header class="cabecalho-mobile">
+    <a class="marca" href="02-home-mobile.html" aria-label="Descubra o Vinho — página inicial">
+      <img class="cabecalho-mobile__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+    </a>
+    <div class="cabecalho-mobile__acoes">
+      <button class="botao-icone botao-icone--toque" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">
+        <svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="cabeca-busca-mobile" aria-labelledby="busca-titulo">
+      <h1 class="cabeca-busca-mobile__titulo" id="busca-titulo">Nada encontrado para <em class="cabeca-busca-mobile__termo">“vinho de jabuticaba azul”</em></h1>
+      <form class="busca-mobile busca-mobile--foco" role="search" action="#">
+        <svg class="busca-mobile__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+        <label class="visualmente-oculto" for="busca-m">Buscar no portal</label>
+        <input class="busca-mobile__campo" id="busca-m" type="search" name="s" placeholder="Tente outro termo…">
+      </form>
+    </section>
+
+    <section class="vazio" aria-labelledby="vazio-titulo">
+      <h2 class="visualmente-oculto" id="vazio-titulo">Nenhum resultado</h2>
+      <p class="vazio__texto" role="status">Confira a grafia ou tente palavras mais simples — “uva”, “espumante”, “Serra Gaúcha”.</p>
+      <p class="kicker kicker-mobile vazio__rotulo">Comece por aqui</p>
+      <div class="chips vazio__chips">
+        <a class="chip" href="08-almanaque-indice-mobile.html">Almanaque A–Z</a>
+        <a class="chip" href="#">Harmonize</a>
+        <a class="chip" href="04-categoria-mobile.html">Viaje</a>
+      </div>
+      <a class="botao botao--primario botao--bloco" href="02-home-mobile.html">Ver as últimas publicações</a>
+    </section>
+  </main>
+</body>
+</html>

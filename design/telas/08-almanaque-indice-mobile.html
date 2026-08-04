@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Almanaque do Vinho · Descubra o Vinho</title>
+  <meta name="description" content="418 verbetes sobre uvas, técnicas e regiões.">
+  <!-- Apenas para o preview estático. Em Next.js remova e carregue via next/font
+       (Cormorant_Garamond 400/500 + DM_Sans 400/500/700). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="08-almanaque-indice-mobile.css">
+</head>
+<body>
+  <header class="cabecalho-mobile">
+    <a class="marca" href="02-home-mobile.html" aria-label="Descubra o Vinho — página inicial">
+      <img class="cabecalho-mobile__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+    </a>
+    <div class="cabecalho-mobile__acoes">
+      <button class="botao-icone botao-icone--toque" type="button" aria-label="Buscar">
+        <svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+      </button>
+      <button class="botao-icone botao-icone--toque" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">
+        <svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="secao-mobile--escura secao--empilhada cabeca-almanaque-mobile" aria-labelledby="almanaque-titulo">
+      <img class="blob blob--menta cabeca-almanaque-mobile__blob" src="../assets/blobs/dov-blob-menta.svg" alt="" aria-hidden="true">
+      <div class="secao__conteudo">
+        <p class="kicker kicker-mobile kicker--menta">Consulta permanente</p>
+        <h1 class="cabeca-almanaque-mobile__titulo" id="almanaque-titulo">Almanaque do Vinho</h1>
+        <p class="cabeca-almanaque-mobile__texto">418 verbetes sobre uvas, técnicas e regiões.</p>
+        <form class="busca-mobile busca-mobile--almanaque" role="search" action="#">
+          <svg class="busca-mobile__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+          <label class="visualmente-oculto" for="busca-almanaque">Buscar um verbete</label>
+          <input class="busca-mobile__campo" id="busca-almanaque" type="search" name="verbete" placeholder="Buscar um verbete…">
+        </form>
+      </div>
+    </section>
+
+    <nav class="letras-mobile" aria-label="Índice alfabético">
+      <ul class="letras-mobile__lista">
+        <li><a class="letras-mobile__item letras-mobile__item--ativa" href="#letra-a" aria-current="true">A</a></li>
+        <li><a class="letras-mobile__item" href="#letra-b">B</a></li>
+        <li><a class="letras-mobile__item" href="#letra-c">C</a></li>
+        <li><a class="letras-mobile__item" href="#letra-d">D</a></li>
+        <li><a class="letras-mobile__item" href="#letra-e">E</a></li>
+        <li><a class="letras-mobile__item" href="#letra-f">F</a></li>
+        <li><a class="letras-mobile__item" href="#letra-g">G</a></li>
+        <li><a class="letras-mobile__item" href="#letra-h">H</a></li>
+        <li><a class="letras-mobile__item" href="#letra-i">I</a></li>
+        <li><a class="letras-mobile__item" href="#letra-j">J</a></li>
+        <li><span class="letras-mobile__item letras-mobile__item--vazia" aria-disabled="true">K</span></li>
+        <li><a class="letras-mobile__item" href="#letra-l">L</a></li>
+        <li><a class="letras-mobile__item" href="#letra-m">M</a></li>
+        <li><a class="letras-mobile__item" href="#letra-n">N</a></li>
+        <li><a class="letras-mobile__item" href="#letra-o">O</a></li>
+        <li><a class="letras-mobile__item" href="#letra-p">P</a></li>
+        <li><span class="letras-mobile__item letras-mobile__item--vazia" aria-disabled="true">Q</span></li>
+        <li><a class="letras-mobile__item" href="#letra-r">R</a></li>
+        <li><a class="letras-mobile__item" href="#letra-s">S</a></li>
+        <li><a class="letras-mobile__item" href="#letra-t">T</a></li>
+        <li><a class="letras-mobile__item" href="#letra-u">U</a></li>
+        <li><a class="letras-mobile__item" href="#letra-v">V</a></li>
+        <li><span class="letras-mobile__item letras-mobile__item--vazia" aria-disabled="true">W</span></li>
+        <li><span class="letras-mobile__item letras-mobile__item--vazia" aria-disabled="true">X</span></li>
+        <li><span class="letras-mobile__item letras-mobile__item--vazia" aria-disabled="true">Y</span></li>
+        <li><a class="letras-mobile__item" href="#letra-z">Z</a></li>
+      </ul>
+    </nav>
+
+    <section class="verbetes-mobile" aria-label="Verbetes do Almanaque">
+      <div class="bloco-letra-mobile__cabeca">
+        <h2 class="bloco-letra-mobile__inicial" id="letra-a">A</h2>
+        <p class="bloco-letra-mobile__contagem">28 verbetes</p>
+      </div>
+      <ul class="verbetes-mobile__lista">
+        <li><a class="verbete-item-mobile" href="10-verbete-mobile.html">
+          <h3 class="verbete-item-mobile__termo">Acidez</h3>
+          <p class="verbete-item-mobile__definicao">A sensação de frescor que faz salivar — e sustenta o vinho no tempo.</p>
+        </a></li>
+        <li><a class="verbete-item-mobile" href="10-verbete-mobile.html">
+          <h3 class="verbete-item-mobile__termo">Amarone</h3>
+          <p class="verbete-item-mobile__definicao">Tinto italiano feito com uvas passificadas antes da fermentação.</p>
+        </a></li>
+        <li><a class="verbete-item-mobile" href="10-verbete-mobile.html">
+          <h3 class="verbete-item-mobile__termo">Assemblage</h3>
+          <p class="verbete-item-mobile__definicao">A mistura de lotes ou uvas que forma o corte final.</p>
+        </a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="rodape-mobile">
+    <img class="rodape-mobile__logo" src="../assets/logos/dov-logo-horizontal-branco.svg" alt="Descubra o Vinho">
+    <p class="rodape-mobile__descricao">Um portal para descobrir o universo do vinho sem solenidade.</p>
+    <nav class="rodape-mobile__links" aria-label="Rodapé">
+      <a class="rodape__link" href="#">Descubra</a>
+      <a class="rodape__link" href="#">Saúde &amp; Ciência</a>
+      <a class="rodape__link" href="#">Curiosidades</a>
+      <a class="rodape__link" href="#">Viaje</a>
+      <a class="rodape__link" href="#">Harmonize</a>
+      <a class="rodape__link" href="#">Programe-se</a>
+      <a class="rodape__link" href="#">Mercado</a>
+      <a class="rodape__link" href="#">Almanaque A–Z</a>
+    </nav>
+    <div class="rodape-mobile__base">
+      <p>© 2026 Descubra o Vinho</p>
+      <p class="rodape__aviso">Aprecie com moderação. Venda proibida para menores de 18 anos.</p>
+    </div>
+  </footer>
+</body>
+</html>

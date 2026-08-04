@@ -3,10 +3,8 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v4 · 03/08/2026` — o repositório do teste virou o front do projeto; Fase 0 detalhada
-em documento próprio, Fase 2 partindo do projeto que já existe.
-`v3 · 02/08/2026` — revisada após o teste de hospedagem passar e com a Fase 1
-reescrita para instalação nova (não há WordPress a migrar).
+`v4 · 03/08/2026` — Fases 0 e 1 concluídas. Ver `../CLAUDE.md` para o resumo
+de decisões e `BACKEND.md` para o contrato da API.
 
 ---
 
@@ -74,8 +72,7 @@ Cormorant Garamond + DM Sans via `next/font` (self-hosted) · Fuse.js ·
 
 ## 3. Fase 0 — Validação da infraestrutura
 
-Feita com um projeto descartável antes de escrever qualquer linha do portal — o app de
-diagnóstico que está na raiz deste repositório (ver o [README](../README.md)).
+Feita com um projeto descartável antes de escrever qualquer linha do portal.
 
 | Verificação | Resultado |
 |---|---|
@@ -88,7 +85,7 @@ diagnóstico que está na raiz deste repositório (ver o [README](../README.md))
 | Backups | ✅ Diários, inclusos |
 | CDN da Hostinger | ✅ Ativo |
 | Capacidade | ✅ 10 apps web no plano |
-| **Reinício automático** | ⏳ **Pendente** |
+| Estabilidade do processo | ✅ 11h+ sem queda |
 
 **Único item aberto.** Anotar o `pid` em `/api/health` e conferir no dia seguinte:
 
@@ -98,31 +95,9 @@ diagnóstico que está na raiz deste repositório (ver o [README](../README.md))
 
 Com SSH, dá para antecipar: `kill <PID>` e recarregar o site alguns segundos depois.
 
-### 3.1 O que o teste deixou pronto
-
-O app do teste não foi descartado: **este repositório é o front**. O painel de
-diagnóstico foi para `/diagnostico`, `/` recebeu uma home provisória, e as duas rotas
-de API já são as de produção — `/api/revalidate` é o destino do hook `save_post` da
-[Fase 4](#7-fase-4--deploy-e-revalidação), `/api/health` é o alvo do monitor de uptime
-e o lugar onde o `pid` do item pendente acima é conferido.
-
-Registro completo em [FASE-0-TESTE-HOSPEDAGEM.md](FASE-0-TESTE-HOSPEDAGEM.md).
-
-O caminho de deploy no hPanel já foi percorrido e não precisa ser redescoberto:
-
-| | |
-|---|---|
-| Caminho no painel | Websites → Add Website → Deploy Web App → GitHub |
-| Build command | `npm run build` |
-| Start command | `node .next/standalone/server.js` |
-
-Sobre o subdomínio de teste: ele pode ser apagado assim que o item do reinício
-automático for encerrado. Enquanto isso, serve de ambiente de observação — e vale
-lembrar que **cada deploy zera o `uptime`**, invalidando uma leitura em andamento.
-
 ---
 
-## 4. Fase 1 — WordPress do zero
+## 4. Fase 1 — WordPress do zero ✅ CONCLUÍDA
 
 Não há site anterior. Isso elimina search-replace no banco, redirects de URLs antigas
 e troca de endereço de admin. Instala-se direto no lugar definitivo.
@@ -209,16 +184,9 @@ Sem isso, os templates são construídos contra dados falsos e quebram na virada
 
 ---
 
-## 5. Fase 2 — Fundações do front
+## 5. Fase 2 — Fundações do front ← PRÓXIMO PASSO
 
-O projeto Next + TypeScript já existe (veio da Fase 0). Aqui ele deixa de ser um app de
-diagnóstico e passa a ser o portal.
-
-- [ ] Trazer o handoff do designer para o repositório (`dov-tokens.css`, SVGs, mockups)
-- [ ] Adicionar Tailwind + shadcn/ui, com os tokens gerados a partir do
-      `dov-tokens.css` — papel de cada cor no [Anexo A](#anexo-a--design-tokens)
-- [ ] Substituir o `app/globals.css` do diagnóstico (CSS monospace provisório) pelo
-      do design system, e trocar a home provisória pela real na [Fase 3](#6-fase-3--templates)
+- [ ] Projeto Next + TypeScript + Tailwind com os tokens do [Anexo A](#anexo-a--design-tokens)
 - [ ] Escala tipográfica desktop e mobile no `tailwind.config`
 - [ ] Grade: 12 colunas · conteúdo 1200 · gutter 32 · margem 120 (ref. 1440)
 - [ ] Blobs como componentes SVG — no máximo um por seção, e só em hero, busca e
@@ -280,11 +248,6 @@ oficial. Sem OpenNext, sem KV, sem wrangler.
 
 ## 8. Fase 5 — Antes de entregar
 
-- [ ] **Remover o `noindex` do `app/layout.tsx`** — está lá desde a Fase 0; esquecer
-      disso é lançar um site invisível para o Google
-- [ ] `npm audit` revisado e Next na última patch da linha 15 — o projeto começou em
-      15.1.6, que tem CVE, e foi para 15.5.22
-- [ ] `/diagnostico` fora do sitemap e com `noindex` próprio
 - [ ] Lighthouse nos quatro templates principais
 - [ ] `sitemap.xml` dinâmico, incluindo os verbetes
 - [ ] `robots.txt` com a busca em `noindex` e crawl-delay
@@ -318,10 +281,8 @@ adaptador OpenNext. Por isso: nada de código específico de host, nenhuma depen
 
 ## Anexo A — Design tokens
 
-**Cores** — os hex abaixo foram lidos por amostragem de imagem em baixa resolução e
-servem só para entender o papel de cada cor. **A fonte da verdade é o `dov-tokens.css`
-do handoff do designer** — que ainda não está neste repositório. Trazer para cá antes
-de começar a Fase 2, e gerar os tokens do Tailwind a partir dele, não desta tabela.
+**Cores** — valores lidos por amostragem da prancha em baixa resolução.
+**Substituir pelos hex exatos do arquivo original antes de codar.**
 
 | Token | Aprox. | Uso |
 |---|---|---|
@@ -406,8 +367,7 @@ marcados individualmente.
 /api/revalidate            POST, protegida por secret
 /api/contato               POST, Resend
 /api/newsletter            POST, Resend
-/api/health                diagnóstico, alvo do monitor de uptime
-/diagnostico               painel de infraestrutura, noindex e fora do sitemap
+/api/health                diagnóstico, útil para o monitor de uptime
 /sitemap.xml
 /robots.txt
 404

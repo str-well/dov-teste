@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Viaje · Descubra o Vinho</title>
+  <meta name="description" content="Enoturismo com pé no chão: estradas, vinícolas que valem o desvio e quanto custa.">
+  <!-- Apenas para o preview estático. Em Next.js remova e carregue via next/font
+       (Cormorant_Garamond 400/500 + DM_Sans 400/500/700). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="03-categoria-desktop.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="faixa-utilitaria">
+      <div class="limite faixa-utilitaria__interno">
+        <p class="assinatura">Descubra + Compartilhe + Viva +</p>
+        <div class="links-utilitarios">
+          <a class="links-utilitarios__link" href="#">Quem Somos</a>
+          <a class="links-utilitarios__link" href="#">Contato</a>
+          <a class="links-utilitarios__link" href="#">Newsletter</a>
+          <div class="redes">
+            <a class="redes__link" href="#" aria-label="Instagram"><svg class="redes__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.6" cy="6.4" r="1"/></svg></a>
+            <a class="redes__link" href="#" aria-label="YouTube"><svg class="redes__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5a4 4 0 0 0-3-3.8C17 4.2 12 4.2 12 4.2s-5 0-7 .5A4 4 0 0 0 2 8.5 24 24 0 0 0 2 15.5a4 4 0 0 0 3 3.8c2 .5 7 .5 7 .5s5 0 7-.5a4 4 0 0 0 3-3.8 24 24 0 0 0 0-7Z"/><path d="M10 9.5l5 2.5-5 2.5v-5Z"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="limite barra-principal">
+      <a class="marca" href="01-home-desktop.html" aria-label="Descubra o Vinho — página inicial">
+        <img class="marca__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+      </a>
+      <nav class="menu-principal" aria-label="Editorias">
+        <ul class="menu-principal__lista">
+          <li><a class="menu-principal__link" href="#">Descubra</a></li>
+          <li><a class="menu-principal__link" href="#">Curiosidades</a></li>
+          <li><a class="menu-principal__link" href="#">Harmonize</a></li>
+          <li><a class="menu-principal__link" href="#">Mercado</a></li>
+          <li><a class="menu-principal__link" href="#">Saúde &amp; Ciência</a></li>
+          <li><a class="menu-principal__link" href="#" aria-current="page">Viaje</a></li>
+          <li><a class="menu-principal__link" href="#">Programe-se</a></li>
+        </ul>
+        <span class="menu-principal__divisor" aria-hidden="true"></span>
+        <a class="botao botao--contorno botao--mini" href="07-almanaque-indice-desktop.html">Almanaque</a>
+        <button class="botao-icone" type="button" aria-label="Buscar"><svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="cabeca-categoria secao--empilhada" aria-labelledby="categoria-titulo">
+      <img class="blob blob--lilas cabeca-categoria__blob" src="../assets/blobs/dov-blob-lilas.svg" alt="" aria-hidden="true">
+      <div class="limite secao__conteudo">
+        <nav class="migalhas" aria-label="Você está em">
+          <ol class="migalhas__lista">
+            <li><a class="migalhas__link" href="01-home-desktop.html">Home</a></li>
+            <li class="migalhas__separador" aria-hidden="true">/</li>
+            <li><span class="migalhas__atual" aria-current="page">Viaje</span></li>
+          </ol>
+        </nav>
+        <h1 class="cabeca-categoria__titulo" id="categoria-titulo">Viaje</h1>
+        <p class="cabeca-categoria__descricao">Enoturismo com pé no chão: estradas, vinícolas que valem o desvio, onde dormir e quanto custa. Roteiros testados por quem foi.</p>
+        <p class="cabeca-categoria__contagem">128 matérias nesta categoria</p>
+      </div>
+    </section>
+
+    <div class="filtros">
+      <div class="limite filtros__interno">
+        <p class="filtros__rotulo" id="rotulo-filtros">Filtrar por tema</p>
+        <a class="chip chip--ativo" href="#" aria-current="true">Tudo</a>
+        <a class="chip" href="#">Brasil</a>
+        <a class="chip" href="#">Argentina</a>
+        <a class="chip" href="#">Portugal</a>
+        <a class="chip" href="#">Itália</a>
+        <a class="chip" href="#">Roteiros de 3 dias</a>
+        <a class="chip" href="#">Onde dormir</a>
+        <div class="ordenacao">
+          <label for="ordenar">Ordenar:</label>
+          <select class="ordenacao__campo" id="ordenar" name="ordenar">
+            <option>Mais recentes</option>
+            <option>Mais lidas</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <section class="arquivo" aria-label="Matérias em Viaje">
+      <div class="limite">
+        <ul class="arquivo__grade">
+          <li>
+            <article class="cartao">
+              <a class="cartao__link" href="05-materia-desktop.html">
+                <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+                <p class="kicker">Brasil</p>
+                <h2 class="cartao__titulo">Serra Gaúcha em três dias: o roteiro sem pressa</h2>
+                <p class="cartao__resumo">Seis vinícolas, duas estradas de terra e nenhuma degustação antes das dez.</p>
+                <p class="cartao__meta"><time datetime="2026-03-12">12 mar 2026</time> · 9 min</p>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="cartao">
+              <a class="cartao__link" href="05-materia-desktop.html">
+                <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+                <p class="kicker">Argentina</p>
+                <h2 class="cartao__titulo">Mendoza fora da rota: três vales que ninguém te indicou</h2>
+                <p class="cartao__resumo">Subimos a 1.700 metros para provar malbecs que quase não saem da província.</p>
+                <p class="cartao__meta"><time datetime="2026-03-09">09 mar 2026</time> · 7 min</p>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="cartao">
+              <a class="cartao__link" href="05-materia-desktop.html">
+                <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+                <p class="kicker">Portugal</p>
+                <h2 class="cartao__titulo">Douro de trem: o trajeto mais bonito da Europa do vinho</h2>
+                <p class="cartao__resumo">Duas horas de janela aberta entre terraços de xisto, por 18 euros.</p>
+                <p class="cartao__meta"><time datetime="2026-03-07">07 mar 2026</time> · 6 min</p>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="cartao">
+              <a class="cartao__link" href="05-materia-desktop.html">
+                <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+                <p class="kicker">Brasil</p>
+                <h2 class="cartao__titulo">Vinhos de altitude em Santa Catarina: o que provar</h2>
+                <p class="cartao__resumo">São Joaquim tem geada, 1.400 metros e uma acidez que muda tudo.</p>
+                <p class="cartao__meta"><time datetime="2026-03-05">05 mar 2026</time> · 5 min</p>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="cartao">
+              <a class="cartao__link" href="05-materia-desktop.html">
+                <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+                <p class="kicker">Chile</p>
+                <h2 class="cartao__titulo">Casablanca em um dia, saindo de Santiago</h2>
+                <p class="cartao__resumo">Um vale a 80 km da capital, com brisa do Pacífico dentro da taça.</p>
+                <p class="cartao__meta"><time datetime="2026-03-02">02 mar 2026</time> · 4 min</p>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="cartao">
+              <a class="cartao__link" href="05-materia-desktop.html">
+                <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+                <p class="kicker">Itália</p>
+                <h2 class="cartao__titulo">Piemonte no outono: névoa, trufa e nebbiolo</h2>
+                <p class="cartao__resumo">A melhor época para ir é também a mais cheia — como escapar disso.</p>
+                <p class="cartao__meta"><time datetime="2026-02-28">28 fev 2026</time> · 8 min</p>
+              </a>
+            </article>
+          </li>
+        </ul>
+        <nav class="paginacao arquivo__paginacao" aria-label="Paginação">
+          <span class="paginacao__item paginacao__item--ativo" aria-current="page">1</span>
+          <a class="paginacao__item" href="#">2</a>
+          <a class="paginacao__item" href="#">3</a>
+          <span class="paginacao__reticencias" aria-hidden="true">…</span>
+          <a class="paginacao__item" href="#">14</a>
+          <a class="paginacao__proxima" href="#">Próxima <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="limite">
+      <div class="rodape__grade">
+        <div>
+          <img class="rodape__logo" src="../assets/logos/dov-logo-horizontal-branco.svg" alt="Descubra o Vinho">
+          <p class="rodape__descricao">Um portal para descobrir o universo do vinho sem solenidade: viagens, harmonizações, mercado, ciência e curiosidades.</p>
+        </div>
+        <nav aria-labelledby="rodape-editorias">
+          <h2 class="rodape__titulo" id="rodape-editorias">Editorias</h2>
+          <ul class="rodape__lista">
+            <li><a class="rodape__link" href="#">Descubra</a></li>
+            <li><a class="rodape__link" href="#">Curiosidades</a></li>
+            <li><a class="rodape__link" href="#">Harmonize</a></li>
+            <li><a class="rodape__link" href="#">Mercado</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="rodape-mais">
+          <h2 class="rodape__titulo" id="rodape-mais">Mais</h2>
+          <ul class="rodape__lista">
+            <li><a class="rodape__link" href="#">Saúde &amp; Ciência</a></li>
+            <li><a class="rodape__link" href="#">Viaje</a></li>
+            <li><a class="rodape__link" href="#">Programe-se</a></li>
+            <li><a class="rodape__link" href="#">Almanaque A–Z</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2 class="rodape__titulo" id="rodape-newsletter">Newsletter</h2>
+          <p class="rodape__texto">Uma carta por semana, com o que vale ler e beber.</p>
+          <form class="rodape__form" aria-labelledby="rodape-newsletter">
+            <label class="visualmente-oculto" for="rodape-email">Seu e-mail</label>
+            <input class="rodape__campo" id="rodape-email" type="email" name="email" placeholder="seu@email.com" autocomplete="email">
+            <button class="botao botao--verde" type="submit">Assinar</button>
+          </form>
+        </div>
+      </div>
+      <div class="rodape__base">
+        <p>© 2026 Descubra o Vinho · Todos os direitos reservados</p>
+        <div class="rodape__legais">
+          <a href="#">Política de privacidade</a>
+          <a href="#">Termos de uso</a>
+          <p class="rodape__aviso">Aprecie com moderação. Venda proibida para menores de 18 anos.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

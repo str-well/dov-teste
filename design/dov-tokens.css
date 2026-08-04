@@ -1,0 +1,378 @@
+/* ==========================================================================
+   Descubra o Vinho — tokens de design
+   Fonte única de verdade para cores, tipografia, espaçamento e movimento.
+   Todos os valores foram extraídos das pranchas aprovadas (desktop 1440 /
+   mobile 390). Não editar valores individuais nas telas: alterar aqui.
+
+   As fontes são referenciadas apenas por nome — o carregamento fica a cargo
+   do next/font (ver README).
+   ========================================================================== */
+
+:root {
+  /* ----------------------------------------------------------------------
+     1. CORES DA MARCA
+     ---------------------------------------------------------------------- */
+  --dov-roxo:            #681775; /* primária: marca, CTAs, links, kickers   */
+  --dov-roxo-secundario: #9158A4; /* hover de link, blobs, gradações         */
+  --dov-lilas:           #D1B3D2; /* bordas, filetes, placeholders           */
+  --dov-offwhite:        #F3E8E8; /* fundo de respiro entre seções           */
+  --dov-marinho:         #202D42; /* todo o texto e o fundo do rodapé        */
+  --dov-verde:           #009559; /* acento: datas de agenda, tags, ícones   */
+  --dov-limao:           #95BA34; /* sublinhado de hover, filetes de detalhe */
+  --dov-menta:           #74C29A; /* blob secundário, títulos no rodapé      */
+  --dov-branco:          #FFFFFF;
+  --dov-preto:           #000000; /* exclusivo da versão preta do logo       */
+
+  /* ----------------------------------------------------------------------
+     2. PAPÉIS SEMÂNTICOS
+     ---------------------------------------------------------------------- */
+  --dov-fundo:              var(--dov-branco);
+  --dov-fundo-alternativo:  var(--dov-offwhite);
+  --dov-fundo-escuro:       var(--dov-marinho);
+  --dov-texto:              var(--dov-marinho);
+  --dov-texto-suave:        #4C4F5C;
+  --dov-texto-meta:         #6A6975;
+  --dov-texto-desabilitado: #B4AFB6;
+  --dov-texto-sobre-escuro:      #FFFFFF;
+  --dov-texto-suave-sobre-escuro: #D8D2D6;
+  --dov-texto-meta-sobre-escuro:  #B4AFB6;
+
+  --dov-divisor:              rgba(32, 45, 66, 0.14);
+  --dov-divisor-sobre-escuro: rgba(255, 255, 255, 0.18);
+  --dov-borda-sobre-escuro:   rgba(255, 255, 255, 0.30);
+  --dov-borda-campo-escuro:   rgba(255, 255, 255, 0.35);
+
+  /* ----------------------------------------------------------------------
+     3. RAMPAS TONAIS
+     ---------------------------------------------------------------------- */
+  --dov-roxo-100: #F6EDF7;
+  --dov-roxo-200: #E9D6EC;
+  --dov-roxo-300: #D1B3D2;
+  --dov-roxo-400: #B98AC0;
+  --dov-roxo-500: #9158A4;
+  --dov-roxo-600: #7A2C8A;
+  --dov-roxo-700: #681775;
+  --dov-roxo-800: #4E0F5A;
+  --dov-roxo-900: #360A3E;
+
+  --dov-verde-100: #E7F6EE;
+  --dov-verde-200: #C9EBD9;
+  --dov-verde-300: #74C29A;
+  --dov-verde-400: #35AC77;
+  --dov-verde-500: #009559;
+  --dov-verde-600: #00814C;
+  --dov-verde-700: #006B3F;
+  --dov-verde-800: #0A5233;
+  --dov-verde-900: #093A26;
+
+  --dov-neutro-100: #F7F4F5;
+  --dov-neutro-200: #ECE6E8;
+  --dov-neutro-300: #D8D2D6;
+  --dov-neutro-400: #B4AFB6;
+  --dov-neutro-500: #8A8894;
+  --dov-neutro-600: #6A6975;
+  --dov-neutro-700: #4C4F5C;
+  --dov-neutro-800: #333949;
+  --dov-neutro-900: #202D42;
+
+  /* ----------------------------------------------------------------------
+     4. TIPOGRAFIA — famílias e pesos
+     ---------------------------------------------------------------------- */
+  --dov-fonte-titulo: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --dov-fonte-corpo:  "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --dov-peso-titulo-leve:   400; /* display e H1 de página                   */
+  --dov-peso-titulo:        500; /* H1 de matéria, H2, H3 — o peso máximo    */
+  --dov-peso-corpo:         400;
+  --dov-peso-corpo-medio:   500; /* kickers, navegação, botões, rótulos      */
+  --dov-peso-corpo-forte:   700; /* exclusivo de <strong> dentro do corpo    */
+
+  /* Cormorant nunca em bold. 600 apenas em rótulos ≤ 14px, se necessário.  */
+
+  /* ----------------------------------------------------------------------
+     5. ESCALA TIPOGRÁFICA — DESKTOP (≥ 1025px)
+        Cada papel traz tamanho e altura de linha.
+     ---------------------------------------------------------------------- */
+  --dov-t-hero:               64px;   --dov-lh-hero:               1.04;
+  --dov-t-h1-pagina:          56px;   --dov-lh-h1-pagina:          1.04;
+  --dov-t-h1-institucional:   60px;   --dov-lh-h1-institucional:   1.03;
+  --dov-t-h1-materia:         56px;   --dov-lh-h1-materia:         1.04;
+  --dov-t-h1-busca:           44px;   --dov-lh-h1-busca:           1.06;
+  --dov-t-h2-hero:            48px;   --dov-lh-h2-hero:            1.06;
+  --dov-t-h2-destaque:        44px;   --dov-lh-h2-destaque:        1.08;
+  --dov-t-h2-secao:           38px;   --dov-lh-h2-secao:           1.10;
+  --dov-t-h2-artigo:          34px;   --dov-lh-h2-artigo:          1.12;
+  --dov-t-h3-destaque:        32px;   --dov-lh-h3-destaque:        1.12;
+  --dov-t-h3-artigo:          26px;   --dov-lh-h3-artigo:          1.15;
+  --dov-t-h3-cartao:          24px;   --dov-lh-h3-cartao:          1.15;
+  --dov-t-h4-cartao:          21px;   --dov-lh-h4-cartao:          1.20;
+  --dov-t-h5-cartao:          19px;   --dov-lh-h5-cartao:          1.20;
+  --dov-t-citacao:            27px;   --dov-lh-citacao:            1.30;
+
+  --dov-t-lead:               21px;   --dov-lh-lead:               1.60;
+  --dov-t-corpo:              18px;   --dov-lh-corpo:              1.75;
+  --dov-t-corpo-medio:        17px;   --dov-lh-corpo-medio:        1.70;
+  --dov-t-corpo-compacto:     16px;   --dov-lh-corpo-compacto:     1.65;
+  --dov-t-cartao:             15px;   --dov-lh-cartao:             1.60;
+  --dov-t-auxiliar:           14px;   --dov-lh-auxiliar:           1.60;
+  --dov-t-meta:               13px;   --dov-lh-meta:               1.50;
+  --dov-t-legenda:            12px;   --dov-lh-legenda:            1.50;
+
+  --dov-t-navegacao:          15px;
+  --dov-t-botao:              15px;
+  --dov-t-botao-pequeno:      14px;
+  --dov-t-chip:               13px;
+
+  --dov-t-kicker:             12px;
+  --dov-t-kicker-pequeno:     11px;
+  --dov-t-kicker-mini:        10px;
+
+  --dov-t-letra-indice:       76px;   --dov-lh-letra-indice:       0.90;
+  --dov-t-letra-verbete:      64px;   --dov-lh-letra-verbete:      0.90;
+  --dov-t-letra-navegacao:    19px;
+  --dov-t-numeral-destaque:   40px;   --dov-lh-numeral-destaque:   1.00;
+  --dov-t-numeral-404:        88px;   --dov-lh-numeral-404:        1.00;
+
+  /* ----------------------------------------------------------------------
+     6. ESCALA TIPOGRÁFICA — MOBILE (≤ 767px)
+     ---------------------------------------------------------------------- */
+  --dov-t-hero-mobile:             38px;  --dov-lh-hero-mobile:             1.06;
+  --dov-t-h1-pagina-mobile:        38px;  --dov-lh-h1-pagina-mobile:        1.05;
+  --dov-t-h1-institucional-mobile: 36px;  --dov-lh-h1-institucional-mobile: 1.06;
+  --dov-t-h1-materia-mobile:       34px;  --dov-lh-h1-materia-mobile:       1.08;
+  --dov-t-h1-busca-mobile:         30px;  --dov-lh-h1-busca-mobile:         1.08;
+  --dov-t-h2-hero-mobile:          32px;  --dov-lh-h2-hero-mobile:          1.10;
+  --dov-t-h2-destaque-mobile:      32px;  --dov-lh-h2-destaque-mobile:      1.10;
+  --dov-t-h2-secao-mobile:         27px;  --dov-lh-h2-secao-mobile:         1.10;
+  --dov-t-h2-artigo-mobile:        27px;  --dov-lh-h2-artigo-mobile:        1.15;
+  --dov-t-h3-destaque-mobile:      23px;  --dov-lh-h3-destaque-mobile:      1.18;
+  --dov-t-h3-cartao-mobile:        22px;  --dov-lh-h3-cartao-mobile:        1.18;
+  --dov-t-h4-cartao-mobile:        20px;  --dov-lh-h4-cartao-mobile:        1.20;
+  --dov-t-h5-cartao-mobile:        19px;  --dov-lh-h5-cartao-mobile:        1.20;
+  --dov-t-citacao-mobile:          22px;  --dov-lh-citacao-mobile:          1.30;
+  --dov-t-menu-mobile:             27px;  /* itens do menu em tela cheia    */
+
+  --dov-t-lead-mobile:             18px;  --dov-lh-lead-mobile:             1.60;
+  --dov-t-corpo-mobile:            17px;  --dov-lh-corpo-mobile:            1.75;
+  --dov-t-corpo-compacto-mobile:   16px;  --dov-lh-corpo-compacto-mobile:   1.70;
+  --dov-t-cartao-mobile:           15px;  --dov-lh-cartao-mobile:           1.60;
+  --dov-t-meta-mobile:             13px;
+  --dov-t-legenda-mobile:          12px;
+  --dov-t-kicker-mobile:           11px;
+
+  --dov-t-letra-indice-mobile:     52px;  --dov-lh-letra-indice-mobile:     0.90;
+  --dov-t-letra-verbete-mobile:    42px;
+  --dov-t-letra-navegacao-mobile:  17px;
+  --dov-t-numeral-destaque-mobile: 32px;
+
+  /* ----------------------------------------------------------------------
+     7. TRACKING (letter-spacing)
+     ---------------------------------------------------------------------- */
+  --dov-tracking-kicker:      0.16em; /* kickers e rótulos em caixa-alta    */
+  --dov-tracking-assinatura:  0.14em; /* faixa utilitária do cabeçalho      */
+  --dov-tracking-marca:       0.20em; /* assinatura em peças de marca       */
+  --dov-tracking-titulo:      -0.01em;
+  --dov-tracking-normal:      0;
+
+  /* ----------------------------------------------------------------------
+     8. ESPAÇAMENTO
+     ---------------------------------------------------------------------- */
+  --dov-esp-1:   4px;
+  --dov-esp-2:   8px;
+  --dov-esp-3:   12px;
+  --dov-esp-4:   16px;
+  --dov-esp-5:   20px;
+  --dov-esp-6:   24px;
+  --dov-esp-7:   28px;
+  --dov-esp-8:   32px;
+  --dov-esp-9:   40px;
+  --dov-esp-10:  48px;
+  --dov-esp-11:  56px;
+  --dov-esp-12:  64px;
+  --dov-esp-13:  72px;
+  --dov-esp-14:  84px;
+  --dov-esp-15:  120px;
+
+  /* ----------------------------------------------------------------------
+     9. GRADE E LARGURAS
+     ---------------------------------------------------------------------- */
+  --dov-largura-prancha-desktop: 1440px;
+  --dov-largura-prancha-mobile:  390px;
+  --dov-largura-conteudo:        1200px;
+  --dov-colunas:                 12;
+  --dov-coluna:                  68px;
+  --dov-gutter:                  32px;
+  --dov-gutter-tablet:           24px;
+
+  --dov-margem-desktop: 120px;
+  --dov-margem-tablet:  48px;
+  --dov-margem-mobile:  20px;
+
+  --dov-medida-texto:      720px; /* largura máxima do corpo do artigo      */
+  --dov-medida-cabecalho:  820px; /* largura máxima da cabeça da matéria    */
+  --dov-largura-sidebar:   300px;
+  --dov-largura-sidebar-larga: 340px;
+
+  --dov-secao-y-desktop: 84px;
+  --dov-secao-y-mobile:  36px;
+
+  /* --------------------------------------------------------------------
+     10. ALTURAS DE COMPONENTE
+     -------------------------------------------------------------------- */
+  --dov-altura-faixa-utilitaria:    44px;
+  --dov-altura-cabecalho:           92px;
+  --dov-altura-cabecalho-reduzido:  68px; /* após o scroll                  */
+  --dov-altura-cabecalho-mobile:    66px;
+
+  --dov-altura-busca:          72px; /* hero desktop                        */
+  --dov-altura-busca-media:    66px; /* página de resultados                */
+  --dov-altura-busca-compacta: 64px; /* almanaque                           */
+  --dov-altura-busca-mobile:   56px;
+  --dov-altura-campo:          52px;
+
+  --dov-altura-botao:         54px;
+  --dov-altura-botao-media:   52px;
+  --dov-altura-botao-pequena: 46px;
+  --dov-altura-botao-mini:    44px;
+
+  --dov-alvo-toque:      48px; /* mínimo no mobile                          */
+  --dov-alvo-paginacao:  44px;
+  --dov-alvo-letra:      40px;
+  --dov-alvo-letra-mobile: 36px;
+
+  --dov-logo-altura-desktop:  58px;
+  --dov-logo-altura-mobile:   42px;
+  --dov-logo-altura-rodape:   56px;
+  --dov-logo-proporcao:       2.1531; /* 900 / 418 — dimensionar por altura */
+
+  /* --------------------------------------------------------------------
+     11. RAIOS
+     -------------------------------------------------------------------- */
+  --dov-raio-pequeno: 3px;
+  --dov-raio:         6px;  /* cartões, imagens, caixas                     */
+  --dov-raio-grande:  14px;
+  --dov-raio-pilula:  999px; /* botões, chips, campos, paginação            */
+
+  /* --------------------------------------------------------------------
+     12. SOMBRAS
+     -------------------------------------------------------------------- */
+  --dov-sombra-pequena: 0 1px 2px rgba(32, 45, 66, 0.10);
+  --dov-sombra:         0 6px 18px rgba(32, 45, 66, 0.12);
+  --dov-sombra-grande:  0 18px 44px rgba(32, 45, 66, 0.16);
+  --dov-filete-hover:   0 3px 0 var(--dov-limao); /* sob a imagem do cartão */
+
+  /* --------------------------------------------------------------------
+     13. BORDAS
+     -------------------------------------------------------------------- */
+  --dov-borda-fina:    1px;
+  --dov-borda-media:   2px;
+  --dov-borda-marcada: 3px;
+  --dov-hairline:      var(--dov-borda-fina) solid var(--dov-divisor);
+
+  /* --------------------------------------------------------------------
+     14. FOCO
+     -------------------------------------------------------------------- */
+  --dov-foco-cor:      var(--dov-roxo);
+  --dov-foco-espessura: 2px;
+  --dov-foco-offset:    2px;
+
+  /* --------------------------------------------------------------------
+     15. MOVIMENTO
+     -------------------------------------------------------------------- */
+  --dov-duracao-instantanea: 100ms;
+  --dov-duracao-rapida:      150ms; /* cor de link, hover de menu           */
+  --dov-duracao:             250ms; /* zoom de imagem, sombra de cartão     */
+  --dov-duracao-media:       320ms; /* sugestões da busca, sticky           */
+  --dov-duracao-lenta:       400ms; /* menu mobile em tela cheia            */
+
+  --dov-easing:        cubic-bezier(0.4, 0, 0.2, 1);
+  --dov-easing-saida:  cubic-bezier(0.0, 0, 0.2, 1);
+  --dov-easing-entrada: cubic-bezier(0.4, 0, 1, 1);
+
+  --dov-escala-hover-imagem: 1.03;
+
+  /* --------------------------------------------------------------------
+     16. CAMADAS
+     -------------------------------------------------------------------- */
+  --dov-z-base:            0;
+  --dov-z-blob:            1;
+  --dov-z-conteudo:        2;
+  --dov-z-sticky:          100;
+  --dov-z-cabecalho:       200;
+  --dov-z-sugestoes:       300;
+  --dov-z-menu-mobile:     400;
+
+  /* --------------------------------------------------------------------
+     17. OPACIDADE DOS BLOBS
+     -------------------------------------------------------------------- */
+  --dov-blob-lilas-opacidade: 0.50;
+  --dov-blob-menta-opacidade: 0.30;
+  --dov-blob-roxo-opacidade:  0.14;
+}
+
+/* ==========================================================================
+   Reset e base — o mínimo para as pranchas renderizarem fielmente.
+   Em Next.js, mova para o globals.css.
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--dov-fundo);
+  color: var(--dov-texto);
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-corpo);
+  line-height: var(--dov-lh-corpo);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo);
+  letter-spacing: var(--dov-tracking-titulo);
+  text-wrap: pretty;
+}
+
+p, ul, ol, figure, blockquote { margin: 0; }
+ul, ol { padding: 0; list-style: none; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+
+a {
+  color: var(--dov-roxo-700);
+  text-decoration: none;
+  transition: color var(--dov-duracao-rapida) var(--dov-easing);
+}
+a:hover { color: var(--dov-roxo-secundario); }
+
+:focus-visible {
+  outline: var(--dov-foco-espessura) solid var(--dov-foco-cor);
+  outline-offset: var(--dov-foco-offset);
+}
+
+::selection {
+  background: var(--dov-roxo-200);
+  color: var(--dov-roxo-900);
+}
+
+/* Números sempre tabulares em datas, contagens, paginação e letras. */
+time,
+.dov-tabular { font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

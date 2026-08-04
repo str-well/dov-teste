@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home · Descubra o Vinho</title>
+  <meta name="description" content="Portal para descobrir o universo do vinho.">
+  <!-- Apenas para o preview estático. Em Next.js remova e carregue via next/font
+       (Cormorant_Garamond 400/500 + DM_Sans 400/500/700). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="02-home-mobile.css">
+</head>
+<body>
+  <header class="cabecalho-mobile">
+    <a class="marca" href="02-home-mobile.html" aria-label="Descubra o Vinho — página inicial">
+      <img class="cabecalho-mobile__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+    </a>
+    <div class="cabecalho-mobile__acoes">
+      <button class="botao-icone botao-icone--toque" type="button" aria-label="Buscar">
+        <svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+      </button>
+      <button class="botao-icone botao-icone--toque" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu-mobile">
+        <svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-mobile secao--empilhada" aria-labelledby="hero-titulo">
+      <img class="blob blob--lilas hero-mobile__blob" src="../assets/blobs/dov-blob-lilas.svg" alt="" aria-hidden="true">
+      <div class="secao__conteudo">
+        <p class="kicker kicker-mobile">Descubra o vinho</p>
+        <h1 class="hero-mobile__titulo" id="hero-titulo">O que você quer descobrir sobre vinho hoje?</h1>
+        <p class="lead-mobile hero-mobile__lead">Uvas, harmonizações, destinos e verbetes — em um só lugar.</p>
+        <form role="search" action="#">
+          <div class="busca-mobile hero-mobile__busca">
+            <svg class="busca-mobile__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+            <label class="visualmente-oculto" for="busca-mobile">Buscar no portal</label>
+            <input class="busca-mobile__campo" id="busca-mobile" type="search" name="s" placeholder="Busque uvas, destinos…">
+          </div>
+          <button class="botao botao--primario botao--bloco" type="submit">Buscar</button>
+        </form>
+        <div class="chips hero-mobile__chips">
+          <a class="chip chip--sugestao" href="#">Tannat</a>
+          <a class="chip chip--sugestao" href="#">Vinho e queijo</a>
+          <a class="chip chip--sugestao" href="#">Espumantes</a>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="capa-titulo">
+      <div class="marcador marcador--16x9 marcador--reto" aria-hidden="true">foto 16:9 · 1920×1080</div>
+      <div class="capa-mobile__texto">
+        <p class="kicker kicker-mobile kicker--verde">Matéria de capa · Viaje</p>
+        <h2 class="capa-mobile__titulo" id="capa-titulo">Serra Gaúcha em três dias: o roteiro sem pressa</h2>
+        <p class="capa-mobile__resumo">Seis vinícolas, duas estradas de terra e uma regra: nenhuma degustação antes das dez.</p>
+        <a class="botao botao--primario botao--bloco" href="06-materia-mobile.html">Ler a matéria <svg class="botao__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <section class="secao-mobile secao-mobile--ultimas limite-mobile" aria-labelledby="ultimas-titulo">
+      <div class="secao-mobile__cabeca">
+        <h2 class="titulo-secao-mobile" id="ultimas-titulo">Últimas publicações</h2>
+        <a class="link-texto" href="#">Ver todas</a>
+      </div>
+      <ul class="lista-mobile">
+        <li>
+          <article>
+            <a class="cartao-mobile__link" href="#">
+              <div class="marcador marcador--3x2" aria-hidden="true">foto 3:2</div>
+              <p class="kicker kicker-mobile">Harmonize</p>
+              <h3 class="cartao-mobile__titulo">Cinco queijos brasileiros e o que abrir com cada um</h3>
+              <p class="cartao-mobile__meta"><time datetime="2026-03-11">11 mar 2026</time> · 5 min</p>
+            </a>
+          </article>
+        </li>
+        <li>
+          <article>
+            <a class="cartao-linha__link" href="#">
+              <div class="cartao-linha__midia"><div class="marcador marcador--1x1" aria-hidden="true">1:1</div></div>
+              <div>
+                <p class="kicker kicker-mobile">Saúde &amp; Ciência</p>
+                <h3 class="cartao-linha__titulo">O que a ciência diz sobre uma taça por dia</h3>
+                <p class="cartao-linha__meta"><time datetime="2026-03-10">10 mar 2026</time></p>
+              </div>
+            </a>
+          </article>
+        </li>
+        <li>
+          <article>
+            <a class="cartao-linha__link" href="#">
+              <div class="cartao-linha__midia"><div class="marcador marcador--1x1" aria-hidden="true">1:1</div></div>
+              <div>
+                <p class="kicker kicker-mobile">Curiosidades</p>
+                <h3 class="cartao-linha__titulo">Por que a garrafa de vinho tem 750 ml?</h3>
+                <p class="cartao-linha__meta"><time datetime="2026-03-09">09 mar 2026</time></p>
+              </div>
+            </a>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <section class="secao-mobile secao-mobile--alternativa limite-mobile" aria-labelledby="viaje-titulo">
+      <div class="secao-mobile__cabeca">
+        <h2 class="titulo-secao-mobile" id="viaje-titulo">Viaje</h2>
+        <a class="link-texto" href="04-categoria-mobile.html">Ver tudo</a>
+      </div>
+      <article class="editoria-mobile__cartao">
+        <a href="#">
+          <div class="marcador marcador--4x3 marcador--reto" aria-hidden="true">foto 4:3</div>
+          <div class="editoria-mobile__texto">
+            <h3 class="editoria-mobile__titulo">Mendoza fora da rota: três vales que ninguém te indicou</h3>
+            <p class="cartao-mobile__resumo">Subimos a 1.700 metros para provar malbecs que quase não saem da província.</p>
+          </div>
+        </a>
+      </article>
+      <ol class="lista-numerada editoria-mobile__lista">
+        <li><a class="lista-numerada__item" href="#"><span class="lista-numerada__numero">01</span><span class="lista-numerada__titulo lista-numerada__titulo--mobile">Douro de trem: o trajeto mais bonito da Europa do vinho</span></a></li>
+        <li><a class="lista-numerada__item" href="#"><span class="lista-numerada__numero">02</span><span class="lista-numerada__titulo lista-numerada__titulo--mobile">Vinhos de altitude em Santa Catarina: o que provar</span></a></li>
+      </ol>
+    </section>
+
+    <section class="secao-mobile--escura secao--empilhada almanaque-mobile" aria-labelledby="almanaque-titulo">
+      <img class="blob blob--menta almanaque-mobile__blob" src="../assets/blobs/dov-blob-menta.svg" alt="" aria-hidden="true">
+      <div class="secao__conteudo">
+        <p class="kicker kicker-mobile kicker--menta">Consulta permanente</p>
+        <h2 class="almanaque-mobile__titulo" id="almanaque-titulo">O Almanaque do Vinho, de A a Z</h2>
+        <p class="almanaque-mobile__texto">Mais de 400 verbetes explicando uvas, técnicas, regiões e termos.</p>
+        <nav class="alfabeto-mobile" aria-label="Índice do Almanaque">
+          <a class="alfabeto-mobile__letra" href="#">A</a>
+          <a class="alfabeto-mobile__letra" href="#">B</a>
+          <a class="alfabeto-mobile__letra" href="#">C</a>
+          <a class="alfabeto-mobile__letra alfabeto-mobile__letra--ativa" href="#">D</a>
+          <a class="alfabeto-mobile__letra" href="#">E</a>
+          <a class="alfabeto-mobile__letra" href="#">F</a>
+          <a class="alfabeto-mobile__letra" href="#">G</a>
+        </nav>
+        <a class="botao botao--claro botao--bloco" href="08-almanaque-indice-mobile.html">Abrir o Almanaque <svg class="botao__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <section class="secao-mobile limite-mobile" aria-labelledby="agenda-titulo">
+      <div class="secao-mobile__cabeca">
+        <h2 class="titulo-secao-mobile" id="agenda-titulo">Programe-se</h2>
+        <a class="link-texto" href="#">Agenda</a>
+      </div>
+      <div class="agenda-mobile">
+        <a class="agenda-mobile__item" href="#">
+          <p class="agenda-mobile__data"><time datetime="2026-04-18">18–20 abr</time> · São Paulo</p>
+          <h3 class="agenda-mobile__titulo">Feira do Vinho Nacional</h3>
+        </a>
+        <a class="agenda-mobile__item" href="#">
+          <p class="agenda-mobile__data"><time datetime="2026-04-26">26 abr</time> · Bento Gonçalves</p>
+          <h3 class="agenda-mobile__titulo">Abertura da vindima de inverno</h3>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape-mobile">
+    <img class="rodape-mobile__logo" src="../assets/logos/dov-logo-horizontal-branco.svg" alt="Descubra o Vinho">
+    <p class="rodape-mobile__descricao">Um portal para descobrir o universo do vinho sem solenidade.</p>
+    <nav class="rodape-mobile__links" aria-label="Rodapé">
+      <a class="rodape__link" href="#">Descubra</a>
+      <a class="rodape__link" href="#">Saúde &amp; Ciência</a>
+      <a class="rodape__link" href="#">Curiosidades</a>
+      <a class="rodape__link" href="#">Viaje</a>
+      <a class="rodape__link" href="#">Harmonize</a>
+      <a class="rodape__link" href="#">Programe-se</a>
+      <a class="rodape__link" href="#">Mercado</a>
+      <a class="rodape__link" href="#">Almanaque A–Z</a>
+    </nav>
+    <div class="rodape-mobile__base">
+      <p>© 2026 Descubra o Vinho</p>
+      <p class="rodape__aviso">Aprecie com moderação. Venda proibida para menores de 18 anos.</p>
+    </div>
+  </footer>
+</body>
+</html>

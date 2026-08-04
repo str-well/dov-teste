@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fundamentos e componentes · Descubra o Vinho</title>
+  <meta name="description" content="Paleta, tipografia, grade e componentes globais do Descubra o Vinho.">
+  <!-- Apenas para o preview estático. Em Next.js remova e carregue via next/font
+       (Cormorant_Garamond 400/500 + DM_Sans 400/500/700). -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap">
+  <link rel="stylesheet" href="00-fundamentos-componentes.css">
+</head>
+<body>
+  <div class="folha">
+    <header class="folha__cabeca">
+      <img class="folha__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+      <div>
+        <p class="kicker">Sistema de design · v1</p>
+        <h1 class="folha__titulo">Fundamentos<br>e componentes globais</h1>
+        <p class="folha__intro">Paleta, escala tipográfica, grade, blobs e os componentes reutilizáveis (cabeçalho, busca, cartão, rodapé) que se repetem em todos os templates. Todos os valores vêm de <code>dov-tokens.css</code>.</p>
+      </div>
+    </header>
+
+    <section aria-labelledby="g-paleta">
+      <h2 class="grupo__rotulo" id="g-paleta">01 · Paleta aplicada</h2>
+      <div class="paleta">
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #681775;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Roxo primário</p>
+            <p class="swatch__hex">#681775</p>
+            <p class="swatch__uso">Marca, CTAs, links, categoria ativa</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #9158A4;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Roxo secundário</p>
+            <p class="swatch__hex">#9158A4</p>
+            <p class="swatch__uso">Hover de links, blobs, gradações</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #D1B3D2;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Lilás claro</p>
+            <p class="swatch__hex">#D1B3D2</p>
+            <p class="swatch__uso">Bordas, filetes, blobs, placeholders</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #F3E8E8; border-bottom: 1px solid var(--dov-divisor);"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Off-white / rosé</p>
+            <p class="swatch__hex">#F3E8E8</p>
+            <p class="swatch__uso">Fundo de respiro entre seções</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #202D42;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Azul-marinho</p>
+            <p class="swatch__hex">#202D42</p>
+            <p class="swatch__uso">Todo o texto e o rodapé</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #009559;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Verde escuro</p>
+            <p class="swatch__hex">#009559</p>
+            <p class="swatch__uso">Acento: tag de destaque, ícones</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #95BA34;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Verde-limão</p>
+            <p class="swatch__hex">#95BA34</p>
+            <p class="swatch__uso">Sublinhado de hover, detalhes finos</p>
+          </div>
+        </div>
+        <div class="swatch">
+          <div class="swatch__cor" style="background: #74C29A;"></div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Verde menta</p>
+            <p class="swatch__hex">#74C29A</p>
+            <p class="swatch__uso">Blob secundário, fundo de tag</p>
+          </div>
+        </div>
+        <div class="swatch swatch--duplo">
+          <div class="swatch__par">
+            <span style="background: #FFFFFF; border-bottom: 1px solid var(--dov-divisor);"></span>
+            <span style="background: #000000;"></span>
+          </div>
+          <div class="swatch__corpo">
+            <p class="swatch__nome">Branco / Preto</p>
+            <p class="swatch__hex">#FFFFFF · #000000</p>
+            <p class="swatch__uso">Fundo padrão das páginas. Preto só nas versões do logo.</p>
+          </div>
+        </div>
+      </div>
+      <div class="contrastes">
+        <p class="contraste" style="background: #681775; color: #fff;">Branco sobre roxo · 9,3:1 · AAA</p>
+        <p class="contraste" style="background: #F3E8E8; color: #202D42;">Marinho sobre off-white · 12,4:1 · AAA</p>
+        <p class="contraste" style="background: #fff; color: #681775; border: 1px solid var(--dov-divisor);">Roxo sobre branco · 9,7:1 · AAA</p>
+        <p class="contraste" style="background: #009559; color: #fff;">Branco sobre verde escuro · 3,4:1 · só texto ≥ 24px</p>
+        <p class="contraste" style="background: #95BA34; color: #202D42;">Limão nunca com texto branco — usar marinho</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-tipo">
+      <h2 class="grupo__rotulo" id="g-tipo">02 · Tipografia — Cormorant Garamond + DM Sans</h2>
+      <div class="linha">
+        <div class="painel tipo">
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">Display / H1 hero<br>Cormorant 400 · 64/1.04</p>
+        <p class="tipo__amostra" style="font-family: var(--dov-fonte-titulo); font-weight: 400; font-size: 64px; line-height: 1.04;">O vinho começa no lugar</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">H1 matéria<br>Cormorant 500 · 56/1.04</p>
+        <p class="tipo__amostra" style="font-family: var(--dov-fonte-titulo); font-weight: 500; font-size: 56px; line-height: 1.04;">Serra Gaúcha em três dias</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">H2 seção<br>Cormorant 500 · 38/1.10</p>
+        <p class="tipo__amostra" style="font-family: var(--dov-fonte-titulo); font-weight: 500; font-size: 38px; line-height: 1.1;">Harmonize com calma</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">H3 / título de cartão<br>Cormorant 500 · 24/1.15</p>
+        <p class="tipo__amostra" style="font-family: var(--dov-fonte-titulo); font-weight: 500; font-size: 24px; line-height: 1.15;">Uvas que ninguém pediu e todos amaram</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">Kicker / categoria<br>DM Sans 500 · 12 · +.16em</p>
+        <p class="tipo__amostra" style="font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: var(--dov-roxo);">Saúde &amp; Ciência</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">Lead / olho<br>DM Sans 400 · 21/1.60</p>
+        <p class="tipo__amostra" style="font-size: 21px; line-height: 1.6; color: var(--dov-neutro-800);">Um roteiro curto para quem quer entender terroir sem decorar rótulos.</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">Corpo<br>DM Sans 400 · 18/1.75</p>
+        <p class="tipo__amostra" style="font-size: 18px; line-height: 1.75;">A altitude muda a acidez, o solo muda o corpo e o vento muda a casca. É por isso que dois vinhos feitos com a mesma uva, a trinta quilômetros de distância, não têm nada a ver um com o outro.</p>
+      </div>
+      <div class="tipo__linha">
+        <p class="tipo__rotulo">Meta / data<br>DM Sans 400 · 13</p>
+        <p class="tipo__amostra" style="font-size: 13px; color: var(--dov-texto-meta); font-variant-numeric: tabular-nums;">12 mar 2026 · 6 min de leitura · por Ana Ferraz</p>
+      </div>
+        </div>
+        <div class="painel painel--compacto" style="width: 420px;">
+          <h3 style="margin-bottom: var(--dov-esp-4); font-size: 22px;">Escala mobile (≤ 767px)</h3>
+          <table class="tabela">
+            <thead><tr><th scope="col">Papel</th><th scope="col">Tamanho / linha</th></tr></thead>
+            <tbody>
+              <tr><td>H1 hero</td><td>38 / 1.06</td></tr>
+              <tr><td>H1 matéria</td><td>34 / 1.08</td></tr>
+              <tr><td>H2 seção</td><td>27 / 1.10</td></tr>
+              <tr><td>H3 cartão</td><td>22 / 1.18</td></tr>
+              <tr><td>Lead</td><td>18 / 1.60</td></tr>
+              <tr><td>Corpo</td><td>17 / 1.75</td></tr>
+              <tr><td>Kicker · Meta</td><td>11 · 13</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top: var(--dov-esp-5); font-size: 13px; line-height: 1.6; color: var(--dov-texto-suave);">Uma única <strong>H1 por página</strong>. Cormorant nunca em bold — o peso máximo é 500. Números sempre tabulares em datas, letras do almanaque e paginação.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-grade">
+      <h2 class="grupo__rotulo" id="g-grade">03 · Grade e breakpoints</h2>
+      <div class="linha">
+        <div class="painel painel--compacto" style="width: 600px;">
+          <p class="swatch__nome">Desktop · referência 1440</p>
+          <p class="nota" style="margin-bottom: 18px;">Conteúdo 1200 · 12 colunas de 68 · gutter 32 · margem 120</p>
+          <div class="colunas" style="grid-template-columns: repeat(12, 1fr);"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="nota" style="margin-top: 14px;">Grade de cartões: 3 colunas na listagem, 2 em destaques, conteúdo + sidebar na matéria.</p>
+        </div>
+        <div class="painel painel--compacto" style="width: 340px;">
+          <p class="swatch__nome">Tablet · 768–1024</p>
+          <p class="nota" style="margin-bottom: 18px;">Margem 48 · gutter 24 · cartões em 2 colunas</p>
+          <div class="colunas" style="grid-template-columns: repeat(8, 1fr);"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="nota" style="margin-top: 14px;">Menu passa a hambúrguer a partir de 1024.</p>
+        </div>
+        <div class="painel painel--compacto" style="width: 300px;">
+          <p class="swatch__nome">Mobile · 375–390</p>
+          <p class="nota" style="margin-bottom: 18px;">Margem 20 · 1 coluna · gutter vertical 32</p>
+          <div class="colunas" style="grid-template-columns: repeat(4, 1fr);"><span></span><span></span><span></span><span></span></div>
+          <p class="nota" style="margin-top: 14px;">Área de toque mínima 48×48.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-imagens">
+      <h2 class="grupo__rotulo" id="g-imagens">04 · Blobs e especificação de imagens</h2>
+      <div class="linha">
+        <div class="painel" style="width: 600px;">
+          <div class="linha" style="align-items: center; gap: var(--dov-esp-6);">
+            <img src="../assets/blobs/dov-blob-roxo.svg" alt="Blob roxo" style="width: 120px; aspect-ratio: 1;">
+            <img src="../assets/blobs/dov-blob-menta.svg" alt="Blob menta" style="width: 120px; aspect-ratio: 1;">
+            <img src="../assets/blobs/dov-blob-lilas.svg" alt="Blob lilás" style="width: 120px; aspect-ratio: 1;">
+          </div>
+          <p style="margin-top: 22px; font-size: 14px; line-height: 1.65; color: var(--dov-texto-suave);">Três formas em SVG. Entram como imagem posicionada dentro de uma seção <code>overflow: hidden</code>, nunca como máscara. No máximo um blob por seção, e só em hero, busca, chamada do Almanaque e 404. Opacidades: lilás .45–.55 · menta .26–.35 · roxo .14.</p>
+        </div>
+        <div class="painel" style="width: 600px;">
+          <h3 style="margin-bottom: 14px; font-size: 22px;">Proporções para exportar (WebP)</h3>
+          <table class="tabela">
+            <thead><tr><th scope="col">Uso</th><th scope="col">Proporção</th><th scope="col">Exportar</th><th scope="col">Peso alvo</th></tr></thead>
+            <tbody>
+              <tr><td>Hero da home</td><td>16:9</td><td>1920×1080</td><td>≤ 200 kB</td></tr>
+              <tr><td>Destaque da matéria</td><td>3:2</td><td>1600×1067</td><td>≤ 160 kB</td></tr>
+              <tr><td>Cartão de notícia</td><td>3:2</td><td>800×533</td><td>≤ 70 kB</td></tr>
+              <tr><td>Cartão em destaque</td><td>4:3</td><td>1200×900</td><td>≤ 110 kB</td></tr>
+              <tr><td>Imagem no corpo</td><td>3:2 ou 4:5</td><td>1200 de largura</td><td>≤ 120 kB</td></tr>
+              <tr><td>Retrato / autor</td><td>1:1</td><td>240×240</td><td>≤ 20 kB</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top: var(--dov-esp-4); font-size: 13px; line-height: 1.6; color: var(--dov-texto-suave);">O hero é <strong>imagem única, não carrossel</strong>: <code>priority</code> no <code>next/image</code>. Fotografias sempre com luz natural; nada de filtro roxo por cima.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-cabecalho">
+      <h2 class="grupo__rotulo" id="g-cabecalho">05 · Cabeçalho desktop — com os estados de hover e ativo</h2>
+      <div class="demo">
+        <div class="faixa-utilitaria">
+          <div class="limite faixa-utilitaria__interno">
+            <p class="assinatura">Descubra + Compartilhe + Viva +</p>
+            <div class="links-utilitarios">
+              <a class="links-utilitarios__link" href="#">Quem Somos</a>
+              <a class="links-utilitarios__link" href="#">Contato</a>
+              <a class="links-utilitarios__link" href="#">Newsletter</a>
+              <div class="redes">
+                <a class="redes__link" href="#" aria-label="Instagram"><svg class="redes__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.6" cy="6.4" r="1"/></svg></a>
+                <a class="redes__link" href="#" aria-label="YouTube"><svg class="redes__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 8.5a4 4 0 0 0-3-3.8C17 4.2 12 4.2 12 4.2s-5 0-7 .5A4 4 0 0 0 2 8.5 24 24 0 0 0 2 15.5a4 4 0 0 0 3 3.8c2 .5 7 .5 7 .5s5 0 7-.5a4 4 0 0 0 3-3.8 24 24 0 0 0 0-7Z"/><path d="M10 9.5l5 2.5-5 2.5v-5Z"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="limite barra-principal">
+          <a class="marca" href="#"><img class="marca__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho"></a>
+          <nav class="menu-principal" aria-label="Exemplo de menu">
+            <ul class="menu-principal__lista">
+              <li><a class="menu-principal__link" href="#" aria-current="page">Descubra</a></li>
+              <li><a class="menu-principal__link menu-principal__link--hover" href="#">Curiosidades</a></li>
+              <li><a class="menu-principal__link" href="#">Harmonize</a></li>
+              <li><a class="menu-principal__link" href="#">Mercado</a></li>
+              <li><a class="menu-principal__link" href="#">Saúde &amp; Ciência</a></li>
+              <li><a class="menu-principal__link" href="#">Viaje</a></li>
+              <li><a class="menu-principal__link" href="#">Programe-se</a></li>
+            </ul>
+            <span class="menu-principal__divisor" aria-hidden="true"></span>
+            <a class="botao botao--contorno botao--mini" href="#">Almanaque</a>
+            <button class="botao-icone" type="button" aria-label="Buscar"><svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></button>
+          </nav>
+        </div>
+      </div>
+      <div class="demo__legenda">
+        <p><span class="demo__marca" style="background: #681775;"></span>Ativo: roxo + filete roxo 2px</p>
+        <p><span class="demo__marca" style="background: #95BA34;"></span>Hover: roxo + filete limão 2px (150ms)</p>
+        <p>Sticky no scroll: só a linha branca de 92px, encolhendo para 68px.</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-mobile">
+      <h2 class="grupo__rotulo" id="g-mobile">06 · Cabeçalho mobile — fechado e menu aberto</h2>
+      <div class="linha" style="gap: var(--dov-esp-9);">
+        <div class="demo demo--mobile">
+          <div class="cabecalho-mobile">
+            <img class="cabecalho-mobile__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+            <div class="cabecalho-mobile__acoes">
+              <button class="botao-icone botao-icone--toque" type="button" aria-label="Buscar"><svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg></button>
+              <button class="botao-icone botao-icone--toque" type="button" aria-label="Abrir menu" aria-expanded="false"><svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+            </div>
+          </div>
+          <div style="padding: var(--dov-esp-6) var(--dov-margem-mobile) var(--dov-esp-8);">
+            <div class="marcador" style="height: 180px;" aria-hidden="true">conteúdo da página</div>
+          </div>
+        </div>
+
+        <div class="demo demo--mobile menu-tela-cheia">
+          <img class="blob blob--lilas menu-tela-cheia__blob" src="../assets/blobs/dov-blob-lilas.svg" alt="" aria-hidden="true">
+          <div class="menu-tela-cheia__topo">
+            <img class="cabecalho-mobile__logo" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+            <button class="botao-icone botao-icone--toque" type="button" aria-label="Fechar menu" aria-expanded="true"><svg class="botao-icone__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          </div>
+          <div class="menu-tela-cheia__corpo">
+            <form class="busca-mobile menu-tela-cheia__busca" role="search" action="#">
+              <svg class="busca-mobile__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+              <label class="visualmente-oculto" for="busca-menu">Buscar no portal</label>
+              <input class="busca-mobile__campo" id="busca-menu" type="search" placeholder="Busque uvas, harmonizações…">
+            </form>
+            <nav class="menu-tela-cheia__lista" aria-label="Editorias">
+              <a class="menu-tela-cheia__link" href="#" aria-current="page">Descubra</a>
+              <a class="menu-tela-cheia__link" href="#">Curiosidades</a>
+              <a class="menu-tela-cheia__link" href="#">Harmonize</a>
+              <a class="menu-tela-cheia__link" href="#">Mercado</a>
+              <a class="menu-tela-cheia__link" href="#">Saúde &amp; Ciência</a>
+              <a class="menu-tela-cheia__link" href="#">Viaje</a>
+              <a class="menu-tela-cheia__link" href="#">Programe-se</a>
+            </nav>
+            <a class="botao botao--primario botao--bloco menu-tela-cheia__cta" href="#">Almanaque do vinho <svg class="botao__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <div class="menu-tela-cheia__utilitarios">
+              <a href="#">Quem Somos</a>
+              <a href="#">Contato</a>
+              <a href="#">Newsletter</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="width: 340px; font-size: 14px; line-height: 1.7; color: var(--dov-texto-suave);">
+          <p style="margin-bottom: var(--dov-esp-3);">Menu em tela cheia sobre o off-white, com um blob lilás no canto. Itens em Cormorant 27px, altura de toque 54px, filete de 1px entre eles.</p>
+          <p>A busca aparece já aberta no topo do menu — no mobile é o caminho mais curto para o conteúdo. O Almanaque é o único item com botão cheio.</p>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-busca">
+      <h2 class="grupo__rotulo" id="g-busca">07 · Barra de busca — o componente-assinatura</h2>
+      <div class="painel pilha" style="width: 1000px;">
+        <div>
+          <p class="estado">Padrão · altura 72px · raio 999px · borda lilás 1px</p>
+          <form class="busca" role="search" action="#">
+            <svg class="busca__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+            <label class="visualmente-oculto" for="busca-padrao">Buscar</label>
+            <input class="busca__campo" id="busca-padrao" type="search" placeholder="Busque uvas, harmonizações, destinos…">
+            <button class="busca__botao" type="submit">Buscar</button>
+          </form>
+        </div>
+        <div>
+          <p class="estado">Foco · borda roxa 2px + anel de foco (acessibilidade de teclado)</p>
+          <div class="busca busca--foco">
+            <svg class="busca__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.3-4.3"/></svg>
+            <p class="busca__campo" style="margin: 0;">enoturismo na serra<span class="busca__cursor">|</span></p>
+            <button class="busca__botao" type="button">Buscar</button>
+          </div>
+        </div>
+        <div>
+          <p class="estado">Sugestões · aparecem a partir de 3 caracteres, com 250 ms de debounce</p>
+          <div class="sugestoes">
+            <a class="sugestoes__item" href="#">Enoturismo na Serra Gaúcha <span class="sugestoes__tipo">Viaje</span></a>
+            <a class="sugestoes__item" href="#">Enologia — verbete do Almanaque <span class="sugestoes__tipo">Almanaque</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-cartao">
+      <h2 class="grupo__rotulo" id="g-cartao">08 · Cartão de notícia — padrão, hover e variações</h2>
+      <div class="painel linha" style="gap: var(--dov-esp-8);">
+        <div style="width: 368px;">
+          <p class="estado">Padrão</p>
+          <article class="cartao">
+            <a class="cartao__link" href="#">
+              <div class="cartao__midia"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+              <p class="kicker">Viaje</p>
+              <h3 class="cartao__titulo">Serra Gaúcha em três dias: um roteiro sem pressa</h3>
+              <p class="cartao__resumo">Onde dormir, quais vinícolas pedem agendamento e por que vale acordar cedo no vale.</p>
+              <p class="cartao__meta"><time datetime="2026-03-12">12 mar 2026</time> · 6 min</p>
+            </a>
+          </article>
+        </div>
+        <div style="width: 368px;">
+          <p class="estado">Hover — título em roxo, filete limão sob a imagem, foto 1.03× (250 ms)</p>
+          <article class="cartao">
+            <span class="cartao__link">
+              <div class="cartao__midia cartao__midia--hover"><div class="marcador marcador--3x2" aria-hidden="true">foto 3:2 · 800×533</div></div>
+              <p class="kicker">Viaje</p>
+              <h3 class="cartao__titulo cartao__titulo--hover">Serra Gaúcha em três dias: um roteiro sem pressa</h3>
+              <p class="cartao__resumo">Onde dormir, quais vinícolas pedem agendamento e por que vale acordar cedo no vale.</p>
+              <p class="cartao__meta"><time datetime="2026-03-12">12 mar 2026</time> · 6 min</p>
+            </span>
+          </article>
+        </div>
+        <div style="width: 368px;" class="pilha">
+          <div>
+            <p class="estado">Compacto (listas laterais e relacionados)</p>
+            <article class="cartao-compacto">
+              <a class="cartao-compacto__link" href="#">
+                <div class="cartao-compacto__midia"><div class="marcador marcador--1x1" aria-hidden="true">1:1</div></div>
+                <div>
+                  <p class="kicker kicker--pequeno">Mercado</p>
+                  <h4 class="cartao-compacto__titulo">O consumidor brasileiro trocou o rótulo pela taça</h4>
+                  <p class="cartao-compacto__meta"><time datetime="2026-03-08">08 mar 2026</time></p>
+                </div>
+              </a>
+            </article>
+          </div>
+          <div>
+            <p class="estado">Tags e filtros</p>
+            <div class="chips">
+              <span class="etiqueta etiqueta--roxa">Enoturismo</span>
+              <span class="etiqueta etiqueta--verde">Uvas</span>
+              <span class="etiqueta etiqueta--neutra">Harmonização</span>
+              <span class="etiqueta etiqueta--contorno">Rótulos</span>
+              <span class="chip chip--ativo">Filtro ativo</span>
+            </div>
+          </div>
+          <div>
+            <p class="estado">Botões e paginação</p>
+            <div class="chips" style="margin-bottom: 14px;">
+              <button class="botao botao--primario botao--pequeno" type="button">Primário</button>
+              <a class="botao botao--contorno botao--pequeno" href="#">Secundário</a>
+              <a class="link-texto" href="#">Link de texto</a>
+            </div>
+            <nav class="paginacao" style="justify-content: flex-start;" aria-label="Exemplo de paginação">
+              <span class="paginacao__item paginacao__item--ativo" aria-current="page">1</span>
+              <a class="paginacao__item" href="#">2</a>
+              <a class="paginacao__item" href="#">3</a>
+              <span class="paginacao__reticencias" aria-hidden="true">…</span>
+              <a class="paginacao__proxima" href="#">Próxima <svg class="" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section aria-labelledby="g-rodape">
+      <h2 class="grupo__rotulo" id="g-rodape">09 · Rodapé (idêntico em todas as telas)</h2>
+      <div class="demo">
+  <div class="rodape">
+    <div class="limite">
+      <div class="rodape__grade">
+        <div>
+          <img class="rodape__logo" src="../assets/logos/dov-logo-horizontal-branco.svg" alt="Descubra o Vinho">
+          <p class="rodape__descricao">Um portal para descobrir o universo do vinho sem solenidade: viagens, harmonizações, mercado, ciência e curiosidades.</p>
+        </div>
+        <nav aria-labelledby="rodape-editorias">
+          <h2 class="rodape__titulo" id="rodape-editorias">Editorias</h2>
+          <ul class="rodape__lista">
+            <li><a class="rodape__link" href="#">Descubra</a></li>
+            <li><a class="rodape__link" href="#">Curiosidades</a></li>
+            <li><a class="rodape__link" href="#">Harmonize</a></li>
+            <li><a class="rodape__link" href="#">Mercado</a></li>
+          </ul>
+        </nav>
+        <nav aria-labelledby="rodape-mais">
+          <h2 class="rodape__titulo" id="rodape-mais">Mais</h2>
+          <ul class="rodape__lista">
+            <li><a class="rodape__link" href="#">Saúde &amp; Ciência</a></li>
+            <li><a class="rodape__link" href="#">Viaje</a></li>
+            <li><a class="rodape__link" href="#">Programe-se</a></li>
+            <li><a class="rodape__link" href="#">Almanaque A–Z</a></li>
+          </ul>
+        </nav>
+        <div>
+          <h2 class="rodape__titulo" id="rodape-newsletter">Newsletter</h2>
+          <p class="rodape__texto">Uma carta por semana, com o que vale ler e beber.</p>
+          <form class="rodape__form" aria-labelledby="rodape-newsletter">
+            <label class="visualmente-oculto" for="rodape-email">Seu e-mail</label>
+            <input class="rodape__campo" id="rodape-email" type="email" name="email" placeholder="seu@email.com" autocomplete="email">
+            <button class="botao botao--verde" type="submit">Assinar</button>
+          </form>
+        </div>
+      </div>
+      <div class="rodape__base">
+        <p>© 2026 Descubra o Vinho · Todos os direitos reservados</p>
+        <div class="rodape__legais">
+          <a href="#">Política de privacidade</a>
+          <a href="#">Termos de uso</a>
+          <p class="rodape__aviso">Aprecie com moderação. Venda proibida para menores de 18 anos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      </div>
+    </section>
+
+    <section aria-labelledby="g-logo">
+      <h2 class="grupo__rotulo" id="g-logo">10 · Aplicação do logo</h2>
+      <div class="linha">
+        <div class="logos">
+          <img class="logos__horizontal" src="../assets/logos/dov-logo-horizontal-colorido.svg" alt="Logo horizontal colorido">
+          <img class="logos__vertical" src="../assets/logos/dov-logo-vertical-colorido.svg" alt="Logo vertical colorido">
+          <img class="logos__icone" src="../assets/logos/dov-icone-cacho-colorido.svg" alt="Ícone do cacho">
+        </div>
+        <div class="logos logos--escuro">
+          <img class="logos__horizontal" src="../assets/logos/dov-logo-horizontal-branco.svg" alt="Logo horizontal branco">
+          <img class="logos__icone" src="../assets/logos/dov-icone-cacho-branco.svg" alt="Ícone do cacho em branco">
+        </div>
+        <div class="painel painel--compacto" style="width: 420px; font-size: 14px; line-height: 1.7; color: var(--dov-texto-suave);">
+          Colorida como padrão sobre branco e off-white; branca sobre roxo, marinho e fotos escuras. Dimensionar sempre pela <strong>altura</strong> (proporção 900 × 418): 58px no cabeçalho desktop, 42px no mobile, 36–56px nos rodapés; mínimo 32px. O ícone sozinho só como favicon e avatar de rede social. Margem de respiro igual à altura do cacho.
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

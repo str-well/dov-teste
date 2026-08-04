@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Descubra o Vinho · pacote de exportação</title>
+  <link rel="icon" href="meta/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=DM+Sans:opsz,wght@9..40,400;9..40,500&display=swap">
+  <link rel="stylesheet" href="dov-tokens.css">
+  <style>
+    body { background: var(--dov-offwhite); }
+    .sumario { max-width: 900px; margin-inline: auto; padding: 72px 24px 96px; }
+    .sumario__logo { height: 64px; width: auto; aspect-ratio: 900 / 418; }
+    .sumario__titulo { margin-block: 28px 12px; font-weight: 400; font-size: 48px; line-height: 1.04; }
+    .sumario__intro { max-width: 620px; font-size: 17px; line-height: 1.7; color: var(--dov-texto-suave); }
+    .sumario__rotulo {
+      margin-block: 56px 16px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--dov-texto-meta);
+    }
+    .lista { display: flex; flex-direction: column; }
+    .lista__item {
+      display: flex;
+      align-items: baseline;
+      gap: 18px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--dov-divisor);
+      border-radius: var(--dov-raio);
+      color: var(--dov-texto);
+      transition: background-color 150ms var(--dov-easing), color 150ms var(--dov-easing);
+    }
+    .lista__item:hover { background: #fff; color: var(--dov-roxo); }
+    .lista__numero {
+      flex: none;
+      width: 28px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--dov-texto-meta);
+      font-variant-numeric: tabular-nums;
+    }
+    .lista__nome { flex: 1; font-family: var(--dov-fonte-titulo); font-weight: 500; font-size: 21px; }
+    .lista__larg { font-size: 13px; color: var(--dov-texto-meta); font-variant-numeric: tabular-nums; }
+    .docs { display: flex; flex-wrap: wrap; gap: 10px; }
+    .docs a {
+      padding: 10px 18px;
+      border: 1px solid var(--dov-roxo);
+      border-radius: var(--dov-raio-pilula);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--dov-roxo);
+    }
+    .docs a:hover { background: var(--dov-roxo-100); }
+  </style>
+</head>
+<body>
+  <main class="sumario">
+    <img class="sumario__logo" src="assets/logos/dov-logo-horizontal-colorido.svg" alt="Descubra o Vinho">
+    <h1 class="sumario__titulo">Pacote de exportação para Next.js</h1>
+    <p class="sumario__intro">17 telas em HTML e CSS estáticos, tokens de design, assets em SVG e a especificação de interação. Sem framework, sem build. As telas desktop foram escritas para ≥ 1280px; as mobile, para ≤ 767px.</p>
+
+    <h2 class="sumario__rotulo">Documentação</h2>
+    <div class="docs">
+      <a href="README.md">README</a>
+      <a href="ESPECIFICACAO-DE-INTERACAO.md">Especificação de interação</a>
+      <a href="dov-tokens.css">dov-tokens.css</a>
+      <a href="meta/README.md">Favicon e Open Graph</a>
+      <a href="meta/og-template.html">Template Open Graph</a>
+    </div>
+
+    <h2 class="sumario__rotulo">Telas</h2>
+    <nav class="lista">
+      <a class="lista__item" href="telas/00-fundamentos-componentes.html"><span class="lista__numero">00</span><span class="lista__nome">Fundamentos e componentes</span><span class="lista__larg">referência</span></a>
+      <a class="lista__item" href="telas/01-home-desktop.html"><span class="lista__numero">01</span><span class="lista__nome">Home</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/02-home-mobile.html"><span class="lista__numero">02</span><span class="lista__nome">Home</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/03-categoria-desktop.html"><span class="lista__numero">03</span><span class="lista__nome">Arquivo de categoria</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/04-categoria-mobile.html"><span class="lista__numero">04</span><span class="lista__nome">Arquivo de categoria</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/05-materia-desktop.html"><span class="lista__numero">05</span><span class="lista__nome">Matéria / post</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/06-materia-mobile.html"><span class="lista__numero">06</span><span class="lista__nome">Matéria / post</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/07-almanaque-indice-desktop.html"><span class="lista__numero">07</span><span class="lista__nome">Almanaque A–Z</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/08-almanaque-indice-mobile.html"><span class="lista__numero">08</span><span class="lista__nome">Almanaque A–Z</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/09-verbete-desktop.html"><span class="lista__numero">09</span><span class="lista__nome">Almanaque — verbete</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/10-verbete-mobile.html"><span class="lista__numero">10</span><span class="lista__nome">Almanaque — verbete</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/11-quem-somos-desktop.html"><span class="lista__numero">11</span><span class="lista__nome">Quem Somos</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/12-quem-somos-mobile.html"><span class="lista__numero">12</span><span class="lista__nome">Quem Somos</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/13-busca-desktop.html"><span class="lista__numero">13</span><span class="lista__nome">Resultados de busca</span><span class="lista__larg">desktop</span></a>
+      <a class="lista__item" href="telas/14-busca-mobile.html"><span class="lista__numero">14</span><span class="lista__nome">Resultados de busca</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/15-busca-sem-resultados-mobile.html"><span class="lista__numero">15</span><span class="lista__nome">Busca sem resultados</span><span class="lista__larg">mobile</span></a>
+      <a class="lista__item" href="telas/16-404-mobile.html"><span class="lista__numero">16</span><span class="lista__nome">Página 404</span><span class="lista__larg">mobile</span></a>
+    </nav>
+  </main>
+</body>
+</html>
