@@ -1453,7 +1453,172 @@ a.etiqueta--verde:hover {
 }
 
 /* ==========================================================================
-   14 · CARREGAMENTO
+   14 · PÁGINA INSTITUCIONAL
+
+   Portado de `11-quem-somos-desktop.css` e `12-quem-somos-mobile.css`. Serve
+   Quem Somos, Contato e as páginas legais. A cabeça sobre off-white com um blob,
+   e o corpo numa medida de leitura.
+   ========================================================================== */
+
+.cabeca-institucional {
+  position: relative;
+  overflow: hidden;
+  padding-block: 76px var(--dov-esp-13);
+  background: var(--dov-fundo-alternativo);
+}
+
+.cabeca-institucional__conteudo {
+  position: relative;
+  z-index: var(--dov-z-conteudo);
+  max-width: var(--dov-medida-cabecalho);
+}
+
+.cabeca-institucional__blob {
+  width: 460px;
+  right: -150px;
+  top: -150px;
+}
+
+.cabeca-institucional__titulo {
+  margin-block: var(--dov-esp-5) var(--dov-esp-6);
+  /* Peso leve, não 500: é H1 de página institucional, não de matéria. */
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-h1-institucional);
+  line-height: var(--dov-lh-h1-institucional);
+}
+
+.cabeca-institucional__lead {
+  max-width: 680px;
+  font-size: var(--dov-t-lead);
+  line-height: var(--dov-lh-lead);
+  color: var(--dov-neutro-800);
+}
+
+@media (max-width: 767px) {
+  .cabeca-institucional {
+    padding-block: var(--dov-esp-8);
+  }
+  .cabeca-institucional__titulo {
+    margin-block: var(--dov-esp-3) var(--dov-esp-4);
+    font-size: var(--dov-t-h1-institucional-mobile);
+    line-height: var(--dov-lh-h1-institucional-mobile);
+  }
+  .cabeca-institucional__lead {
+    font-size: var(--dov-t-lead-mobile);
+    line-height: var(--dov-lh-lead-mobile);
+  }
+  .cabeca-institucional__blob {
+    width: 300px;
+    right: -120px;
+    top: -110px;
+  }
+}
+
+/* ---------- Prosa
+
+   Texto corrido de página institucional. Estiliza pelos elementos, não por
+   classe em cada parágrafo: o conteúdo vem do editor de blocos do WordPress,
+   que devolve HTML pronto e não aceita classe nossa. */
+
+.prosa {
+  max-width: var(--dov-medida-texto);
+  padding-block: 76px;
+  font-size: var(--dov-t-corpo);
+  line-height: var(--dov-lh-corpo);
+}
+
+.prosa > * + * {
+  margin-top: var(--dov-esp-5);
+}
+
+.prosa h2 {
+  margin-top: var(--dov-esp-11);
+  font-size: var(--dov-t-h2-secao);
+  line-height: var(--dov-lh-h2-secao);
+}
+
+.prosa h3 {
+  margin-top: var(--dov-esp-9);
+  font-size: var(--dov-t-h3-artigo);
+  line-height: var(--dov-lh-h3-artigo);
+}
+
+.prosa ul,
+.prosa ol {
+  padding-left: var(--dov-esp-6);
+  list-style: revert;
+}
+
+.prosa li + li {
+  margin-top: var(--dov-esp-2);
+}
+
+/* Link no corpo do texto: sublinhado limão que vira roxo no hover. [ESPEC] §3 */
+.prosa a {
+  color: var(--dov-roxo-800);
+  text-decoration: underline;
+  text-decoration-color: var(--dov-limao);
+  text-decoration-thickness: var(--dov-borda-media);
+  text-underline-offset: 3px;
+  transition:
+    color var(--dov-duracao-rapida) var(--dov-easing),
+    text-decoration-color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.prosa a:hover {
+  color: var(--dov-roxo);
+  text-decoration-color: var(--dov-roxo);
+}
+
+.prosa strong {
+  font-weight: var(--dov-peso-corpo-forte);
+}
+
+/* Pendência visível dentro de rascunho jurídico. O amarelo padrão do navegador
+   parece defeito; assim parece o que é — um campo à espera de informação.
+   Sai junto com os rascunhos. */
+.prosa mark {
+  padding: 2px var(--dov-esp-1);
+  border-radius: var(--dov-raio-pequeno);
+  background: var(--dov-limao);
+  color: var(--dov-marinho);
+  font-size: var(--dov-t-auxiliar);
+}
+
+@media (max-width: 767px) {
+  .prosa {
+    padding-block: var(--dov-esp-8);
+    font-size: var(--dov-t-corpo-mobile);
+    line-height: var(--dov-lh-corpo-mobile);
+  }
+  .prosa > * + * {
+    margin-top: var(--dov-esp-4);
+  }
+  .prosa h2 {
+    margin-top: var(--dov-esp-9);
+    font-size: var(--dov-t-h2-secao-mobile);
+    line-height: var(--dov-lh-h2-secao-mobile);
+  }
+  .prosa h3 {
+    margin-top: var(--dov-esp-7);
+    font-size: var(--dov-t-h3-cartao-mobile);
+    line-height: var(--dov-lh-h3-cartao-mobile);
+  }
+}
+
+/* Aviso de rascunho. Sai quando o texto jurídico definitivo entrar. */
+.aviso-rascunho {
+  margin-bottom: var(--dov-esp-8);
+  padding: var(--dov-esp-4) var(--dov-esp-5);
+  border-left: var(--dov-borda-marcada) solid var(--dov-limao);
+  border-radius: var(--dov-raio-pequeno);
+  background: var(--dov-fundo-alternativo);
+  font-size: var(--dov-t-auxiliar);
+  line-height: 1.7;
+  color: var(--dov-texto-suave);
+}
+
+/* ==========================================================================
+   15 · CARREGAMENTO
 
    Nunca spinner de página inteira: esqueleto com a forma do conteúdo. [ESPEC] §7
    ========================================================================== */

@@ -244,10 +244,17 @@ O `@theme` zera cada namespace com `initial` antes de preencher. **`bg-slate-500
 - **`/componentes` é a prancha viva.** Os mesmos componentes com dados reais,
   para comparar com `design/telas/00-fundamentos-componentes.html`. Sai antes do
   lançamento, junto com a `/diagnostico`.
-- Constantes de marca, navegação e ordem das editorias em `lib/site.ts`.
-  Perfis de rede e páginas legais estão vazios ali de propósito: enquanto
-  estiverem, os links não são renderizados — melhor faltar um ícone no rodapé do
-  que entregar link morto num site de cliente.
+- Constantes de marca, navegação e ordem das editorias em `lib/site.ts`. A
+  estrutura de `REDES` aceita `url: null`, e o que for `null` não é renderizado —
+  faltar um ícone no rodapé é melhor que entregar link morto.
+- **`/politica-de-privacidade` e `/termos-de-uso` são rascunho.** Rotas do Next,
+  não páginas do WordPress. As pendências aparecem em `<mark>` **na tela**, de
+  propósito — razão social, CNPJ, encarregado de dados, prazo de retenção,
+  declaração de publicidade e comarca. Enquanto houver um `<mark>` visível, a
+  página não está pronta para publicar. Falta revisão jurídica.
+- **Os endereços de Instagram e YouTube em `lib/site.ts` não foram confirmados.**
+  São o handle da marca, e `instagram.com/descubraovinho` pode ser de outra
+  pessoa. Conferir com o cliente antes do lançamento.
 
 Resumo do que não pode ser esquecido:
 

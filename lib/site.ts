@@ -37,23 +37,35 @@ export const UTILITARIOS: ItemNav[] = [
 /**
  * Perfis de rede social.
  *
- * **Pendente:** os endereços não vieram com o pacote. Enquanto forem `null` os
- * ícones não são renderizados — é melhor faltar um ícone no rodapé do que
- * entregar link morto num site de cliente. Preencher e os ícones voltam.
+ * ⚠️ **Endereços provisórios, não confirmados com o cliente.**
+ *
+ * São o handle da marca, escolhidos por serem o palpite mais provável — mas
+ * `instagram.com/descubraovinho` **pode pertencer a outra pessoa**, e aí o
+ * rodapé de um site de cliente aponta para um terceiro. Conferir com o cliente
+ * antes do lançamento; está no checklist da Fase 5.
+ *
+ * A estrutura aceita `null`: quem for `null` não é renderizado, porque faltar um
+ * ícone no rodapé é melhor que entregar link morto.
  */
 export const REDES: Array<{ nome: string; url: string | null }> = [
-  { nome: 'Instagram', url: null },
-  { nome: 'YouTube', url: null },
+  { nome: 'Instagram', url: 'https://www.instagram.com/descubraovinho/' },
+  { nome: 'YouTube', url: 'https://www.youtube.com/@descubraovinho' },
 ];
 
 /**
  * Páginas legais do rodapé.
  *
- * **Pendente:** política de privacidade e termos de uso não existem no
- * WordPress nem na lista de rotas do plano. Mesma regra das redes: só aparecem
- * quando houver página de verdade atrás.
+ * São rotas do Next e não páginas do WordPress: texto jurídico muda pouco e não
+ * precisa passar pelo editor. Se o cliente quiser editar sozinho, viram páginas
+ * no WordPress e entram no template de `/[slug]`.
+ *
+ * ⚠️ O texto das duas é **rascunho**, e precisa de revisão jurídica antes do
+ * lançamento — está no checklist da Fase 5.
  */
-export const PAGINAS_LEGAIS: ItemNav[] = [];
+export const PAGINAS_LEGAIS: ItemNav[] = [
+  { rotulo: 'Política de privacidade', href: '/politica-de-privacidade' },
+  { rotulo: 'Termos de uso', href: '/termos-de-uso' },
+];
 
 /** Destinos fixos, fora das editorias. */
 export const ALMANAQUE: ItemNav = { rotulo: 'Almanaque', href: '/almanaque' };

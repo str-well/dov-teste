@@ -267,6 +267,16 @@ oficial. Sem OpenNext, sem KV, sem wrangler.
       foco visível, `alt` em todas as imagens
 - [ ] **Fotografia real no lugar dos placeholders** — maior risco não técnico do projeto
 - [ ] **Cores do logo conferidas contra os arquivos oficiais da marca**
+- [ ] **Revisão jurídica da política de privacidade e dos termos de uso.** Os dois
+      são rascunho, e trazem pendências marcadas em `<mark>` que aparecem na tela
+      de propósito: razão social e CNPJ, encarregado de dados, prazo de retenção
+      das mensagens de contato, declaração de publicidade e comarca do foro.
+      **Enquanto houver um `<mark>` na página, ela não está pronta para publicar**
+- [ ] **Confirmar os perfis de Instagram e YouTube com o cliente.** Os endereços
+      em `lib/site.ts` são o handle da marca, não confirmados — podem pertencer a
+      outra pessoa, e o rodapé apontaria para um terceiro
+- [ ] Remover as rotas internas `/diagnostico` e `/componentes`
+- [ ] Tirar o `robots: { index: false }` do `app/layout.tsx`
 - [ ] Monitor externo de uptime (UptimeRobot free) apontado para `/api/health`
 - [ ] Domínio apontado, Cloudflare configurado
 - [ ] Documentar para o cliente: onde publicar, quanto tempo leva para aparecer

@@ -128,7 +128,8 @@ O designer listou outros pontos que ele mudaria e não aplicou:
 | Duplicação de CSS | Cada tela repete ~11 kB de cabeçalho, rodapé, card, botões e chips | **Resolvido.** Extraído para `app/componentes.css`, uma vez só |
 | Conteúdo dos mockups | Datas, "418 verbetes", "128 matérias", "Ana Ferraz" são fictícios | Vêm da API. Nunca chumbar |
 | Ordem das editorias | As pranchas abrem por "Descubra"; a API só ordena por nome, id ou contagem | Ordem editorial em `ORDEM_EDITORIAS`, por slug, com alfabética de reserva para editoria nova |
-| Perfis de rede e páginas legais | Os endereços não vieram, e política de privacidade e termos não existem | Em `lib/site.ts`, vazios. Enquanto vazios os links não são renderizados — melhor faltar ícone que entregar link morto |
+| Perfis de rede | Os endereços não vieram com o pacote | Provisórios em `lib/site.ts`, com o handle da marca. **Não confirmados** — podem ser de terceiro. Bloqueador de lançamento |
+| Páginas legais | Não existiam | `/politica-de-privacidade` e `/termos-de-uso`, rascunho com pendências em `<mark>`. Precisam de revisão jurídica |
 
 ## Cores do logo — pendência real
 
