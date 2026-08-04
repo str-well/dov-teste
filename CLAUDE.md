@@ -3,67 +3,64 @@
 Portal editorial de vinho, em português do Brasil. WordPress headless como backend,
 Next.js como frontend. Cliente real, projeto em produção.
 
-**Este repositório é o front.** O WordPress é criado no painel da Hostinger e vive só
-como backend de API — não há código dele aqui.
-
-O plano completo está em `docs/PLANO-IMPLEMENTACAO.md`, e o registro da validação de
-infraestrutura em `docs/FASE-0-TESTE-HOSPEDAGEM.md`. Este arquivo é o resumo das
-decisões e do que já foi validado — leia antes de sugerir alternativas de arquitetura.
+Leia também, antes de codar:
+- `docs/DESIGN.md` — como usar o pacote do designer e o mapa tela → template
+- `docs/BACKEND.md` — contrato da API do WordPress
+- `docs/PLANO-IMPLEMENTACAO.md` — plano completo das 5 fases
 
 ---
 
 ## Arquitetura
 
 ```
-Cloudflare (free) — DNS e CDN
-├── dominio.com        Next.js 15, Node.js Web App na Hostinger, ISR em disco
-└── wp.dominio.com     WordPress + JetEngine, headless, mesmo plano Hostinger
+Cloudflare — apenas DNS por enquanto (CDN a avaliar depois do lançamento)
+├── descubraovinho.com.br      Next.js 15, Node.js Web App na Hostinger, ISR em disco
+└── wp.descubraovinho.com.br   WordPress headless, mesmo plano Hostinger
 ```
 
-Os dois rodam no **mesmo plano Hostinger Cloud**, já contratado. Custo adicional do
-projeto: zero. O plano comporta até 10 apps web.
+Os dois rodam no mesmo plano Hostinger Cloud Professional, junto com **6 outros
+sites de clientes**. Recursos são compartilhados — evitar consultas desnecessárias
+ao WordPress não é otimização prematura, é requisito.
+
+Custo adicional do projeto: zero.
 
 ## Stack
 
-- Next.js 15 · App Router · TypeScript
-- Tailwind CSS + shadcn/ui
+- Next.js 15 · App Router · TypeScript · `output: 'standalone'`
+- Tailwind CSS **v4** + shadcn/ui — a configuração é o `@theme` do
+  `app/globals.css`. **Não existe `tailwind.config`**; não criar um.
 - Cormorant Garamond + DM Sans via `next/font`, self-hosted
 - Fuse.js para a busca do Almanaque (JSON estático gerado no build)
 - Resend para e-mail transacional
-- `output: 'standalone'` — formato exigido pela Hostinger
 
 ## Estado atual
 
-**Fase 0 (validação da infraestrutura) — concluída**, com um projeto descartável:
+**Fase 0 — validação da infraestrutura: concluída.**
+Build no servidor em 1m0s · deploy automático no `git push` · Node v22.18.0 ·
+ISR revalidando a 60s · RSS ~102 MB · uptime estável por 11h+ sem queda.
 
-| Item | Resultado |
-|---|---|
-| `next build` no servidor Hostinger | ✅ 1m0s, sem estourar memória |
-| Deploy automático no `git push` | ✅ |
-| Node | ✅ v22.18.0 |
-| ISR revalidando a cada 60s | ✅ |
-| HTTP de saída do servidor | ✅ |
-| Consumo | ✅ RSS 109 MB, CPU 7% |
-| Reinício automático do processo | ⏳ pendente — conferir PID em `/api/health` |
+**Fase 1 — WordPress: concluída.**
+Instalado em `wp.`, fuso São Paulo, permalinks `/%postname%/`, mu-plugin ativo,
+7 categorias, 16 tags, 20 matérias, 22 verbetes, 3 eventos, 2 páginas.
+Conexão do front com a API validada em 226 ms.
 
-O único item pendente é o do reinício — e é o único que ainda pode derrubar a
-arquitetura. Cada deploy zera o `uptime`, então uma observação em andamento se perde a
-cada `git push`.
+**Fase 2 — fundações do front: as duas frentes de base estão prontas.**
 
-**Próximo passo:** Fase 1 — instalar o WordPress novo em `wp.dominio.com`.
-Não existe site anterior; não há migração, search-replace nem redirects.
+- **Camada de dados** — `lib/wp/`, entrada única em `lib/wp/index.ts`.
+  ~25 funções tipadas, verificadas contra a API de produção. Detalhe abaixo.
+- **Fundações visuais** — Tailwind v4 com `@theme` no `app/globals.css`,
+  `design/dov-tokens.css` importado, fontes por `next/font`.
 
-O portal em si ainda não foi codado. O que existe no repositório é o app que validou a
-infraestrutura: home provisória em `/`, painel de diagnóstico em `/diagnostico`,
-`/api/health` e `/api/revalidate` — as duas últimas já são as de produção. O site está
-com `noindex` no `layout.tsx` até o lançamento.
+**Próximo passo: os componentes globais**, a partir de
+`design/telas/00-fundamentos-componentes.html`. Nenhum template de página foi
+codado ainda; o repositório tem a home de placeholder e a `/diagnostico`.
+
+As três decisões em aberto de `docs/DESIGN.md` batem direto nesses componentes —
+o breakpoint do menu desktop trava o cabeçalho.
 
 ---
 
 ## Decisões fechadas — não reabrir
-
-Estas opções já foram avaliadas e descartadas com motivo. Não sugerir de novo sem
-que algo tenha mudado:
 
 | Descartado | Por quê |
 |---|---|
@@ -71,96 +68,89 @@ que algo tenha mudado:
 | **Netlify** | Funciona, mas a Hostinger já está paga e faz o mesmo |
 | **Cloudflare Workers como host** | Exigiria OpenNext + KV; desnecessário com processo Node de verdade |
 | **DigitalOcean / VPS** | Custo extra e manutenção de sysadmin sem ganho |
-| **Payload CMS** | Avaliado e descartado — complexidade e custo de infra |
-| **Elementor no front** | Sai da entrega; segue só como editor interno, se o cliente usar |
-| **Plugins de terceiros** | Usar JetEngine/JetSmartFilters da licença Crocoblock existente antes de instalar qualquer coisa nova |
+| **Payload CMS** | Complexidade e custo de infra |
+| **JetEngine** | Licença expirada; substituído por mu-plugin próprio |
+| **ACF** | Desnecessário; as caixas de campo estão no mu-plugin |
+| **Elementor no front** | Fora da entrega |
+| **Cache de REST API no LiteSpeed** | Cria corrida com a revalidação: o webhook dispara no save, o Next busca antes do purge e recebe conteúdo velho, sem erro visível. O ISR já é o cache real. |
+| **Tailwind v3 com `tailwind.config.ts`** | Exigiria reescrever cada token na config, criando a mesma duplicação de valores que já custou 6 hex errados. O `@theme` do v4 consome as variáveis CSS direto. Custo aceito: v4 pede Chrome 111+ / Safari 16.4+. |
+| **Copiar os tokens para o `globals.css`** | Mesmo motivo: duas cópias divergem. O arquivo do designer é importado. |
+| **Escala tipográfica como utilitário Tailwind** | É onde o designer avisa que a fidelidade escorre. Tipografia herda o CSS do mockup; Tailwind faz grade, espaçamento e responsividade. |
 
 **Regra que sustenta a saída de emergência:** nada de código específico de host,
-nenhuma dependência `@vercel/*`. Usar `next/image` e `revalidatePath` padrão. Se a
-hospedagem na Hostinger se mostrar frágil, o mesmo repositório sobe no Cloudflare
-free com o adaptador OpenNext, sem reescrever nada.
+nenhuma dependência `@vercel/*`. `next/image` e `revalidatePath` padrão. Se a
+hospedagem na Hostinger se mostrar frágil, o mesmo repo sobe no Cloudflare free
+com OpenNext, sem reescrever nada.
 
 ---
 
 ## Preferências de trabalho
 
-- **Não adicionar serviços pagos.** O orçamento é a Hostinger e a licença Crocoblock,
-  e nada além disso.
-- **Minimizar trabalho de terminal e manutenção de infraestrutura contínua.**
-- Escrever código no IDE é o objetivo do projeto — foi o motivo de sair do
-  drag-and-drop. Não sugerir voltar para construtor visual.
-- Responder em **português do Brasil**.
+- **Não adicionar serviços pagos nem plugins.** O orçamento é a Hostinger e nada mais.
+- Minimizar trabalho de terminal e manutenção de infraestrutura contínua.
+- Escrever código no IDE é o objetivo do projeto — não sugerir construtor visual.
+- **Responder em português do Brasil.**
 
 ---
 
-## Modelo de conteúdo (WordPress)
+## Armadilhas já descobertas
 
-Tudo precisa de `show_in_rest: true`, **incluindo cada campo do JetEngine
-individualmente** — é a causa número um de campo sumido na API.
+Cada uma dessas custou tempo. Não repetir.
 
-- `post` (nativo) — matérias. Categoria = as 7 editorias. Tags = temas dos chips de filtro.
-- `verbete` (CPT) — Almanaque. Definição curta, texto, etimologia, caixa "Na prática",
-  relação com verbetes vizinhos. A letra do índice é derivada do título, não é campo.
-- `evento` (CPT) — agenda do Programe-se. Data início/fim, cidade ou "online", link.
-- Páginas nativas: Quem Somos, Contato.
+1. **Entidades HTML.** A API devolve `title.rendered` com entidades codificadas —
+   "Saúde & Ciência" chega como `Saúde &#038; Ciência`. Vale para título de matéria,
+   nome de categoria, nome de verbete e resumo. **Decodificar uma vez na camada de
+   dados**, nunca componente por componente.
 
-## Rotas
+2. **`meta` só aparece na API se o CPT declarar `custom-fields` em `supports`.**
+   Já corrigido no mu-plugin. Se um campo novo não aparecer no JSON, é a primeira
+   coisa a checar — o campo grava no banco e some silenciosamente na resposta.
 
-```
-/                       home
-/quem-somos  /contato
-/busca?q=               noindex
-/almanaque              índice A–Z
-/almanaque/[termo]      verbete
-/[categoria]            7 editorias, template único
-/[categoria]/[slug]     matéria
-/api/revalidate         POST, protegida por secret
-/api/contato            POST, Resend
-/api/newsletter         POST, Resend
-/api/health             diagnóstico, alvo do monitor de uptime
-/diagnostico            painel de infraestrutura, noindex e fora do sitemap
-```
+3. **`dov_imagens` retorna `null` quando o post não tem imagem destacada.**
+   Hoje **nenhum** conteúdo tem imagem. Todo componente que consome imagem precisa
+   de estado vazio desde o primeiro dia, não como refinamento posterior.
 
-As 7 editorias: `descubra`, `curiosidades`, `harmonize`, `mercado`, `saude-e-ciencia`,
-`viaje`, `programe-se`.
+4. **`dov_tempo_leitura` está 1 em todas as matérias**, porque os corpos são curtos.
+   Não é bug; corrige sozinho quando o conteúdo real entrar.
+
+5. **Os hex em documentos markdown deste repo são aproximados.** Foram lidos por
+   amostragem de imagem antes de o pacote do designer chegar, e 6 de 8 estavam
+   errados. Usar exclusivamente `design/dov-tokens.css`.
+
+6. **Slugs de categoria são contrato.** O template de arquivo é único e resolve pela
+   URL. `saude-e-ciencia` — com o "e" — é o slug real. Errar dá 404 sem explicação.
+
+As quatro seguintes vieram da inspeção da API real ao escrever `lib/wp/`. Já
+estão resolvidas dentro do módulo — só importam para quem for mexer nele.
+
+7. **`orderby=include` é obrigatório nos relacionados.** Sem ele a API devolve
+   por data, não na ordem pedida: `include=24,30` volta `[30, 24]`. A ordem do
+   `<select multiple>` do editor é escolha editorial e precisa sobreviver.
+
+8. **`?slug=inexistente` responde 200 com `[]`**, nunca 404. Quem tratar só o
+   status vai renderizar página vazia em vez de chamar `notFound()`.
+
+9. **`?page=` além da última responde 400**, não lista vazia — código
+   `rest_post_invalid_page_number`. Uma URL digitada errada virava erro 500.
+
+10. **`dov_imagens` pode omitir um tamanho específico** mesmo quando não é
+    `null`: o mu-plugin só inclui a chave se `wp_get_attachment_image_src`
+    devolver algo, e ele falha quando o original é menor que o tamanho pedido.
+    O estado vazio tem dois níveis, não um — usar `imagem()`, que trata os dois.
 
 ---
 
-## Design system
+## Variáveis de ambiente
 
-Handoff completo do designer: 17 telas, `dov-tokens.css`, SVGs e mockups em HTML.
-**Os hex do plano foram lidos por amostragem de imagem em baixa resolução — usar
-sempre os valores do `dov-tokens.css`, não os do markdown.**
+Cadastradas no painel da Hostinger, nunca no repositório:
 
-Resumo dos papéis: roxo primário (marca, CTAs), roxo secundário (hover, blobs),
-lilás claro (bordas, filetes), off-white (fundo de respiro), azul-marinho (faixa do
-Almanaque e rodapé), verde escuro (acento), verde-limão (filete de hover),
-verde-menta (blob, tag).
+```
+WORDPRESS_API_URL=https://wp.descubraovinho.com.br/wp-json/wp/v2
+REVALIDATE_SECRET=<segredo compartilhado com o wp-config.php>
+RESEND_API_KEY=<pendente>
+```
 
-- Cormorant Garamond nos títulos, **nunca em bold** — máximo peso 500
-- DM Sans no corpo, kickers e dados
-- Um H1 por página
-- Números tabulares em datas, letras do Almanaque e paginação
-- Grade: 12 colunas · conteúdo 1200 · gutter 32 · margem 120 (ref. 1440)
-- Toque mínimo 48×48 no mobile
-- Verde-limão nunca com texto branco
-
-### Imagens
-
-Servidas do WordPress via Cloudflare, com `unoptimized` — os tamanhos são fixos e
-gerados no WP, não otimizados em runtime.
-
-| Uso | Proporção | Dimensão | Peso |
-|---|---|---|---|
-| Hero da home | 16:9 | 1920×1080 | ≤200 kB |
-| Destaque da matéria | 3:2 | 1600×1067 | ≤160 kB |
-| Card | 3:2 | 800×533 | ≤70 kB |
-| Card em destaque | 4:3 | 1200×900 | ≤120 kB |
-| Corpo do texto | 3:2 ou 4:5 | 1200 largura | ≤120 kB |
-| Retrato / autor | 1:1 | 240×240 | ≤20 kB |
-
-Todas as imagens do projeto ainda são placeholder — a fotografia real é o maior
-risco não técnico.
+O `.env.local` não sobe no deploy.
 
 ---
 
@@ -169,19 +159,116 @@ risco não técnico.
 Do mais complexo para o mais simples, para os componentes nascerem testados no caso
 difícil:
 
-1. Matéria — `/[categoria]/[slug]`
-2. Arquivo de categoria — `/[categoria]`
-3. Verbete — `/almanaque/[termo]`
-4. Índice A–Z — `/almanaque`
-5. Home
-6. Quem Somos, busca, sem resultados, 404
+1. **Matéria** — `/[categoria]/[slug]` — sumário "Neste texto", citação, imagem com
+   legenda e crédito, caixa "Do Almanaque", newsletter, tags, relacionados
+2. **Arquivo de categoria** — `/[categoria]` — serve as 7 editorias; chips com
+   rolagem horizontal no mobile, ordenação, paginação
+3. **Verbete** — `/almanaque/[termo]` — etimologia, caixa "Na prática", relacionados,
+   matérias que usam o termo, anterior/próximo
+4. **Índice A–Z** — `/almanaque` — navegação sticky; letras sem verbete em cinza e
+   sem link (K, Q, W, X, Y, Z estão vazias de propósito, para testar esse estado)
+5. **Home**
+6. **Quem Somos**, busca, busca sem resultados, 404
+
+---
+
+## Design system
+
+O pacote do designer está em `design/` e **é a fonte de verdade do visual**:
+17 pares HTML/CSS, `dov-tokens.css`, SVGs, favicons e a especificação de interação.
+Detalhes de uso e o mapa tela → template estão em **`docs/DESIGN.md`** — ler antes
+de construir qualquer componente.
+
+### Como está montado
+
+`app/globals.css` importa `design/dov-tokens.css` — **não copia**. Divergir é
+impossível: existe um arquivo só, e é o do designer. Se ele sair do lugar, o
+build quebra alto, que é o comportamento desejado.
+
+O `@theme` zera cada namespace com `initial` antes de preencher. **`bg-slate-500`,
+`rounded-xl`, `md:p-4` e `font-sans` não compilam** — a regra "nenhum valor novo"
+é aplicada pela ferramenta, não pela memória de quem coda.
+
+- `--spacing: var(--dov-esp-1)` — a escala toda é múltipla de 4, então a
+  numeração padrão do Tailwind alcança cada passo: `p-6`→24px, `mt-10`→40px,
+  `gap-30`→120px
+- Três faixas, não cinco: `tablet:` 768px e `desktop:` 1025px, os limites que
+  estão nos cabeçalhos das seções 5 e 6 dos tokens. Falta o breakpoint do menu
+  desktop (~1280px), que é decisão em aberto.
+- Cores, raios, sombras e larguras máximas viram utilitário com os nomes dos
+  tokens: `bg-roxo`, `text-texto-meta`, `rounded-pilula`, `max-w-conteudo`
+- A escala tipográfica **não** está no `@theme`, de propósito
+- `app/diagnostico/diagnostico.css` é o estilo da ferramenta interna, carregado
+  só naquela rota. Não é design system.
+
+Resumo do que não pode ser esquecido:
+
+- **`design/dov-tokens.css` é a única fonte de valores.** Os CSS das telas não têm
+  um hex cru. Nenhum número novo deve ser inventado.
+- Portar **sem redesenhar**. Tipografia e componentes visuais herdam o CSS do
+  mockup; Tailwind cuida de grade, espaçamento e responsividade.
+- **Começar pela tela `00-fundamentos-componentes`** — ela contém todo componente
+  global (cabeçalho nos dois estados, menu mobile, busca, card nas 3 variações,
+  botões, chips, paginação, rodapé).
+- Cormorant Garamond e DM Sans via `next/font`, self-hosted. **Cormorant nunca em
+  bold** — 500 é o máximo.
+- Logos: dimensionar por altura, sempre com `aspect-ratio` (`900/418` no horizontal,
+  `630/900` no ícone). Sem isso o logo colapsa em layout flex.
+- Um H1 por página. Números tabulares em datas, letras do A–Z e paginação.
+- Toque mínimo 48×48 no mobile. `prefers-reduced-motion` já tratado nos tokens.
+- Datas, "418 verbetes", "128 matérias" e "Ana Ferraz" nos mockups são fictícios —
+  vêm da API, nunca chumbados.
+
+**Três decisões em aberto** que afetam componentes (detalhe em `docs/DESIGN.md`):
+breakpoint do menu desktop, sidebar sticky ou estática, e o botão de Instagram que
+não funciona na web.
+
+### Imagens
+
+Servidas do WordPress com `unoptimized` — tamanhos fixos gerados no WP, não
+otimizados em runtime.
+
+| Uso | Nome do tamanho | Proporção | Dimensão |
+|---|---|---|---|
+| Hero da home | `dov_hero` | 16:9 | 1920×1080 |
+| Destaque da matéria | `dov_destaque` | 3:2 | 1600×1067 |
+| Card em destaque | `dov_card_4x3` | 4:3 | 1200×900 |
+| Corpo do texto | `dov_corpo` | livre | 1200 de largura |
+| Card padrão | `dov_card` | 3:2 | 800×533 |
+| Retrato / autor | `dov_retrato` | 1:1 | 240×240 |
 
 ## Convenções de código
 
-- Toda chamada ao WordPress passa por **um único módulo de dados** com funções
-  tipadas. Tipos derivados da resposta real da API, não inventados.
-- Segredos só nas variáveis de ambiente do painel da Hostinger. O `.env.local` não
-  sobe no deploy e não vai para o Git.
-- Revalidação: hook `save_post` no WordPress chamando `/api/revalidate`, com trava
-  contra revisão automática e contra loop. Fallback por tempo (`revalidate: 300`)
-  nas listagens.
+- **Toda chamada ao WordPress passa por `lib/wp/`**, com entrada única em
+  `lib/wp/index.ts`. Importar `./http`, `./consultas` ou `./mapeadores` direto de
+  um componente fura a regra — se falta algo, exportar no `index.ts`.
+- A decodificação de entidades HTML mora nesse módulo, em `html.ts`, e roda uma
+  vez na camada de dados. **Nunca componente por componente.**
+- Segredos só nas variáveis de ambiente do painel.
+- Revalidação: o mu-plugin chama `/api/revalidate` no `transition_post_status`,
+  com trava de 10s por post. Fallback por tempo (`revalidate: 300`) nas listagens.
+
+### `lib/wp/` — o que o módulo garante
+
+Nada disso precisa ser lembrado componente por componente:
+
+| Arquivo | Papel |
+|---|---|
+| `index.ts` | A única porta pública |
+| `consultas.ts` | As funções de consulta; `_fields` sempre explícito |
+| `http.ts` | O único `fetch` no WordPress; headers de paginação e erros |
+| `mapeadores.ts` | Bruto → domínio; é onde a decodificação acontece |
+| `html.ts` | Decodificador de entidades, texto simples, `letraInicial` |
+| `tipos.ts` | `Bruto*` (a API real) e o domínio, em português |
+| `config.ts` | URL base e os segundos de ISR |
+
+- Entidades já decodificadas em título, resumo, nome de termo e texto do `meta`.
+  **Exceto `conteudoHtml`**, que é HTML de verdade e sai cru de propósito —
+  decodificar transformaria entidades do texto em marcação.
+- Ausência é `null` ou lista vazia. `ErroWordPress` é só falha de verdade, para
+  o `error.tsx`; "não encontrado" é `null`, para o `notFound()`.
+- `total` e `totalPaginas` vindos dos headers, para a paginação.
+- Categorias, tags e autores passam por `cache()` do React: um render que pede a
+  lista de categorias em 20 cards faz **uma** requisição.
+- Tipos de item completo (`MateriaCompleta`, `VerbeteCompleto`) só vêm das
+  consultas de item único — um card não consegue depender do corpo do texto.
