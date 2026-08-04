@@ -257,8 +257,9 @@ no caso difícil.
   o põe na cabeça, não junto do texto. `separarLead()` faz o corte; sem a classe,
   a página cai para o resumo da API.
 - **Falta o formulário de contato.** `/api/contato` com o Resend é da Fase 4. Até
-  lá a página é informativa, com aviso — melhor que um formulário que engole a
-  mensagem.
+  lá a página mostra só o título e a frase da redação — sem formulário que engole
+  a mensagem, e **sem aviso de obra na tela**: pendência de projeto fica no
+  código e neste plano, não para o leitor ler.
 - **A busca não devolve trecho em contexto.** A prancha mostra um recorte do
   corpo em volta da palavra encontrada; a REST API não entrega isso, e só um
   endpoint próprio no mu-plugin faria o recorte. O trecho exibido é o resumo,

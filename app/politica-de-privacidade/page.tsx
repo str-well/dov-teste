@@ -32,13 +32,6 @@ export default function Page() {
       kicker="Legal"
       titulo="Política de privacidade"
       lead="O que coletamos, por quê, por quanto tempo guardamos e como você pede para apagar."
-      aviso={
-        <>
-          <strong>Rascunho.</strong> Este texto descreve o funcionamento atual do site,
-          mas ainda não passou por revisão jurídica e tem campos a preencher. Não
-          considere a versão final.
-        </>
-      }
     >
       <p>
         Última atualização: <time dateTime={ATUALIZADO_EM}>{dataLonga(ATUALIZADO_EM)}</time>.

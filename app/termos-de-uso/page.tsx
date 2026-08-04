@@ -27,12 +27,6 @@ export default function Page() {
       kicker="Legal"
       titulo="Termos de uso"
       lead="As regras para usar o site, o que você pode fazer com o nosso conteúdo e o que não prometemos."
-      aviso={
-        <>
-          <strong>Rascunho.</strong> Este texto ainda não passou por revisão jurídica e
-          tem campos a preencher. Não considere a versão final.
-        </>
-      }
     >
       <p>
         Última atualização: <time dateTime={ATUALIZADO_EM}>{dataLonga(ATUALIZADO_EM)}</time>.

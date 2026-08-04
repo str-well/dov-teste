@@ -4,8 +4,6 @@ type Props = {
   titulo: string;
   /** Uma ou duas frases. Aparece na cabeça, sobre off-white. */
   lead?: string;
-  /** Aviso destacado antes do corpo — usado nos rascunhos jurídicos. */
-  aviso?: React.ReactNode;
   children: React.ReactNode;
 };
 
@@ -18,7 +16,7 @@ type Props = {
  *
  * O H1 é daqui: uma página, um H1.
  */
-export function PaginaInstitucional({ kicker, titulo, lead, aviso, children }: Props) {
+export function PaginaInstitucional({ kicker, titulo, lead, children }: Props) {
   return (
     <main>
       <div className="cabeca-institucional">
@@ -41,7 +39,6 @@ export function PaginaInstitucional({ kicker, titulo, lead, aviso, children }: P
 
       <div className="limite">
         <div className="prosa">
-          {aviso && <div className="aviso-rascunho">{aviso}</div>}
           {children}
         </div>
       </div>

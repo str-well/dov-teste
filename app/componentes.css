@@ -1542,6 +1542,12 @@ a.etiqueta--verde:hover {
   line-height: var(--dov-lh-corpo);
 }
 
+/* Corpo vazio não deve reservar espaço: a página de contato tem só o olho, e o
+   padding de 76px em cima e embaixo deixaria uma faixa branca antes do rodapé. */
+.prosa:empty {
+  display: none;
+}
+
 .prosa > * + * {
   margin-top: var(--dov-esp-5);
 }
@@ -1618,18 +1624,6 @@ a.etiqueta--verde:hover {
     font-size: var(--dov-t-h3-cartao-mobile);
     line-height: var(--dov-lh-h3-cartao-mobile);
   }
-}
-
-/* Aviso de rascunho. Sai quando o texto jurídico definitivo entrar. */
-.aviso-rascunho {
-  margin-bottom: var(--dov-esp-8);
-  padding: var(--dov-esp-4) var(--dov-esp-5);
-  border-left: var(--dov-borda-marcada) solid var(--dov-limao);
-  border-radius: var(--dov-raio-pequeno);
-  background: var(--dov-fundo-alternativo);
-  font-size: var(--dov-t-auxiliar);
-  line-height: 1.7;
-  color: var(--dov-texto-suave);
 }
 
 /* ==========================================================================
