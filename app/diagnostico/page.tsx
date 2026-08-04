@@ -1,3 +1,5 @@
+import './diagnostico.css';
+
 // Revalida a cada 60 segundos. É o coração do teste:
 // se o "gerado em" avançar sozinho após 60s, o ISR está funcionando.
 export const revalidate = 60;

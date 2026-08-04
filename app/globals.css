@@ -1,121 +1,223 @@
+/* ==========================================================================
+   Descubra o Vinho — folha global.
+   ==========================================================================
+
+   Três camadas, nesta ordem:
+
+   1. Tailwind
+   2. `design/dov-tokens.css`, importado — não copiado
+   3. `@theme`, que expõe os tokens como utilitários do Tailwind
+
+   Sobre a camada 2: o pacote do designer é importado direto de `design/` em vez
+   de ter os valores copiados para cá. É de propósito. A armadilha nº 5 do
+   projeto foi exatamente valores de cor duplicados que divergiram do original —
+   6 de 8 hex errados. Com o import, divergir é impossível: existe um arquivo
+   só, e ele é o do designer. Se `design/dov-tokens.css` sair do lugar, o build
+   quebra alto, que é o comportamento desejado.
+
+   O reset do designer vem junto no mesmo arquivo, depois do preflight do
+   Tailwind — então ele ganha, e a fidelidade das pranchas se preserva.
+
+   ========================================================================== */
+
+/* `source(none)` desliga a varredura automática: sem isso o Tailwind leria as
+   17 pranchas em `design/telas/` e os `.php` do WordPress, gerando utilitários
+   de classes que não existem no front. As fontes ficam explícitas abaixo. */
+@import 'tailwindcss' source(none);
+
+@import '../design/dov-tokens.css';
+
+@source '../app';
+@source '../lib';
+@source '../components';
+
+/* ==========================================================================
+   TEMA
+   ==========================================================================
+
+   Cada namespace é zerado com `initial` antes de ser preenchido. Isso remove a
+   paleta e as escalas padrão do Tailwind, e é o ponto central desta
+   configuração: `bg-slate-500` ou `rounded-xl` deixam de compilar. A regra
+   "nenhum valor numérico novo — se um número não existe nos tokens, ele está
+   errado" passa a ser aplicada pela ferramenta, não pela memória de quem coda.
+
+   `@theme inline` faz os utilitários apontarem para `var(--dov-*)` direto, sem
+   uma variável intermediária. Um valor, um lugar.
+
+   O que **não** está aqui, deliberadamente: a escala tipográfica. Tipografia e
+   componentes visuais herdam o CSS do mockup — retipá-los em utilitários é,
+   segundo o próprio designer, onde a fidelidade escorre. Tailwind cuida de
+   grade, espaçamento e responsividade.
+   ========================================================================== */
+
+@theme inline {
+  /* ---------------------------------------------------------------- cores */
+  --color-*: initial;
+
+  /* Marca */
+  --color-roxo: var(--dov-roxo);
+  --color-roxo-secundario: var(--dov-roxo-secundario);
+  --color-lilas: var(--dov-lilas);
+  --color-offwhite: var(--dov-offwhite);
+  --color-marinho: var(--dov-marinho);
+  --color-verde: var(--dov-verde);
+  --color-limao: var(--dov-limao);
+  --color-menta: var(--dov-menta);
+  --color-branco: var(--dov-branco);
+  --color-preto: var(--dov-preto);
+
+  /* Papéis semânticos */
+  --color-fundo: var(--dov-fundo);
+  --color-fundo-alternativo: var(--dov-fundo-alternativo);
+  --color-fundo-escuro: var(--dov-fundo-escuro);
+  --color-texto: var(--dov-texto);
+  --color-texto-suave: var(--dov-texto-suave);
+  --color-texto-meta: var(--dov-texto-meta);
+  --color-texto-desabilitado: var(--dov-texto-desabilitado);
+  --color-texto-sobre-escuro: var(--dov-texto-sobre-escuro);
+  --color-texto-suave-sobre-escuro: var(--dov-texto-suave-sobre-escuro);
+  --color-texto-meta-sobre-escuro: var(--dov-texto-meta-sobre-escuro);
+  --color-divisor: var(--dov-divisor);
+  --color-divisor-sobre-escuro: var(--dov-divisor-sobre-escuro);
+  --color-borda-sobre-escuro: var(--dov-borda-sobre-escuro);
+  --color-borda-campo-escuro: var(--dov-borda-campo-escuro);
+
+  /* Rampas tonais */
+  --color-roxo-100: var(--dov-roxo-100);
+  --color-roxo-200: var(--dov-roxo-200);
+  --color-roxo-300: var(--dov-roxo-300);
+  --color-roxo-400: var(--dov-roxo-400);
+  --color-roxo-500: var(--dov-roxo-500);
+  --color-roxo-600: var(--dov-roxo-600);
+  --color-roxo-700: var(--dov-roxo-700);
+  --color-roxo-800: var(--dov-roxo-800);
+  --color-roxo-900: var(--dov-roxo-900);
+
+  --color-verde-100: var(--dov-verde-100);
+  --color-verde-200: var(--dov-verde-200);
+  --color-verde-300: var(--dov-verde-300);
+  --color-verde-400: var(--dov-verde-400);
+  --color-verde-500: var(--dov-verde-500);
+  --color-verde-600: var(--dov-verde-600);
+  --color-verde-700: var(--dov-verde-700);
+  --color-verde-800: var(--dov-verde-800);
+  --color-verde-900: var(--dov-verde-900);
+
+  --color-neutro-100: var(--dov-neutro-100);
+  --color-neutro-200: var(--dov-neutro-200);
+  --color-neutro-300: var(--dov-neutro-300);
+  --color-neutro-400: var(--dov-neutro-400);
+  --color-neutro-500: var(--dov-neutro-500);
+  --color-neutro-600: var(--dov-neutro-600);
+  --color-neutro-700: var(--dov-neutro-700);
+  --color-neutro-800: var(--dov-neutro-800);
+  --color-neutro-900: var(--dov-neutro-900);
+
+  /* --------------------------------------------------------------- fontes */
+  --font-*: initial;
+  --font-titulo: var(--dov-fonte-titulo);
+  --font-corpo: var(--dov-fonte-corpo);
+
+  /* ---------------------------------------------------------- espaçamento
+
+     Multiplicador de 4px, que é `--dov-esp-1`. Toda a escala do designer é
+     múltipla de 4, então a numeração padrão do Tailwind alcança cada passo
+     sem inventar nome nem valor:
+
+       p-1 = 4    p-5 = 20   p-10 = 40   p-16 = 64
+       p-2 = 8    p-6 = 24   p-12 = 48   p-18 = 72
+       p-3 = 12   p-7 = 28   p-14 = 56   p-21 = 84
+       p-4 = 16   p-8 = 32               p-30 = 120
+
+     Os passos nomeados dos tokens (`--dov-esp-9` = 40px) seguem disponíveis
+     como `var()` para quem precisar do nome, mas na prática o número resolve. */
+  --spacing: var(--dov-esp-1);
+
+  /* --------------------------------------------------------------- raios */
+  --radius-*: initial;
+  --radius-pequeno: var(--dov-raio-pequeno);
+  --radius-padrao: var(--dov-raio);
+  --radius-grande: var(--dov-raio-grande);
+  --radius-pilula: var(--dov-raio-pilula);
+
+  /* -------------------------------------------------------------- sombras */
+  --shadow-*: initial;
+  --shadow-pequena: var(--dov-sombra-pequena);
+  --shadow-padrao: var(--dov-sombra);
+  --shadow-grande: var(--dov-sombra-grande);
+  /* Filete limão sob a imagem do cartão, no hover. */
+  --shadow-filete: var(--dov-filete-hover);
+
+  /* --------------------------------------------------------- larguras máx.
+
+     Geram `max-w-conteudo`, `max-w-texto` etc. */
+  --container-*: initial;
+  --container-conteudo: var(--dov-largura-conteudo);
+  --container-texto: var(--dov-medida-texto);
+  --container-cabecalho: var(--dov-medida-cabecalho);
+  --container-sidebar: var(--dov-largura-sidebar);
+  --container-sidebar-larga: var(--dov-largura-sidebar-larga);
+
+  /* ---------------------------------------------------------- breakpoints
+
+     O pacote do designer tem três faixas, não cinco: mobile até 767px,
+     tablet de 768 a 1024, desktop de 1025 em diante — os limites estão nos
+     cabeçalhos das seções 5 e 6 de `dov-tokens.css`. Os breakpoints padrão do
+     Tailwind são zerados para `md:` e `lg:` não virarem uma quarta e quinta
+     faixa que ninguém desenhou.
+
+     Falta aqui o breakpoint do menu desktop (~1280px): é uma das três
+     decisões em aberto de `docs/DESIGN.md`. Entra quando for decidida. */
+  --breakpoint-*: initial;
+  --breakpoint-tablet: 768px;
+  --breakpoint-desktop: 1025px;
+
+  /* ------------------------------------------------------------- movimento */
+  --ease-*: initial;
+  --ease-dov: var(--dov-easing);
+  --ease-saida: var(--dov-easing-saida);
+  --ease-entrada: var(--dov-easing-entrada);
+
+  --default-transition-duration: var(--dov-duracao-rapida);
+  --default-transition-timing-function: var(--dov-easing);
+}
+
+/* ==========================================================================
+   FONTES
+
+   `next/font` baixa Cormorant Garamond e DM Sans no build e as serve do nosso
+   próprio domínio — nenhuma chamada ao Google em runtime. O nome da família
+   é gerado com hash, então as duas famílias dos tokens são reapontadas para as
+   variáveis que o `next/font` publica (ver `app/layout.tsx`).
+
+   É o único lugar em que um valor de token é reescrito, e não é um valor novo:
+   é a mesma fonte, pelo identificador que o `next/font` gerou.
+   ========================================================================== */
+
 :root {
-  --marinho: #212d45;
-  --roxo: #6b1775;
-  --lilas: #cdb2d2;
-  --off-white: #f3efea;
-  --verde: #009559;
-  --vermelho: #a8322d;
-  --cinza: #6b6b73;
+  --dov-fonte-titulo: var(--fonte-titulo), Georgia, 'Times New Roman', serif;
+  --dov-fonte-corpo: var(--fonte-corpo), system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
-* {
-  box-sizing: border-box;
+/* ==========================================================================
+   BASE
+
+   O reset do designer já veio em `dov-tokens.css`. Aqui só o que o Next
+   acrescenta ao quadro.
+   ========================================================================== */
+
+html {
+  /* A navegação sticky do índice A–Z e as âncoras do sumário "Neste texto"
+     não podem parar embaixo do cabeçalho fixo. */
+  scroll-padding-top: var(--dov-altura-cabecalho);
 }
 
-body {
-  margin: 0;
-  padding: 40px 20px 80px;
-  background: var(--off-white);
-  color: var(--marinho);
-  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-main {
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-h1 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  margin: 0 0 4px;
-}
-
-.sub {
-  color: var(--cinza);
-  margin: 0 0 32px;
-}
-
-section {
-  background: #fff;
-  border: 1px solid var(--lilas);
-  border-radius: 6px;
-  padding: 20px;
-  margin-bottom: 16px;
-}
-
-h2 {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--roxo);
-  margin: 0 0 14px;
-}
-
-dl {
-  display: grid;
-  grid-template-columns: minmax(140px, auto) 1fr;
-  gap: 6px 20px;
-  margin: 0;
-}
-
-dt {
-  color: var(--cinza);
-}
-
-dd {
-  margin: 0;
-  word-break: break-all;
-}
-
-.big {
-  font-size: 20px;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-
-.ok {
-  color: var(--verde);
-}
-
-.erro {
-  color: var(--vermelho);
-}
-
-ol,
-ul {
-  margin: 0;
-  padding-left: 20px;
-}
-
-li {
-  margin-bottom: 6px;
-}
-
-.nota {
-  color: var(--cinza);
-  font-size: 12px;
-  margin-top: 14px;
-  padding-top: 14px;
-  border-top: 1px solid var(--off-white);
-}
-
-code {
-  background: var(--off-white);
-  padding: 1px 5px;
-  border-radius: 3px;
-}
-
-@media (max-width: 520px) {
-  dl {
-    grid-template-columns: 1fr;
-    gap: 2px;
-  }
-  dd {
-    margin-bottom: 10px;
+@media (max-width: 767px) {
+  html {
+    scroll-padding-top: var(--dov-altura-cabecalho-mobile);
   }
 }
+
+/* O alvo de toque de 48×48 fica em cada componente, não numa regra global:
+   aplicado em todo `a`, ele esticaria os links dentro do corpo do texto e
+   quebraria a entrelinha da matéria. `--dov-alvo-toque` é o valor a usar. */

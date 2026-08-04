@@ -1,0 +1,119 @@
+/* Estilo da página de diagnóstico, ferramenta interna de verificação.
+   Vivia no `globals.css`, que agora é do portal — mudou de lugar, não de forma.
+
+   Carregado só nesta rota. Não é design system: é um painel de infraestrutura,
+   monoespaçado de propósito. Os hex aproximados que estavam aqui saíram; o que
+   sobrou vem de `dov-tokens.css`. */
+
+body {
+  padding: var(--dov-esp-9) var(--dov-esp-5) var(--dov-esp-14);
+  background: var(--dov-fundo-alternativo);
+  color: var(--dov-texto);
+  font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  font-size: var(--dov-t-auxiliar);
+  line-height: var(--dov-lh-auxiliar);
+}
+
+main {
+  max-width: var(--dov-medida-texto);
+  margin: 0 auto;
+}
+
+h1 {
+  /* Sem serifada aqui: é painel técnico, não peça editorial. */
+  font-family: inherit;
+  font-size: var(--dov-t-corpo);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-titulo);
+  margin: 0 0 var(--dov-esp-1);
+}
+
+.sub {
+  color: var(--dov-texto-meta);
+  margin: 0 0 var(--dov-esp-8);
+}
+
+section {
+  background: var(--dov-fundo);
+  border: var(--dov-borda-fina) solid var(--dov-lilas);
+  border-radius: var(--dov-raio);
+  padding: var(--dov-esp-5);
+  margin-bottom: var(--dov-esp-4);
+}
+
+h2 {
+  font-family: inherit;
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--dov-roxo);
+  margin: 0 0 var(--dov-esp-3);
+}
+
+dl {
+  display: grid;
+  grid-template-columns: minmax(140px, auto) 1fr;
+  gap: var(--dov-esp-2) var(--dov-esp-5);
+  margin: 0;
+}
+
+dt {
+  color: var(--dov-texto-meta);
+}
+
+dd {
+  margin: 0;
+  word-break: break-all;
+}
+
+.big {
+  font-size: var(--dov-t-lead);
+  font-weight: var(--dov-peso-corpo-medio);
+}
+
+.ok {
+  color: var(--dov-verde-600);
+}
+
+/* Não há vermelho na paleta da marca — o portal não tem estado de erro em
+   cor. Este é local desta ferramenta e não deve ser reaproveitado. */
+.erro {
+  color: #a8322d;
+}
+
+ol,
+ul {
+  margin: 0;
+  padding-left: var(--dov-esp-5);
+  list-style: revert;
+}
+
+li {
+  margin-bottom: var(--dov-esp-2);
+}
+
+.nota {
+  color: var(--dov-texto-meta);
+  font-size: var(--dov-t-legenda);
+  margin-top: var(--dov-esp-3);
+  padding-top: var(--dov-esp-3);
+  border-top: var(--dov-hairline);
+}
+
+code {
+  background: var(--dov-fundo-alternativo);
+  padding: 1px var(--dov-esp-1);
+  border-radius: var(--dov-raio-pequeno);
+}
+
+@media (max-width: 767px) {
+  dl {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  dd {
+    margin-bottom: var(--dov-esp-3);
+  }
+}
