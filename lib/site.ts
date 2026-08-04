@@ -113,6 +113,20 @@ const ORDEM_EDITORIAS = [
   'programe-se',
 ] as const;
 
+/**
+ * A curadoria da home, por slug.
+ *
+ * As pranchas destacam Viaje no bloco grande e Harmonize + Mercado no par
+ * lado a lado. É escolha editorial, não dado: a API não sabe qual editoria
+ * merece a home desta semana.
+ *
+ * Slug que não existir mais no WordPress é ignorado, e o lugar é preenchido
+ * pela ordem de `ORDEM_EDITORIAS` — a home não fica com um buraco se o cliente
+ * renomear ou apagar uma editoria.
+ */
+export const HOME_EDITORIA_DESTAQUE = 'viaje';
+export const HOME_EDITORIAS_DUPLAS = ['harmonize', 'mercado'] as const;
+
 export function ordenarEditorias<T extends { slug: string; nome: string }>(termos: T[]): T[] {
   const posicao = (slug: string) => {
     const indice = ORDEM_EDITORIAS.indexOf(slug as (typeof ORDEM_EDITORIAS)[number]);

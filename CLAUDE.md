@@ -92,8 +92,18 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   hora e tolera erro de digitação. **Sem o `public/almanaque.json`** do plano: a
   lista vai nas props, e o arquivo estático fica para quando o Almanaque crescer.
 
-Faltam a **home** e as **institucionais** — e as institucionais precisam resolver
-`/quem-somos` e `/contato`, hoje capturadas pela rota de categoria.
+- **Home** (`/`) — pronta. Hero de busca com o combobox, matéria de capa, últimas,
+  bloco de editoria, chamada do Almanaque, duas editorias lado a lado e agenda.
+  A curadoria (`HOME_EDITORIA_DESTAQUE`, `HOME_EDITORIAS_DUPLAS`) é constante em
+  `lib/site.ts`, por slug — a API não sabe qual editoria merece a home.
+
+**Falta só o item 6:** Quem Somos, Contato, busca, busca sem resultados e 404. As
+duas primeiras precisam resolver `/quem-somos` e `/contato`, hoje capturadas pela
+rota de categoria.
+
+**Lacuna do plano descoberta na home:** o CPT `evento` tem corpo de texto e
+nenhuma rota — não está no `Anexo C` nem na lista de templates. O cartão da agenda
+só é link quando há `dov_link` externo. Decidir se evento ganha página própria.
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
 
@@ -226,6 +236,13 @@ As duas seguintes vieram do template de matéria.
     "Z" caía sozinho na segunda linha na vida real. É grade de 26 colunas.
     Vale a lição geral: medida que fecha justinho na prancha não fecha no
     navegador, porque a barra de rolagem come 15px.
+
+17. **`aspect-ratio` num item de grade `1fr` infla a coluna.** `1fr` é
+    `minmax(auto, 1fr)`, então o mínimo do conteúdo entra na conta. A mídia da
+    capa da home tem `height: 100%` e o estado vazio traz `aspect-ratio: 16/9`:
+    esticado a 520px de altura, ele **exige** 924px de largura, e a capa saía
+    500/924 em vez de meio a meio. `aspect-ratio: auto` no filho resolve, e vale
+    igual para a foto de verdade, que tem proporção intrínseca.
 
 ---
 

@@ -3,9 +3,9 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v10 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria,
-arquivo de categoria, verbete e índice A–Z prontos. Faltam a home e as
-institucionais.
+`v11 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria,
+arquivo de categoria, verbete, índice A–Z e home prontos. **Falta só o item 6:**
+Quem Somos, Contato, busca, busca sem resultados e 404.
 Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
 e `DESIGN.md` para o pacote do designer.
 
@@ -237,8 +237,34 @@ no caso difícil.
 | 2 ✅ | Arquivo de categoria | `/[categoria]` | serve as 7 editorias; chips com rolagem horizontal no mobile, ordenação, paginação |
 | 3 ✅ | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
 | 4 ✅ | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
-| 5 | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
+| 5 ✅ | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
 | 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
+
+### Notas da home
+
+**Três coisas da prancha que o dado não sustenta:**
+
+- **"Mais buscados"** nos chips do hero exigiria dado de busca, e não há analytics
+  no projeto. O que a API sustenta é "mais publicados" — as tags com mais
+  matérias. O rótulo virou "Comece por aqui" para não prometer o que não medimos.
+  Se "mais buscados" importar, é preciso decidir de onde vem o número.
+- **As letras da chamada do Almanaque** aparecem na prancha de A a N, como se
+  todas levassem a algum lugar. Só entram as que **têm** verbete — hoje 9.
+- **"Ver todas" das últimas publicações saiu.** Não existe rota que signifique
+  "todas as publicações" no `Anexo C`, e apontar para a primeira editoria seria
+  mentir sobre o destino. Volta quando a página de busca puder listar tudo sem
+  termo.
+
+**Uma lacuna real do plano:** o CPT `evento` tem corpo de texto e **nenhuma rota**
+— não está no `Anexo C` nem na lista de templates. Por isso o cartão da agenda é
+link só quando existe `dov_link` externo; sem ele é um bloco informativo. Os 3
+eventos de teste estão sem link, e nenhum é clicável. Decidir: criar
+`/agenda/[slug]`, ou aceitar que evento é só um cartão com data e local.
+
+**A curadoria da home é constante, não dado.** `HOME_EDITORIA_DESTAQUE` e
+`HOME_EDITORIAS_DUPLAS` em `lib/site.ts`, por slug: a API não sabe qual editoria
+merece a home desta semana. Slug que desaparecer é ignorado, e o lugar é
+preenchido pela ordem editorial.
 
 ### Notas do índice A–Z
 
