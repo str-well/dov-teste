@@ -97,13 +97,24 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   A curadoria (`HOME_EDITORIA_DESTAQUE`, `HOME_EDITORIAS_DUPLAS`) é constante em
   `lib/site.ts`, por slug — a API não sabe qual editoria merece a home.
 
-**Falta só o item 6:** Quem Somos, Contato, busca, busca sem resultados e 404. As
-duas primeiras precisam resolver `/quem-somos` e `/contato`, hoje capturadas pela
-rota de categoria.
+- **Institucionais** — prontas. `/quem-somos` e `/contato` são **rotas estáticas**,
+  e é isso que as tira do 404 da rota de categoria. `/busca` com filtro por tipo,
+  realce em `<mark>` e os dois estados vazios da §7. `not-found.tsx` e `error.tsx`
+  dividem o layout da tela 16.
 
-**Lacuna do plano descoberta na home:** o CPT `evento` tem corpo de texto e
-nenhuma rota — não está no `Anexo C` nem na lista de templates. O cartão da agenda
-só é link quando há `dov_link` externo. Decidir se evento ganha página própria.
+**Fase 3 concluída.** Todas as rotas do `Anexo C` respondem, menos as de
+formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
+
+### Pendências que precisam de decisão sua
+
+| O que | Por quê |
+|---|---|
+| Evento sem página | O CPT tem corpo de texto e **nenhuma rota** no `Anexo C`. O cartão da agenda só é link com `dov_link` externo. Criar `/agenda/[slug]`, ou remover o campo de corpo do mu-plugin |
+| Foto em página | `dov_imagens` não é registrado para `page` — a foto de Quem Somos não tem de onde vir. Uma linha no mu-plugin resolve |
+| Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin |
+| Classe gramatical | O verbete não tem campo para "substantivo masculino", que a prancha pede |
+| "Mais lidas" e "mais buscados" | As duas exigem contagem que não existe — sem analytics no projeto |
+| Tira de letras em telas ≤360px | Duas linhas de 13 não alcançam o alvo de 24px de largura. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
 

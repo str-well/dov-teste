@@ -3,9 +3,9 @@
 Portal editorial de vinho. WordPress headless como backend, Next.js como frontend,
 tudo no plano Hostinger Cloud já contratado. Custo adicional: zero.
 
-`v11 · 03/08/2026` — Fases 0, 1 e 2 concluídas. **Fase 3 em andamento:** matéria,
-arquivo de categoria, verbete, índice A–Z e home prontos. **Falta só o item 6:**
-Quem Somos, Contato, busca, busca sem resultados e 404.
+`v12 · 04/08/2026` — **Fases 0, 1, 2 e 3 concluídas.** Os 6 templates estão em pé,
+com todas as rotas do `Anexo C` respondendo — menos as de formulário, que são da
+Fase 4. **Fase 4 é o próximo passo.**
 Ver `../CLAUDE.md` para o resumo de decisões, `BACKEND.md` para o contrato da API
 e `DESIGN.md` para o pacote do designer.
 
@@ -18,8 +18,8 @@ e `DESIGN.md` para o pacote do designer.
 3. [Fase 0 — Validação da infraestrutura](#3-fase-0--validação-da-infraestrutura) ✅
 4. [Fase 1 — WordPress do zero](#4-fase-1--wordpress-do-zero) ✅
 5. [Fase 2 — Fundações do front](#5-fase-2--fundações-do-front) ✅
-6. [Fase 3 — Templates](#6-fase-3--templates) ←
-7. [Fase 4 — Deploy e revalidação](#7-fase-4--deploy-e-revalidação)
+6. [Fase 3 — Templates](#6-fase-3--templates) ✅
+7. [Fase 4 — Deploy e revalidação](#7-fase-4--deploy-e-revalidação) ←
 8. [Fase 5 — Antes de entregar](#8-fase-5--antes-de-entregar)
 9. [Riscos e planos B](#9-riscos-e-planos-b)
 10. [Anexo A — Design tokens](#anexo-a--design-tokens)
@@ -226,7 +226,7 @@ e o Tailwind cuida de grade, espaçamento e responsividade.
 
 ---
 
-## 6. Fase 3 — Templates ← EM ANDAMENTO
+## 6. Fase 3 — Templates ✅ CONCLUÍDA
 
 A ordem começa pelo template mais complexo, para que os componentes nasçam testados
 no caso difícil.
@@ -238,7 +238,42 @@ no caso difícil.
 | 3 ✅ | Verbete | `/almanaque/[termo]` | etimologia, caixa "Na prática", verbetes relacionados, matérias que usam o termo, anterior/próximo |
 | 4 ✅ | Índice A–Z | `/almanaque` | navegação alfabética sticky; letras sem verbete em cinza e sem link |
 | 5 ✅ | Home | `/` | hero de busca, matéria de capa, últimas, bloco Viaje, faixa do Almanaque, Harmonize + Mercado, agenda |
-| 6 | Institucionais | vários | Quem Somos, busca, busca sem resultados, 404 |
+| 6 ✅ | Institucionais | vários | Quem Somos, Contato, busca, busca sem resultados, 404 e 500 |
+
+### Notas das institucionais
+
+- **`/quem-somos` e `/contato` são rotas estáticas**, e é isso que as tira do 404
+  da rota de categoria: no App Router a estática vence a dinâmica. Vale igual
+  para `/busca` e para as duas páginas legais.
+- **A foto da equipe de Quem Somos não tem de onde vir.** `dov_imagens` é
+  registrado no mu-plugin para `post`, `verbete` e `evento` — **não para
+  `page`**. Sem estender o mu-plugin, página não tem imagem destacada na API. Em
+  vez de um retângulo vazio ocupando metade do layout, o texto ocupa a largura
+  toda. Estender o mu-plugin é uma linha, se a foto importar.
+- **Os números de Quem Somos eram fictícios** ("418 verbetes", "2019"). Verbetes
+  e editorias vêm da API; o ano sai da matéria mais antiga publicada — hoje 2026,
+  e vira 2019 sozinho se o acervo antigo for importado.
+- **O olho é separado do corpo.** O editor marca com `class="lead"`, e a prancha
+  o põe na cabeça, não junto do texto. `separarLead()` faz o corte; sem a classe,
+  a página cai para o resumo da API.
+- **Falta o formulário de contato.** `/api/contato` com o Resend é da Fase 4. Até
+  lá a página é informativa, com aviso — melhor que um formulário que engole a
+  mensagem.
+- **A busca não devolve trecho em contexto.** A prancha mostra um recorte do
+  corpo em volta da palavra encontrada; a REST API não entrega isso, e só um
+  endpoint próprio no mu-plugin faria o recorte. O trecho exibido é o resumo,
+  com realce quando o termo aparece nele.
+- **"Buscas relacionadas" virou "Temas relacionados":** a primeira exigiria
+  histórico de busca, que não existe. As tags das matérias encontradas são dado
+  real.
+- **A busca é `noindex`.** Cada termo geraria uma URL rasa e duplicada. Já vale,
+  sem esperar a Fase 5.
+- **Dois estados vazios diferentes na busca**, e confundi-los foi um bug real:
+  "nada no portal" leva para a home com atalhos (tela 15); "nada neste filtro"
+  leva de volta para *Tudo*.
+- **O 404 e o 500 dividem o mesmo layout**, derivado da tela 16 — que só existe
+  em mobile. No desktop os botões ficam lado a lado. O `error.tsx` é onde o
+  `ErroWordPress` da camada de dados aterra.
 
 ### Notas da home
 
@@ -360,7 +395,7 @@ preenchido pela ordem editorial.
 
 ---
 
-## 7. Fase 4 — Deploy e revalidação
+## 7. Fase 4 — Deploy e revalidação ← PRÓXIMO PASSO
 
 Simplificada: com processo Node de verdade, o ISR funciona como na documentação
 oficial. Sem OpenNext, sem KV, sem wrangler.

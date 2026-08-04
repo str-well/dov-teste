@@ -10,6 +10,12 @@ type Props = {
   atalhos?: Atalho[];
   rotuloDosAtalhos?: string;
   acao?: { rotulo: string; href: string; variacao?: 'primario' | 'contorno' };
+  /**
+   * Esconde o título visualmente, mantendo-o para leitor de tela. Serve quando
+   * o `<h1>` da página já diz a mesma coisa — o caso da busca sem resultado, em
+   * que a prancha repete o texto no `<h1>` e deixa o `<h2>` oculto.
+   */
+  tituloOculto?: boolean;
 };
 
 /**
@@ -27,10 +33,11 @@ export function EstadoVazio({
   atalhos = [],
   rotuloDosAtalhos = 'Comece por aqui',
   acao,
+  tituloOculto = false,
 }: Props) {
   return (
     <div className="vazio">
-      <h2 className="vazio__titulo">{titulo}</h2>
+      <h2 className={tituloOculto ? 'visualmente-oculto' : 'vazio__titulo'}>{titulo}</h2>
 
       <p className="vazio__texto" role="status">
         {orientacao}

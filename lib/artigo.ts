@@ -101,3 +101,25 @@ export function prepararArtigo(html: string): Artigo {
 
   return { html: processado, sumario };
 }
+
+/**
+ * Separa o parágrafo de abertura do resto do corpo.
+ *
+ * O editor marca o olho com `class="lead"`, e as pranchas institucionais o
+ * colocam na cabeça — sobre off-white, em corpo maior — não junto do texto. Sem
+ * separar, o olho apareceria duas vezes ou no lugar errado.
+ *
+ * Sem `class="lead"` no conteúdo, devolve o corpo inteiro e `lead` vazio: a
+ * página então usa o resumo da API, que o WordPress gera do primeiro parágrafo.
+ */
+export function separarLead(html: string): { lead: string; corpo: string } {
+  const encontrado = html.match(/<p[^>]*class=["'][^"']*\blead\b[^"']*["'][^>]*>([\s\S]*?)<\/p>/i);
+
+  if (!encontrado) return { lead: '', corpo: html };
+
+  return {
+    // Texto simples: o destino é um `<p>` da cabeça, não HTML solto.
+    lead: encontrado[1].replace(/<[^>]*>/g, '').trim(),
+    corpo: html.replace(encontrado[0], '').trim(),
+  };
+}

@@ -3585,7 +3585,478 @@ a.agenda__item:focus-visible {
 }
 
 /* ==========================================================================
-   20 · CARREGAMENTO
+   20 · INSTITUCIONAIS, BUSCA E ERRO
+
+   Portado de `11`/`12` (quem somos), `13`/`14`/`15` (busca) e `16` (404).
+   ========================================================================== */
+
+/* ---------- Quem Somos: números e princípios */
+
+.institucional {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--dov-esp-13);
+  align-items: start;
+  padding-block: 76px;
+}
+
+/* Sem foto o texto ocupa a largura toda. Ver o comentário em
+   `app/quem-somos/page.tsx`: `dov_imagens` não é registrado para `page`, então
+   a foto da prancha não tem de onde vir. */
+/* O limite de leitura vai no **filho**, não aqui: este elemento também carrega
+   `.limite`, que tem `margin-inline: auto`. Um `max-width` nele encolheria a
+   caixa inteira e o `auto` a centralizaria, jogando o texto para o meio da tela
+   em vez de alinhá-lo à margem da página. */
+.institucional--sem-figura {
+  grid-template-columns: 1fr;
+}
+
+.institucional--sem-figura > * {
+  max-width: var(--dov-medida-texto);
+}
+
+.institucional__titulo {
+  margin-bottom: var(--dov-esp-5);
+  font-size: var(--dov-t-h2-secao);
+  line-height: var(--dov-lh-h2-secao);
+}
+
+.numeros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--dov-esp-6);
+  margin-bottom: var(--dov-esp-8);
+  padding-block: var(--dov-esp-7);
+  border-block: var(--dov-hairline);
+}
+
+.numeros__valor {
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-numeral-destaque);
+  line-height: var(--dov-lh-numeral-destaque);
+  color: var(--dov-roxo);
+  font-variant-numeric: tabular-nums;
+}
+
+.numeros__rotulo {
+  margin-top: 6px;
+  font-size: var(--dov-t-auxiliar);
+  color: var(--dov-texto-suave);
+}
+
+/* O corpo reaproveita a tipografia da `.prosa`, mas sem o padding e o limite de
+   largura dela: quem cuida dos dois aqui é o `.institucional`. */
+.institucional__corpo.prosa {
+  padding-block: 0;
+  max-width: none;
+}
+
+/* A lista de princípios é o `<ul>` do editor de blocos, estilizado por
+   elemento: bolinha verde no lugar do marcador padrão. */
+.institucional__corpo > ul {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 0;
+  list-style: none;
+}
+
+.institucional__corpo > ul > li {
+  position: relative;
+  padding-left: var(--dov-esp-6);
+  font-size: var(--dov-t-corpo-medio);
+  line-height: var(--dov-lh-corpo-medio);
+}
+
+.institucional__corpo > ul > li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 8px;
+  height: 8px;
+  border-radius: var(--dov-raio-pilula);
+  background: var(--dov-verde);
+}
+
+/* ---------- Chamada de contato, sobre marinho */
+
+.contato {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--dov-esp-11);
+  padding-block: var(--dov-esp-12);
+}
+
+.contato__titulo {
+  margin-bottom: var(--dov-esp-3);
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-numeral-destaque);
+  line-height: 1.1;
+  color: var(--dov-texto-sobre-escuro);
+}
+
+.contato__texto {
+  max-width: 520px;
+  font-size: var(--dov-t-corpo-medio);
+  line-height: var(--dov-lh-corpo-medio);
+  color: var(--dov-texto-suave-sobre-escuro);
+}
+
+.contato .botao {
+  flex: none;
+}
+
+@media (max-width: 1024px) {
+  .institucional {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-9);
+  }
+}
+
+@media (max-width: 767px) {
+  .institucional {
+    padding-block: var(--dov-esp-8);
+  }
+  .institucional__titulo {
+    margin-bottom: var(--dov-esp-3);
+    font-size: var(--dov-t-h2-secao-mobile);
+    line-height: 1.12;
+  }
+  .numeros {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-5);
+    padding-block: var(--dov-esp-5);
+  }
+  .numeros__valor {
+    font-size: var(--dov-t-numeral-destaque-mobile);
+  }
+  .contato {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--dov-esp-5);
+    padding-block: var(--dov-esp-9);
+  }
+  .contato__titulo {
+    font-size: var(--dov-t-h2-secao-mobile);
+  }
+  .contato__texto {
+    font-size: var(--dov-t-corpo-compacto-mobile);
+  }
+}
+
+/* ---------- Página de busca */
+
+.cabeca-busca {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--dov-esp-11) var(--dov-esp-10);
+  background: var(--dov-fundo-alternativo);
+}
+
+.cabeca-busca__blob {
+  width: 400px;
+  right: -130px;
+  top: -120px;
+}
+
+.cabeca-busca__conteudo {
+  max-width: 760px;
+}
+
+.cabeca-busca__titulo {
+  margin-bottom: 22px;
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-h1-busca);
+  line-height: var(--dov-lh-h1-busca);
+}
+
+.cabeca-busca__termo {
+  font-style: italic;
+  color: var(--dov-roxo);
+}
+
+.cabeca-busca__contagem {
+  margin-top: 22px;
+  font-size: 15px;
+  color: var(--dov-texto-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.busca--resultados {
+  height: var(--dov-altura-busca-media);
+}
+.busca--resultados .busca__icone {
+  width: 21px;
+  height: 21px;
+}
+.busca--resultados .busca__botao {
+  height: 48px;
+  padding-inline: 26px;
+}
+
+.busca__limpar {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  color: var(--dov-texto-meta);
+}
+.busca__limpar svg {
+  width: 16px;
+  height: 16px;
+}
+
+.filtros-busca {
+  padding-block: var(--dov-esp-6);
+  border-bottom: var(--dov-hairline);
+}
+
+.filtros-busca__interno {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filtros-busca__rotulo {
+  margin-right: 6px;
+  font-size: var(--dov-t-kicker-pequeno);
+  font-weight: var(--dov-peso-corpo-medio);
+  letter-spacing: var(--dov-tracking-kicker);
+  text-transform: uppercase;
+  color: var(--dov-texto-meta);
+}
+
+.resultados {
+  display: grid;
+  grid-template-columns: 1fr var(--dov-largura-sidebar-larga);
+  gap: var(--dov-esp-13);
+  align-items: start;
+  padding-block: var(--dov-esp-10) var(--dov-esp-12);
+}
+
+.resultados__lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-7);
+}
+
+.resultado__link {
+  display: flex;
+  gap: var(--dov-esp-6);
+  padding-bottom: var(--dov-esp-7);
+  border-bottom: var(--dov-hairline);
+  color: inherit;
+  transition: color var(--dov-duracao-rapida) var(--dov-easing);
+}
+.resultado__link:hover,
+.resultado__link:focus-visible {
+  color: var(--dov-roxo);
+}
+
+/* Verbete não tem foto: entra a inicial num quadrado roxo-100. */
+.resultado__inicial {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: var(--dov-raio);
+  background: var(--dov-roxo-100);
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo);
+  font-size: 26px;
+  color: var(--dov-roxo);
+}
+
+.resultado__midia {
+  flex: none;
+  width: 160px;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: var(--dov-raio);
+}
+.resultado__midia > * {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.resultado__kicker {
+  margin-bottom: var(--dov-esp-2);
+}
+
+.resultado__titulo {
+  margin-bottom: var(--dov-esp-2);
+  font-size: var(--dov-t-citacao);
+  line-height: 1.15;
+}
+
+.resultado__trecho {
+  font-size: var(--dov-t-corpo-compacto);
+  line-height: var(--dov-lh-corpo-compacto);
+  color: var(--dov-texto-suave);
+}
+
+.resultado__trecho mark {
+  padding-inline: 3px;
+  background: var(--dov-roxo-200);
+  color: var(--dov-roxo-800);
+}
+
+.resultado__trecho + .resultado__meta {
+  margin-top: var(--dov-esp-2);
+}
+
+.resultado__meta {
+  font-size: var(--dov-t-meta);
+  color: var(--dov-texto-meta);
+  font-variant-numeric: tabular-nums;
+}
+
+.resultados__paginacao {
+  margin-top: var(--dov-esp-5);
+}
+
+.resultados__lateral {
+  padding: var(--dov-esp-7);
+  border-radius: var(--dov-raio);
+  background: var(--dov-fundo-alternativo);
+}
+
+.resultados__lateral-titulo {
+  margin-bottom: var(--dov-esp-4);
+}
+
+@media (max-width: 1024px) {
+  .resultados {
+    grid-template-columns: 1fr;
+    gap: var(--dov-esp-9);
+  }
+}
+
+@media (max-width: 767px) {
+  .cabeca-busca {
+    padding-block: var(--dov-esp-7) var(--dov-esp-8);
+  }
+  .cabeca-busca__titulo {
+    font-size: var(--dov-t-h1-busca-mobile);
+    line-height: var(--dov-lh-h1-busca-mobile);
+  }
+  .resultados {
+    padding-block: var(--dov-esp-7) var(--dov-esp-9);
+  }
+  .resultados__lista {
+    gap: var(--dov-esp-5);
+  }
+  .resultado__link {
+    gap: 14px;
+    padding-bottom: var(--dov-esp-5);
+  }
+  .resultado__midia {
+    width: 96px;
+  }
+  .resultado__inicial {
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  .resultado__titulo {
+    font-size: var(--dov-t-h4-cartao-mobile);
+    line-height: var(--dov-lh-h4-cartao-mobile);
+  }
+  .resultado__trecho {
+    font-size: var(--dov-t-cartao-mobile);
+    line-height: var(--dov-lh-cartao-mobile);
+  }
+}
+
+/* ---------- 404 e erro de servidor
+
+   A tela 16 só existe em mobile; o desktop é derivado dos tokens. */
+
+.erro {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--dov-esp-13);
+  text-align: center;
+}
+
+.erro__blob {
+  width: 420px;
+  left: 50%;
+  top: var(--dov-esp-5);
+  transform: translateX(-50%);
+}
+
+.erro__conteudo {
+  position: relative;
+  z-index: var(--dov-z-conteudo);
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+.erro__numero {
+  font-family: var(--dov-fonte-titulo);
+  font-weight: var(--dov-peso-titulo-leve);
+  font-size: var(--dov-t-numeral-404);
+  line-height: var(--dov-lh-numeral-404);
+  color: var(--dov-roxo);
+  font-variant-numeric: tabular-nums;
+}
+
+.erro__titulo {
+  margin-block: var(--dov-esp-3);
+  font-size: var(--dov-t-h2-secao);
+  line-height: 1.15;
+}
+
+.erro__texto {
+  margin-bottom: 26px;
+  font-size: var(--dov-t-corpo-compacto);
+  line-height: var(--dov-lh-corpo-compacto);
+  color: var(--dov-texto-suave);
+}
+
+.erro__acoes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--dov-esp-3);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .erro {
+    padding: var(--dov-esp-11) var(--dov-margem-mobile) var(--dov-esp-10);
+  }
+  .erro__blob {
+    width: 300px;
+  }
+  .erro__titulo {
+    font-size: var(--dov-esp-7);
+  }
+  .erro__texto {
+    font-size: var(--dov-t-corpo-compacto-mobile);
+    line-height: var(--dov-lh-corpo-compacto-mobile);
+  }
+  /* Botões em bloco, empilhados, como na prancha. */
+  .erro__acoes {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .erro__acoes .botao {
+    width: 100%;
+  }
+  .erro__acoes .botao--contorno {
+    height: var(--dov-altura-botao-media);
+  }
+}
+
+/* ==========================================================================
+   21 · CARREGAMENTO
 
    Nunca spinner de página inteira: esqueleto com a forma do conteúdo. [ESPEC] §7
    ========================================================================== */

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { BUSCA } from '@/lib/site';
 import type { Sugestao } from '@/lib/wp';
 
-import { IconeBusca } from './icones';
+import { IconeBusca, IconeFechar } from './icones';
 import { Realce } from './realce';
 
 /** [ESPEC] §5 — o painel abre a partir de 3 caracteres, com 250 ms de debounce. */
@@ -23,6 +23,12 @@ type Props = {
   id?: string;
   rotulo?: string;
   focoInicial?: boolean;
+  /**
+   * Mostra o botão de limpar quando há texto. A prancha da página de resultados
+   * tem esse botão, e o nativo do `type="search"` está escondido no CSS por
+   * decisão de desenho — sem um dos dois, não há como esvaziar o campo.
+   */
+  limpavel?: boolean;
 };
 
 /**
@@ -44,6 +50,7 @@ export function BuscaComSugestoes({
   id = 'busca',
   rotulo = 'Buscar no portal',
   focoInicial = false,
+  limpavel = false,
 }: Props) {
   const router = useRouter();
   const [itens, setItens] = useState<Sugestao[]>([]);
@@ -151,7 +158,12 @@ export function BuscaComSugestoes({
   const visivel = isOpen && (itens.length > 0 || temMensagem);
 
   const modificador =
-    tamanho === 'media' ? ' busca--media' : tamanho === 'compacta' ? ' busca--compacta' : '';
+    tamanho === 'media'
+      ? // `busca--resultados` traz a altura e o ícone maiores da prancha 13.
+        ' busca--media busca--resultados'
+      : tamanho === 'compacta'
+        ? ' busca--compacta'
+        : '';
 
   return (
     // O `action` continua valendo: sem JavaScript, o Enter submete e leva para
@@ -189,6 +201,20 @@ export function BuscaComSugestoes({
           },
         })}
       />
+
+      {limpavel && termo !== '' && (
+        <button
+          className="botao-icone busca__limpar"
+          type="button"
+          aria-label="Limpar busca"
+          onClick={() => {
+            setTermo('');
+            closeMenu();
+          }}
+        >
+          <IconeFechar />
+        </button>
+      )}
 
       <button className="busca__botao" type="submit">
         Buscar
