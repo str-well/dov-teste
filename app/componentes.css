@@ -4184,3 +4184,178 @@ a.agenda__item:focus-visible {
 .rodape__preferencias:hover {
   color: var(--dov-menta);
 }
+
+/* ==========================================================================
+   23 · FORMULÁRIOS
+
+   Newsletter do rodapé e contato. Sem prancha própria: o pacote do designer
+   traz o campo de busca e o campo do rodapé, e é deles que a entrada de texto
+   daqui herda a forma.
+
+   ⚠️ **Não existe cor de erro nos tokens.** Nenhum vermelho, nenhum token de
+   alerta — conferido no `dov-tokens.css` inteiro. Como a regra do projeto é não
+   inventar valor, o aviso de erro usa ênfase da paleta: fundo roxo-100, borda
+   roxo-700 e peso médio. O significado não fica por conta da cor, que é o que o
+   WCAG 1.4.1 exige — quem usa leitor de tela ouve pelo `role="alert"`, e quem vê
+   lê o texto. Cor de erro é pergunta em aberto para o designer.
+   ========================================================================== */
+
+/* --- Campo genérico -------------------------------------------------------- */
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-2);
+}
+
+.campo__rotulo {
+  font-family: var(--dov-fonte-corpo);
+  font-size: var(--dov-t-meta);
+  font-weight: var(--dov-peso-corpo-medio);
+  color: var(--dov-texto-suave);
+}
+
+.campo__entrada {
+  width: 100%;
+  height: var(--dov-altura-botao);
+  padding-inline: 18px;
+  border: var(--dov-borda-fina) solid var(--dov-divisor);
+  border-radius: var(--dov-raio-pilula);
+  background: var(--dov-fundo);
+  font-family: var(--dov-fonte-corpo);
+  font-size: 17px;
+  color: var(--dov-texto);
+  -webkit-appearance: none;
+  appearance: none;
+}
+.campo__entrada::placeholder {
+  color: var(--dov-texto-meta);
+}
+.campo__entrada:focus-visible {
+  border-color: var(--dov-roxo);
+}
+.campo__entrada:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* A área de texto não é pílula: raio de pílula em caixa alta vira cápsula. */
+.campo__entrada--area {
+  height: auto;
+  padding: 14px 18px;
+  border-radius: var(--dov-raio);
+  line-height: var(--dov-lh-corpo-compacto);
+  resize: vertical;
+}
+
+/* --- A armadilha ----------------------------------------------------------- */
+
+/**
+ * Fora da tela, não `display: none`.
+ *
+ * Robô de formulário costuma pular campo com `display: none` ou
+ * `type="hidden"` — justamente porque o truque é conhecido. Empurrar para fora
+ * da viewport mantém o campo "real" para quem varre o HTML e invisível para
+ * gente. `aria-hidden` e `tabindex="-1"` no JSX tiram do leitor de tela e da
+ * tabulação, que é o que evita a armadilha virar armadilha para o leitor.
+ */
+.campo-armadilha {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* --- Contato --------------------------------------------------------------- */
+
+.form-contato {
+  display: flex;
+  flex-direction: column;
+  gap: var(--dov-esp-5);
+}
+
+/**
+ * A folga só existe quando há texto acima.
+ *
+ * O corpo da página de contato vem do WordPress e **fica oculto quando repete o
+ * olho** — que é o caso hoje. Com `margin-top` fixo, o formulário virava filho
+ * único da prosa e somava 32px aos 76px de respiro dela: 108px de vão antes do
+ * primeiro campo.
+ */
+.prosa > * + .form-contato {
+  margin-top: var(--dov-esp-8);
+}
+
+.form-contato__linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--dov-esp-5);
+}
+
+.form-contato__acoes {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.form-contato__erro,
+.rodape__form-aviso--erro {
+  font-size: var(--dov-t-corpo-compacto);
+  font-weight: var(--dov-peso-corpo-medio);
+}
+
+.form-contato__erro {
+  padding: 14px 18px;
+  border-left: 3px solid var(--dov-roxo-700);
+  border-radius: var(--dov-raio-pequeno);
+  background: var(--dov-roxo-100);
+  color: var(--dov-texto);
+}
+
+/* O sucesso pode usar verde: esse existe nos tokens. Mesma regra de folga do
+   formulário — o aviso ocupa o lugar dele, então herda o mesmo comportamento. */
+.prosa > * + .form-contato__pronto {
+  margin-top: var(--dov-esp-8);
+}
+
+.form-contato__pronto {
+  padding: var(--dov-esp-6);
+  border-left: 3px solid var(--dov-verde);
+  border-radius: var(--dov-raio);
+  background: var(--dov-verde-100);
+}
+.form-contato__pronto-titulo {
+  font-family: var(--dov-fonte-titulo);
+  font-size: var(--dov-t-h3-artigo);
+  line-height: var(--dov-lh-h3-artigo);
+  /* Cormorant nunca em bold: `--dov-peso-titulo` é 500, o máximo. */
+  font-weight: var(--dov-peso-titulo);
+  color: var(--dov-verde-800);
+}
+
+/* --- Avisos do formulário do rodapé --------------------------------------- */
+
+/* O rodapé é escuro: os avisos usam a rampa clara, não a de fundo branco. */
+.rodape__form-aviso {
+  font-size: var(--dov-t-auxiliar);
+  line-height: var(--dov-lh-auxiliar);
+}
+.rodape__form-aviso--ok {
+  color: var(--dov-menta);
+}
+.rodape__form-aviso--erro {
+  /* Ocupa a linha inteira abaixo do campo e do botão, que são irmãos flex. */
+  flex-basis: 100%;
+  color: var(--dov-texto-sobre-escuro);
+}
+
+.rodape__form {
+  /* Passou a ter três filhos, com o aviso de erro embaixo. */
+  flex-wrap: wrap;
+}
+
+@media (max-width: 767px) {
+  .form-contato__linha {
+    grid-template-columns: 1fr;
+  }
+}

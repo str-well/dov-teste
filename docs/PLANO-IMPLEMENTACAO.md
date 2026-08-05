@@ -456,7 +456,24 @@ certa e esconder o problema.
       hoje. Anda por `totalPaginas` em vez de pegar só as 100 primeiras: sitemap
       truncado nunca reclama no build, a matéria 101 só nunca é descoberta
 - [x] `robots.txt` com a busca fora e crawl-delay — `app/robots.ts`
-- [ ] Formulário de contato e newsletter testados de ponta a ponta
+- [x] Formulário de contato e newsletter **construídos** — `/api/contato`,
+      `/api/newsletter` e `/api/newsletter/cancelar`, com honeypot e dois
+      contadores de limite. Validação, limites e degradação verificados
+- [ ] **Testar de ponta a ponta**, o que só é possível depois de você: subir o
+      mu-plugin atualizado, definir `DOV_ASSINANTES_SECRET` no `wp-config.php` e
+      cadastrar `WP_ASSINANTES_SECRET`, `RESEND_API_KEY`, `EMAIL_REMETENTE` e
+      `CONTATO_EMAIL_DESTINO` no painel. **O caminho de gravação no WordPress
+      nunca rodou de verdade** — as rotas foram verificadas até a borda, e a borda
+      é o segredo que ainda não existe
+- [ ] **Opt-in duplo na newsletter.** Hoje é simples: quem envia entra na hora, e
+      nada impede alguém de inscrever o e-mail de outra pessoa. Pede um estado
+      `confirmado` no CPT, uma rota de confirmação e uma página de destino
+- [ ] **Decidir com o designer a cor de erro.** Não existe vermelho nem token de
+      alerta no pacote, e o aviso dos formulários usa ênfase da paleta — roxo-100
+      com borda roxo-700. Funciona e passa no WCAG, mas é escolha por omissão
+- [ ] **Decidir se os formulários precisam funcionar sem JavaScript.** Hoje não
+      funcionam: a rota responde JSON. Resolver pede server action em vez de rota
+      de API
 - [ ] Acessibilidade: contraste (paleta já validada em AAA), navegação por teclado,
       foco visível, `alt` em todas as imagens
 - [ ] **Fotografia real no lugar dos placeholders** — maior risco não técnico do projeto

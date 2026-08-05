@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { FormContato } from '@/components/form-contato';
 import { PaginaInstitucional } from '@/components/pagina-institucional';
 import { paraTextoSimples, paginaPorSlug } from '@/lib/wp';
 
@@ -29,10 +30,13 @@ export async function generateMetadata(): Promise<Metadata> {
  * A página não tem prancha própria — reaproveita a casca institucional. O
  * conteúdo é um parágrafo no WordPress.
  *
- * **Falta o formulário.** A rota `/api/contato` com o Resend é da Fase 4.
- * Enquanto não existir, a página mostra o texto da redação — melhor que um
- * formulário que engole a mensagem sem enviar. A pendência fica aqui e no
- * `docs/PLANO-IMPLEMENTACAO.md`, não na tela do leitor.
+ * **O formulário existe desde que `/api/contato` existe.** A regra que segurava
+ * ele continua valendo do outro lado: falha de envio mostra erro, nunca sucesso
+ * falso. A mensagem não é gravada em lugar nenhum — se o envio falha, ela se
+ * perde, então fingir que deu certo seria o pior defeito possível aqui.
+ *
+ * Ele **exige JavaScript**: a rota responde JSON, e sem JS o leitor veria
+ * `{"ok":true}` numa tela branca. Anotado no plano como pendência de verdade.
  */
 export default async function Page() {
   const pagina = await paginaPorSlug(SLUG);
@@ -47,10 +51,10 @@ export default async function Page() {
 
   return (
     <PaginaInstitucional kicker="Contato" titulo={pagina.titulo} lead={pagina.resumo}>
-      {/* Nada de texto de enfeite aqui: não há formulário, endereço nem e-mail
-          para oferecer, e as redes não estão confirmadas. Quando o cliente
-          escrever mais na página do WordPress, o corpo aparece sozinho. */}
+      {/* O corpo do WordPress, quando diz algo além do olho. */}
       {!repetido && <div dangerouslySetInnerHTML={{ __html: pagina.conteudoHtml }} />}
+
+      <FormContato />
     </PaginaInstitucional>
   );
 }

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { BotaoPreferencias } from '@/components/consentimento';
+import { FormNewsletter } from '@/components/form-newsletter';
 import { ALMANAQUE, PAGINAS_LEGAIS, SITE, ordenarEditorias } from '@/lib/site';
 import { listarCategorias } from '@/lib/wp';
 
@@ -67,31 +68,17 @@ export async function Rodape() {
             </ul>
           </nav>
 
-          <div>
+          {/* O `id` é o destino do link "Newsletter" do cabeçalho, e fica **aqui**,
+              não no `<form>`: depois de assinar o formulário é substituído pelo
+              aviso de sucesso, e a âncora sumiria junto — o link do cabeçalho
+              passaria a não levar a lugar nenhum para quem já assinou. */}
+          <div id="newsletter">
             <h2 className="rodape__titulo" id="rodape-newsletter">
               Newsletter
             </h2>
             <p className="rodape__texto">Uma carta por semana, com o que vale ler e beber.</p>
 
-            {/* O id é o destino do link "Newsletter" do cabeçalho.
-                O envio entra na Fase 4, com a rota /api/newsletter e o Resend. */}
-            <form className="rodape__form" id="newsletter" aria-labelledby="rodape-newsletter">
-              <label className="visualmente-oculto" htmlFor="rodape-email">
-                Seu e-mail
-              </label>
-              <input
-                className="rodape__campo"
-                id="rodape-email"
-                type="email"
-                name="email"
-                placeholder="seu@email.com"
-                autoComplete="email"
-                required
-              />
-              <button className="botao botao--verde" type="submit">
-                Assinar
-              </button>
-            </form>
+            <FormNewsletter />
           </div>
         </div>
 

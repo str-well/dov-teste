@@ -573,7 +573,12 @@ add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
 		$caminhos[] = '/almanaque';
 		$caminhos[] = '/almanaque/' . $post->post_name;
 	} elseif ( 'evento' === $post->post_type ) {
-		$caminhos[] = '/programe-se';
+		// `/agenda`, não `/programe-se`. O segundo é o arquivo de **matérias** da
+		// editoria de mesmo nome, e ficou aqui do tempo em que evento não tinha
+		// página nenhuma. Publicar evento revalidava o caminho errado: a agenda
+		// só atualizava pelo fallback de 300s, sem erro nenhum aparecendo.
+		$caminhos[] = '/agenda';
+		$caminhos[] = '/agenda/' . $post->post_name;
 	} elseif ( 'page' === $post->post_type ) {
 		$caminhos[] = '/' . $post->post_name;
 	}
@@ -596,7 +601,214 @@ add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
 }, 10, 3 );
 
 // ===========================================================================
-// 10 · ENDURECIMENTO E LIMPEZA
+// 10 · ASSINANTES DA NEWSLETTER
+// ===========================================================================
+
+/**
+ * O CPT que guarda quem assinou a newsletter.
+ *
+ * O título do post **é o e-mail**. Não é elegante, mas é o que faz a busca do
+ * painel funcionar sem campo extra, e o cliente encontra um assinante digitando
+ * o endereço.
+ *
+ * **`show_in_rest` é `false`, e isso não é detalhe.** Todo outro CPT deste
+ * arquivo é `true`, porque o front precisa lê-los. Aqui `true` publicaria a
+ * lista inteira de e-mails em `/wp-json/wp/v2/assinantes` para qualquer pessoa
+ * na internet — um vazamento de dado pessoal servido pela nossa própria API, sem
+ * nenhum sinal de que aconteceu. A escrita entra pelas rotas próprias abaixo,
+ * que exigem segredo.
+ *
+ * `public => false` pelo mesmo motivo, mais um: sem isso o WordPress criaria URL
+ * pública por assinante, e `descubraovinho.com.br/assinante/joao-email-com`
+ * seria uma página com o e-mail no endereço.
+ */
+add_action( 'init', function () {
+	register_post_type( 'assinante', array(
+		'labels' => array(
+			'name'          => 'Assinantes',
+			'singular_name' => 'Assinante',
+			'search_items'  => 'Buscar assinantes',
+			'not_found'     => 'Nenhum assinante ainda',
+		),
+		'public'              => false,
+		'show_ui'             => true,
+		'publicly_queryable'  => false,
+		'exclude_from_search' => true,
+		'has_archive'         => false,
+		'menu_icon'           => 'dashicons-email-alt',
+		'menu_position'       => 23,
+		// Sem editor: assinante não tem corpo de texto, e um campo de conteúdo
+		// só convidaria alguém a anotar coisa que não deveria estar ali.
+		'supports'            => array( 'title' ),
+		'show_in_rest'        => false,
+		// Nada de "Adicionar novo" à mão: quem entra, entra pelo formulário, com
+		// token de cancelamento gerado. Um assinante criado no painel não teria
+		// token, e o link de descadastro dele nasceria quebrado.
+		'capabilities'        => array( 'create_posts' => 'do_not_allow' ),
+		'map_meta_cap'        => true,
+	) );
+} );
+
+/**
+ * Colunas da lista: data de entrada e de onde veio.
+ *
+ * Sem isto a tela mostraria só o e-mail e a data do post, e "de onde veio" é o
+ * que responde "por que essa pessoa está aqui" numa eventual reclamação.
+ */
+add_filter( 'manage_assinante_posts_columns', function ( $colunas ) {
+	$colunas['title'] = 'E-mail';
+	$colunas['dov_origem'] = 'Origem';
+	unset( $colunas['date'] );
+	$colunas['date'] = 'Assinou em';
+	return $colunas;
+} );
+
+add_action( 'manage_assinante_posts_custom_column', function ( $coluna, $post_id ) {
+	if ( 'dov_origem' === $coluna ) {
+		echo esc_html( get_post_meta( $post_id, 'dov_origem', true ) ?: '—' );
+	}
+}, 10, 2 );
+
+/**
+ * As rotas de escrita, em namespace próprio.
+ *
+ * Por que não a REST API padrão com senha de aplicativo: uma senha de aplicativo
+ * dá ao portador **tudo** que o usuário pode fazer — criar matéria, apagar
+ * verbete, ler rascunho. Aqui o segredo abre exatamente duas operações, e nada
+ * mais. Menor privilégio a um custo de vinte linhas.
+ *
+ * `DOV_ASSINANTES_SECRET` é **separado** de `DOV_REVALIDATE_SECRET` de
+ * propósito. O de revalidação viaja em query string de WP para Next, e query
+ * string entra em log de servidor e de proxy. Reaproveitá-lo aqui faria um
+ * segredo já exposto em log virar permissão de escrita no banco.
+ */
+add_action( 'rest_api_init', function () {
+
+	$autorizado = function ( WP_REST_Request $req ) {
+		if ( ! defined( 'DOV_ASSINANTES_SECRET' ) || ! DOV_ASSINANTES_SECRET ) {
+			return new WP_Error( 'dov_sem_segredo', 'Rota desligada: falta DOV_ASSINANTES_SECRET no wp-config.', array( 'status' => 503 ) );
+		}
+
+		$enviado = (string) $req->get_header( 'x-dov-segredo' );
+
+		// Comparação em tempo constante: `===` em string vaza o tamanho do
+		// prefixo que casou pelo tempo de resposta.
+		if ( ! hash_equals( DOV_ASSINANTES_SECRET, $enviado ) ) {
+			return new WP_Error( 'dov_nao_autorizado', 'Segredo inválido.', array( 'status' => 401 ) );
+		}
+
+		return true;
+	};
+
+	register_rest_route( 'dov/v1', '/assinantes', array(
+		'methods'             => 'POST',
+		'permission_callback' => $autorizado,
+		'args'                => array(
+			'email'  => array(
+				'required'          => true,
+				'validate_callback' => function ( $valor ) {
+					return is_string( $valor ) && is_email( $valor );
+				},
+				'sanitize_callback' => 'sanitize_email',
+			),
+			'origem' => array(
+				'required'          => false,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+		),
+		'callback'            => function ( WP_REST_Request $req ) {
+			$email = strtolower( $req->get_param( 'email' ) );
+
+			// Já assina? Devolve o token que já existe em vez de duplicar. Quem
+			// assina duas vezes não deve virar duas linhas na lista, e também não
+			// deve receber "erro" — do ponto de vista dele deu certo.
+			$existente = get_posts( array(
+				'post_type'        => 'assinante',
+				'post_status'      => 'any',
+				'title'            => $email,
+				'posts_per_page'   => 1,
+				'fields'           => 'ids',
+				'suppress_filters' => false,
+			) );
+
+			if ( ! empty( $existente ) ) {
+				$id = (int) $existente[0];
+
+				// Reassinar depois de cancelar precisa reativar, senão o
+				// cancelamento seria definitivo e a pessoa não teria como voltar.
+				if ( 'publish' !== get_post_status( $id ) ) {
+					wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
+				}
+
+				return new WP_REST_Response( array(
+					'ja_assinava' => true,
+					'token'       => (string) get_post_meta( $id, 'dov_token', true ),
+				), 200 );
+			}
+
+			$id = wp_insert_post( array(
+				'post_type'   => 'assinante',
+				'post_title'  => $email,
+				'post_status' => 'publish',
+			), true );
+
+			if ( is_wp_error( $id ) ) {
+				return $id;
+			}
+
+			// 32 hex de `wp_generate_password` sem símbolos: entra em URL sem
+			// escapar e não é adivinhável.
+			$token = wp_generate_password( 32, false, false );
+			update_post_meta( $id, 'dov_token', $token );
+			update_post_meta( $id, 'dov_origem', $req->get_param( 'origem' ) ?: 'site' );
+
+			return new WP_REST_Response( array( 'ja_assinava' => false, 'token' => $token ), 201 );
+		},
+	) );
+
+	/**
+	 * O cancelamento.
+	 *
+	 * Muda o status para `draft` em vez de apagar: a LGPD pede que se possa
+	 * comprovar que o consentimento foi revogado, e um registro apagado não
+	 * comprova nada. Quem quiser eliminação de verdade pede pelo contato, que é
+	 * o direito de eliminação — outra coisa, e manual de propósito.
+	 */
+	register_rest_route( 'dov/v1', '/assinantes/cancelar', array(
+		'methods'             => 'POST',
+		'permission_callback' => $autorizado,
+		'args'                => array(
+			'token' => array(
+				'required'          => true,
+				'sanitize_callback' => 'sanitize_text_field',
+			),
+		),
+		'callback'            => function ( WP_REST_Request $req ) {
+			$encontrados = get_posts( array(
+				'post_type'        => 'assinante',
+				'post_status'      => 'any',
+				'posts_per_page'   => 1,
+				'fields'           => 'ids',
+				'meta_key'         => 'dov_token',
+				'meta_value'       => $req->get_param( 'token' ),
+				'suppress_filters' => false,
+			) );
+
+			if ( empty( $encontrados ) ) {
+				return new WP_Error( 'dov_token_invalido', 'Token não encontrado.', array( 'status' => 404 ) );
+			}
+
+			$id = (int) $encontrados[0];
+			wp_update_post( array( 'ID' => $id, 'post_status' => 'draft' ) );
+			update_post_meta( $id, 'dov_cancelado_em', current_time( 'mysql', true ) );
+
+			return new WP_REST_Response( array( 'cancelado' => true ), 200 );
+		},
+	) );
+} );
+
+// ===========================================================================
+// 11 · ENDURECIMENTO E LIMPEZA
 // ===========================================================================
 
 if ( ! defined( 'DISALLOW_FILE_EDIT' ) ) {

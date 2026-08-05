@@ -54,6 +54,15 @@ export {
 
 export type { FiltroMaterias, Ordenacao, ResultadoBusca, Sugestao } from './consultas';
 
+// --- Escrita ---------------------------------------------------------------
+
+/**
+ * As duas únicas escritas do projeto. Vão para o namespace `dov/v1` do
+ * mu-plugin, não para o `wp/v2`, e exigem `WP_ASSINANTES_SECRET`.
+ */
+export { assinarNewsletter, cancelarInscricao } from './escrita';
+export type { Assinatura, ResultadoEscrita } from './escrita';
+
 // --- Auxiliares ------------------------------------------------------------
 
 /** Escolhe um tamanho de imagem, com alternativas. Pode devolver `null`. */

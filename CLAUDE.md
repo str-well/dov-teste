@@ -172,12 +172,56 @@ requisição a `googletagmanager` e `document.cookie` vazio antes do clique.
   mudar sem o outro, a política vira declaração falsa. **Mexer nos dois no mesmo
   commit.**
 
+### Formulários
+
+Newsletter e contato, as duas últimas rotas do `Anexo C`. `/api/newsletter`,
+`/api/newsletter/cancelar` e `/api/contato`.
+
+- **O assinante vai para o WordPress**, por decisão sua: CPT `assinante`, e a
+  lista fica no painel que o cliente já usa. **`show_in_rest` é `false`, e isso
+  não é detalhe** — todo outro CPT é `true` porque o front precisa ler, e aqui
+  `true` publicaria a lista inteira de e-mails em `/wp-json/wp/v2/assinantes`
+  para qualquer pessoa. `public => false` pelo mesmo motivo, mais um: sem ele o
+  WordPress criaria URL por assinante, com o e-mail no endereço.
+- **A escrita é o único lugar do projeto que grava no WordPress.** Fica em
+  `lib/wp/escrita.ts`, e **não passa pelo `http.ts`** — aquele arquivo põe
+  `next: { revalidate }` em tudo, e cachear um POST é errado de um jeito difícil
+  de perceber. Namespace `dov/v1` próprio, não `wp/v2` com senha de aplicativo:
+  senha de aplicativo daria ao portador tudo que o usuário pode fazer.
+- **O contato não grava em lugar nenhum.** Se o envio falha, a mensagem se perde,
+  então falha responde erro de verdade. Fingir sucesso é o pior defeito possível
+  ali, e era a razão de a página não ter formulário antes.
+- **Opt-in simples, não duplo.** Quem envia está inscrito na hora. O custo é
+  real: **nada impede alguém de inscrever o e-mail de outra pessoa.** Opt-in
+  duplo é o caminho de melhoria mais claro daqui, e está no plano.
+- **Cancelar é POST, nunca GET.** Cliente de e-mail e antivírus corporativo abrem
+  links para escanear, e um GET que cancela descadastraria quem nunca clicou, em
+  silêncio. A página `/cancelar-inscricao` mostra um botão; o clique é que
+  cancela. Continua sendo um clique, que é o que a LGPD pede.
+- **O mu-plugin marca como rascunho em vez de apagar.** A lei pede que se possa
+  comprovar a revogação, e registro apagado não comprova nada.
+- **Dois contadores de limite, não um.** O de tentativas é generoso (20) porque
+  conta erro de digitação; o de envio é apertado (3 no contato, 5 na newsletter)
+  e só corre depois da validação. Com um contador só, errar o e-mail três vezes
+  travava a pessoa por dez minutos.
+- **As duas exigem JavaScript.** A rota responde JSON, e sem JS o leitor veria
+  `{"ok":true}` numa tela branca. Funcionar sem JS pediria server action em vez de
+  rota de API — é pendência de verdade, e está no plano.
+- **Não existe cor de erro nos tokens.** Nenhum vermelho, nenhum token de alerta
+  no `dov-tokens.css` inteiro. Como a regra é não inventar valor, o aviso de erro
+  usa ênfase da paleta — fundo roxo-100, borda roxo-700, peso 500 — e o
+  significado não fica por conta da cor, o que satisfaz o WCAG 1.4.1. **Cor de
+  erro é pergunta em aberto para o designer.**
+
 ### Pendências que precisam de decisão sua
 
 | O que | Por quê |
 |---|---|
 | Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin. **Adiado por você** — "não precisa agora" |
 | "Mais lidas" e "mais buscados" | Exigem contagem de acesso. O GA4 já está no código, mas o número só existe depois de semanas de histórico — e traria o front a depender de uma API do Google em runtime |
+| Cor de erro não existe nos tokens | O pacote do designer não tem vermelho nem token de alerta. O aviso de erro dos formulários usa ênfase da paleta, e o WCAG está satisfeito porque o significado não é só cor — mas é decisão do designer se quer uma cor própria |
+| Formulários exigem JavaScript | A rota responde JSON, e sem JS o leitor veria `{"ok":true}` numa tela branca. Resolver pede server action em vez de rota de API — outra forma, e o plano especifica `/api/contato` e `/api/newsletter` |
+| Opt-in simples na newsletter | Quem envia está inscrito na hora, então **nada impede alguém de inscrever o e-mail de outra pessoa**. Opt-in duplo resolve, e pede um estado `confirmado` no CPT, uma rota de confirmação e uma página de destino |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
@@ -333,9 +377,17 @@ WORDPRESS_API_URL=https://wp.descubraovinho.com.br/wp-json/wp/v2
 REVALIDATE_SECRET=<segredo compartilhado com o wp-config.php>
 RESEND_API_KEY=<pendente>
 NEXT_PUBLIC_GA_ID=<pendente — ID de medição do GA4, formato G-XXXXXXXXXX>
+EMAIL_REMETENTE=<pendente — endereço em domínio verificado no Resend>
+CONTATO_EMAIL_DESTINO=<pendente — onde caem as mensagens do formulário>
+WP_ASSINANTES_SECRET=<pendente — igual a DOV_ASSINANTES_SECRET no wp-config.php>
 ```
 
 O `.env.local` não sobe no deploy.
+
+**`WP_ASSINANTES_SECRET` não é o `REVALIDATE_SECRET`, e não deve ser.** O de
+revalidação viaja em **query string** de WP para Next, e query string entra em log
+de servidor e de proxy. Reaproveitá-lo na escrita faria um segredo já exposto em
+log virar permissão de gravar no banco. O de assinantes vai em header.
 
 **`NEXT_PUBLIC_*` é carimbado no build, não lido em runtime.** Cadastrar
 `NEXT_PUBLIC_GA_ID` no painel **não basta**: sem uma build nova o valor não entra
@@ -483,6 +535,7 @@ Nada disso precisa ser lembrado componente por componente:
 | `html.ts` | Decodificador de entidades, texto simples, `letraInicial` |
 | `tipos.ts` | `Bruto*` (a API real) e o domínio, em português |
 | `config.ts` | URL base e os segundos de ISR |
+| `escrita.ts` | O **único** lugar que grava. Namespace `dov/v1`, segredo em header, sem passar pelo `http.ts` |
 
 - Entidades já decodificadas em título, resumo, nome de termo e texto do `meta`.
   **Exceto `conteudoHtml`**, que é HTML de verdade e sai cru de propósito —
@@ -510,3 +563,6 @@ Nada disso precisa ser lembrado componente por componente:
 | `/api/revalidate` | Chamada pelo mu-plugin no `transition_post_status` |
 | `/api/sugestoes` | Sugestões do combobox. `GET ?q=`, mínimo 3 caracteres, `s-maxage=300` |
 | `/api/health` | Versão do Node, uptime e `pid`. Alvo do monitor externo |
+| `/api/newsletter` | `POST`. Grava o assinante no WordPress e manda boas-vindas |
+| `/api/newsletter/cancelar` | `POST`, nunca `GET` — ver a seção de formulários |
+| `/api/contato` | `POST`. Envia para `CONTATO_EMAIL_DESTINO` pelo Resend |
