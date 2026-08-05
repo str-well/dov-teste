@@ -113,7 +113,7 @@ formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
 | Evento sem página | O CPT tem corpo de texto e **nenhuma rota** no `Anexo C`. O cartão da agenda só é link com `dov_link` externo. Criar `/agenda/[slug]`, ou remover o campo de corpo do mu-plugin |
 | Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin |
 | "Mais lidas" e "mais buscados" | As duas exigem contagem que não existe — sem analytics no projeto |
-| Tira de letras em telas ≤360px | Duas linhas de 13 não alcançam o alvo de 24px de largura. Só três linhas resolveriam |
+| Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
 
