@@ -4,7 +4,7 @@ import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
 import { Cabecalho } from '@/components/cabecalho';
 import { Consentimento } from '@/components/consentimento';
 import { Rodape } from '@/components/rodape';
-import { SITE } from '@/lib/site';
+import { PERMITIR_INDEXACAO, SITE } from '@/lib/site';
 
 import './globals.css';
 
@@ -40,9 +40,10 @@ export const metadata: Metadata = {
   title: SITE.nome,
   description: 'Portal editorial de vinho.',
 
-  // Site em construção. REMOVER ANTES DO LANÇAMENTO —
-  // está no checklist da Fase 5 do plano.
-  robots: { index: false, follow: false },
+  // Sai de `PERMITIR_INDEXACAO` em `lib/site.ts`, o mesmo interruptor que o
+  // `app/robots.ts` lê. **Não editar aqui:** trocar a constante é o que põe o
+  // site no ar para os buscadores, e é um interruptor só de propósito.
+  robots: PERMITIR_INDEXACAO ? undefined : { index: false, follow: false },
 };
 
 export default function RootLayout({

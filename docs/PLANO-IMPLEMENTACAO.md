@@ -421,28 +421,41 @@ preenchido pela ordem editorial.
 
 ---
 
-## 7. Fase 4 — Deploy e revalidação ← PRÓXIMO PASSO
+## 7. Fase 4 — Deploy e revalidação ✅ CONCLUÍDA
 
 Simplificada: com processo Node de verdade, o ISR funciona como na documentação
 oficial. Sem OpenNext, sem KV, sem wrangler.
 
-- [ ] `next.config.js` com `output: 'standalone'` e o domínio de imagens em
+- [x] `next.config.js` com `output: 'standalone'` e o domínio de imagens em
       `remotePatterns`
-- [ ] Variáveis no painel da Hostinger — nunca no repositório:
-      `WORDPRESS_API_URL`, `REVALIDATE_SECRET`, `RESEND_API_KEY`
-- [ ] Rota `/api/revalidate` protegida por secret, chamando `revalidatePath`
-- [ ] Hook `save_post` no WordPress chamando a rota, com trava contra revisão
-      automática e contra loop
-- [ ] Fallback por tempo (`revalidate: 300`) nas páginas de listagem, caso o hook falhe
-- [ ] Teste real: publicar uma matéria e cronometrar até aparecer
+- [x] Variáveis no painel da Hostinger — nunca no repositório:
+      `WORDPRESS_API_URL` e `REVALIDATE_SECRET` cadastradas. **Faltam duas:**
+      `RESEND_API_KEY`, que trava os formulários, e `NEXT_PUBLIC_GA_ID`, que
+      deixa o GA4 inerte
+- [x] Rota `/api/revalidate` protegida por secret, chamando `revalidatePath`
+- [x] Hook no WordPress chamando a rota — em `transition_post_status`, não
+      `save_post`, com trava de 10s por post
+- [x] Fallback por tempo (`revalidate: 300`) nas páginas de listagem, caso o hook falhe
+- [x] Teste real: **trocar o título no WordPress apareceu no site na hora.**
+      Medido também sob concorrência: a rota de matéria fica em 184 ms com 10
+      requisições simultâneas, porque serve do ISR em disco sem tocar no WordPress
+
+**Uma ressalva que ficou de pé:** a Hostinger tem CDN própria na frente do
+processo Node (`Server: hcdn`), e ela serve a matéria do edge com
+`stale-while-revalidate` de quase um ano. Pode entregar uma cópia velha mesmo
+depois de o ISR já ter atualizado. Conferir a próxima publicação **de outra rede
+ou pelo 4G**, não só do navegador de quem publicou — que costuma ver a versão
+certa e esconder o problema.
 
 ---
 
 ## 8. Fase 5 — Antes de entregar
 
 - [ ] Lighthouse nos quatro templates principais
-- [ ] `sitemap.xml` dinâmico, incluindo os verbetes
-- [ ] `robots.txt` com a busca em `noindex` e crawl-delay
+- [x] `sitemap.xml` dinâmico, incluindo os verbetes — `app/sitemap.ts`, 59 URLs
+      hoje. Anda por `totalPaginas` em vez de pegar só as 100 primeiras: sitemap
+      truncado nunca reclama no build, a matéria 101 só nunca é descoberta
+- [x] `robots.txt` com a busca fora e crawl-delay — `app/robots.ts`
 - [ ] Formulário de contato e newsletter testados de ponta a ponta
 - [ ] Acessibilidade: contraste (paleta já validada em AAA), navegação por teclado,
       foco visível, `alt` em todas as imagens
@@ -461,7 +474,11 @@ oficial. Sem OpenNext, sem KV, sem wrangler.
       em `lib/site.ts` são o handle da marca, não confirmados — podem pertencer a
       outra pessoa, e o rodapé apontaria para um terceiro
 - [ ] Remover as rotas internas `/diagnostico` e `/componentes`
-- [ ] Tirar o `robots: { index: false }` do `app/layout.tsx`
+- [ ] **Trocar `PERMITIR_INDEXACAO` para `true` em `lib/site.ts`.** É o
+      interruptor de lançamento, e é um só de propósito: o `noindex` do layout e
+      o `Disallow: /` do `robots.ts` saem os dois dele. Dois interruptores na mão
+      criavam a pior falha possível — lançar com o site invisível no Google e não
+      descobrir por semanas, porque nada quebra, só não aparece ninguém
 - [ ] **Criar a propriedade do Google Analytics 4 e cadastrar `NEXT_PUBLIC_GA_ID`**
       no painel da Hostinger. Sem a variável o banner e o script não aparecem, e é
       esse o estado da build atual — o código está pronto e desligado

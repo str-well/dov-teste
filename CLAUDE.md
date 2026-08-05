@@ -115,7 +115,26 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   o arquivo de *matérias* da editoria de mesmo nome.
 
 **Fase 3 concluída.** Todas as rotas do `Anexo C` respondem, menos as de
-formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
+formulário.
+
+**Fase 4 — deploy e revalidação: concluída.** Deploy automático no `git push`,
+`/api/revalidate` no ar, mu-plugin revalidando em `transition_post_status`, e o
+teste real passou — trocar o título no WordPress apareceu no site na hora. Falta
+só o `RESEND_API_KEY`, que é da Fase 5. **Ressalva:** a CDN da Hostinger
+(`Server: hcdn`) fica na frente do processo Node com `stale-while-revalidate` de
+quase um ano, e pode servir cópia velha depois de o ISR atualizar — conferir a
+próxima publicação de outra rede, não do navegador de quem publicou.
+
+**`sitemap.xml` e `robots.txt` prontos**, em `app/sitemap.ts` e `app/robots.ts`.
+59 URLs, sem `/busca` nem as rotas internas. O sitemap anda por `totalPaginas`
+em vez de pegar as 100 primeiras — sitemap truncado não reclama no build, a
+matéria 101 só nunca é descoberta.
+
+**`PERMITIR_INDEXACAO` em `lib/site.ts` é o interruptor de lançamento**, e é um
+só de propósito: o `noindex` do layout e o `Disallow: /` do `robots.txt` saem os
+dois dele. **Não editar o `robots` do layout na mão.** Dois interruptores criavam
+a pior falha possível — lançar com o site invisível no Google e não descobrir por
+semanas, porque nada quebra, só não aparece ninguém.
 
 ### Analytics e consentimento
 
@@ -317,6 +336,11 @@ NEXT_PUBLIC_GA_ID=<pendente — ID de medição do GA4, formato G-XXXXXXXXXX>
 ```
 
 O `.env.local` não sobe no deploy.
+
+**`NEXT_PUBLIC_*` é carimbado no build, não lido em runtime.** Cadastrar
+`NEXT_PUBLIC_GA_ID` no painel **não basta**: sem uma build nova o valor não entra
+no pacote do cliente, e o banner continua invisível como se a variável não
+existisse. Reiniciar o processo não resolve — precisa de deploy.
 
 **`NEXT_PUBLIC_GA_ID` é a única variável com `NEXT_PUBLIC_`, e é de propósito:**
 o consentimento e o `gtag` rodam no navegador, então o ID precisa ir no pacote do

@@ -87,6 +87,22 @@ export const BUSCA: ItemNav = { rotulo: 'Buscar', href: '/busca' };
 export const AGENDA: ItemNav = { rotulo: 'Agenda', href: '/agenda' };
 
 /**
+ * O interruptor de lançamento. **Trocar para `true` é o que põe o site no ar
+ * para os buscadores.**
+ *
+ * Existe para haver **um** interruptor e não dois. O `noindex` do
+ * `app/layout.tsx` e o `Disallow: /` do `app/robots.ts` dizem a mesma coisa por
+ * mecanismos diferentes, e manter os dois na mão criava a pior falha possível:
+ * lançar com o site invisível no Google e não descobrir por semanas, porque
+ * nada quebra — só não aparece ninguém.
+ *
+ * O `sitemap.xml` **não** depende disto. Ele lista as URLs de verdade desde já,
+ * para dar para conferir a saída antes do lançamento; com `Disallow: /` no ar
+ * nenhum buscador vai buscá-lo de qualquer forma.
+ */
+export const PERMITIR_INDEXACAO = false;
+
+/**
  * A largura em que o cabeçalho troca de hambúrguer para menu completo.
  *
  * **Precisa acompanhar** `--breakpoint-menu` no `app/globals.css` e as media
