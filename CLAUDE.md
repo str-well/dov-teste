@@ -409,6 +409,12 @@ Nada disso precisa ser lembrado componente por componente:
 - `total` e `totalPaginas` vindos dos headers, para a paginação.
 - Categorias, tags e autores passam por `cache()` do React: um render que pede a
   lista de categorias em 20 cards faz **uma** requisição.
+- **Todo fetch tem `next: { revalidate: 300 }`**, sem exceção e sem `no-store`.
+  As taxonomias já ficaram em 3600 e voltaram para 300: o cache de fetch do Next
+  é indexado por URL e compartilhado entre páginas, então 3600 poupava 11
+  requisições por hora — e em troca deixava o menu com editoria renomeada errada
+  por até uma hora, porque o mu-plugin revalida caminho no save de post e não
+  mexe em termo.
 - Tipos de item completo (`MateriaCompleta`, `VerbeteCompleto`) só vêm das
   consultas de item único — um card não consegue depender do corpo do texto.
 - `sugestoes()` devolve item pronto, com `href` montado, porque quem consome é o

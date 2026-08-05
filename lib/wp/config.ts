@@ -31,11 +31,20 @@ export const REVALIDAR = {
   conteudo: 300,
 
   /**
-   * Categorias, tags e autores. Mudam raramente e são consultados em quase
-   * toda página; um intervalo curto aqui só gera consulta a mais num plano
-   * compartilhado com outros 6 sites.
+   * Categorias, tags e autores — o **mesmo** valor do conteúdo.
+   *
+   * Ficou em 3600 por um tempo, com o raciocínio de que taxonomia muda pouco e
+   * é consultada em toda página. O raciocínio estava errado no ponto que
+   * importa: **o cache de fetch do Next é indexado pela URL e compartilhado
+   * entre todas as páginas**, então 3600 economizava 11 requisições por hora, e
+   * não uma por página. Em troca, renomear uma editoria levava até uma hora para
+   * aparecer no menu — o mu-plugin revalida por caminho no save de post, e não
+   * mexe em termo.
+   *
+   * Onze requisições por hora não pagam uma hora de menu errado. Um valor só,
+   * comportamento previsível.
    */
-  taxonomia: 3600,
+  taxonomia: 300,
 } as const;
 
 /** Teto do `per_page` da REST API do WordPress. Acima disso ela responde 400. */
