@@ -139,6 +139,11 @@ requisição a `googletagmanager` e `document.cookie` vazio antes do clique.
 - **"Preferências de cookies" no rodapé** reabre o banner. A LGPD exige que
   revogar seja tão fácil quanto consentir, e o banner não volta sozinho depois da
   primeira decisão.
+- **O texto do banner é curto e genérico, por decisão sua** — "este site utiliza
+  cookies", sem nomear ferramenta nem medição. Quem carrega o dever de informar
+  passa a ser o link para a política: **ele não é ornamento.** Tirar o link deixa
+  o consentimento sem informação, que é o único jeito de esse texto curto não se
+  sustentar.
 - **Sem prancha.** O banner é posterior ao pacote do designer. Montado só com
   tokens e com os botões da seção 3 do `componentes.css` — `--primario` e
   `--contorno`, mesmo tamanho e mesmo peso, porque recusar não pode ser mais

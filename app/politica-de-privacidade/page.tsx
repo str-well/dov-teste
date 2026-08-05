@@ -121,7 +121,8 @@ export default function Page() {
         Google, e os dados de audiência são processados <strong>fora do Brasil</strong>,
         em servidores nos Estados Unidos e em outros países onde o Google mantém
         infraestrutura. Isso é transferência internacional de dados, permitida pela LGPD
-        com o seu consentimento — que é exatamente o que o aviso pede.
+        com o seu consentimento — o mesmo que o aviso de cookies pede, e que esta página
+        detalha.
       </p>
 
       <p>

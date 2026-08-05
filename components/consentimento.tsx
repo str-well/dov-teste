@@ -167,14 +167,13 @@ export function Consentimento() {
         // então o teclado o alcança depois do rodapé.
         <section className="consentimento" role="region" aria-label="Cookies de medição">
           <div className="consentimento__caixa">
-            {/* Curto de propósito: em tela de 375px o texto longo fazia o aviso
-                ocupar 38% da altura. O detalhe — transferência internacional,
-                base legal, retenção — mora na política, que é linkada aqui. */}
+            {/* Curto e padrão, por sua escolha. O detalhe todo — qual ferramenta,
+                transferência internacional, base legal, retenção — mora na
+                política, e é para lá que o link vai. Ele não é ornamento: é o
+                que faz o consentimento continuar informado com o texto curto. */}
             <p className="consentimento__texto">
-              Queremos usar o Google Analytics para medir quais matérias são lidas. Ele
-              grava um cookie e envia dados para fora do Brasil, e nada é carregado antes
-              de você autorizar.{' '}
-              <Link href="/politica-de-privacidade">Como tratamos seus dados</Link>.
+              Este site utiliza cookies. Nada é carregado antes da sua escolha.{' '}
+              <Link href="/politica-de-privacidade">Política de privacidade</Link>.
             </p>
 
             {/* Os dois botões têm o mesmo tamanho e o mesmo peso de propósito:
