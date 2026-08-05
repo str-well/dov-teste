@@ -58,7 +58,7 @@ const CAMPOS = {
   verbete: 'id,slug,date,date_gmt,title,meta,dov_imagens',
   verbeteCompleto: 'id,slug,date,date_gmt,modified_gmt,title,content,meta,dov_imagens',
   evento: 'id,slug,title,content,meta,dov_imagens',
-  pagina: 'id,slug,modified_gmt,title,excerpt,content',
+  pagina: 'id,slug,modified_gmt,title,excerpt,content,dov_imagens',
   termo: 'id,name,slug,description,count',
   autor: 'id,name,slug,description,meta',
 } as const;

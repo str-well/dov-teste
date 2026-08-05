@@ -11,7 +11,7 @@ type Props = {
   /** `true` só no hero e no destaque da matéria: desliga o lazy-load. */
   prioridade?: boolean;
   /** Proporção do estado vazio. Deve casar com a da moldura. */
-  proporcao?: '16x9' | '3x2' | '4x3' | '1x1';
+  proporcao?: '16x9' | '3x2' | '4x3' | '4x5' | '1x1';
 };
 
 /**

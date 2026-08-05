@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { IconeSetaDireita } from '@/components/icones';
+import { ImagemWp } from '@/components/imagem-wp';
 import { separarLead } from '@/lib/artigo';
 import { contarVerbetes, listarCategorias, listarMaterias, paginaPorSlug } from '@/lib/wp';
 
@@ -30,14 +31,20 @@ export async function generateMetadata(): Promise<Metadata> {
  * vence a dinâmica por precedência no App Router, e é o que traz esta página de
  * volta. O mesmo vale para `/contato` e para as duas páginas legais.
  *
- * O conteúdo vem do WordPress. Duas coisas da prancha não vêm:
+ * O conteúdo vem do WordPress.
  *
- * 1. **A foto da equipe não tem de onde vir.** `dov_imagens` é registrado no
- *    mu-plugin para `post`, `verbete` e `evento` — **não para `page`**. Sem
- *    estender o mu-plugin, página não tem imagem destacada na API. Em vez de um
- *    retângulo vazio ocupando metade do layout, o texto ocupa a largura toda.
- * 2. **Os números eram fictícios** ("418 verbetes", "2019"). Verbetes e
- *    editorias vêm da API; o ano sai da matéria mais antiga publicada.
+ * **A foto da equipe.** `dov_imagens` passou a ser registrado para `page` no
+ * mu-plugin, então a foto da prancha tem de onde vir. O layout de duas colunas
+ * só aparece **quando existe imagem** — sem ela, um retângulo vazio ocupando
+ * metade da tela seria pior que texto em largura de leitura. Nenhuma página tem
+ * foto ainda, então hoje é uma coluna.
+ *
+ * A prancha pede 4:5 (1000×1250), e **não existe tamanho 4:5 no mu-plugin**. O
+ * `dov_corpo` tem largura fixa de 1200 e altura livre, então preserva a
+ * proporção do arquivo enviado — é o único que serve para retrato.
+ *
+ * **Os números eram fictícios** ("418 verbetes", "2019"). Verbetes e editorias
+ * vêm da API; o ano sai da matéria mais antiga publicada.
  *
  * Os números aparecem no topo do texto, e não no meio como na prancha: o corpo
  * é um bloco de HTML do editor, e fatiá-lo ao meio para injetar a faixa seria
@@ -83,7 +90,23 @@ export default async function Page() {
         </div>
       </section>
 
-      <section className="limite institucional institucional--sem-figura" aria-label="Sobre o portal">
+      <section
+        className={`limite institucional${pagina.imagens ? '' : ' institucional--sem-figura'}`}
+        aria-label="Sobre o portal"
+      >
+        {pagina.imagens && (
+          <figure>
+            <div className="moldura">
+              <ImagemWp
+                imagens={pagina.imagens}
+                preferencia={['dov_corpo', 'dov_destaque']}
+                alt={pagina.titulo}
+                proporcao="4x5"
+              />
+            </div>
+          </figure>
+        )}
+
         <div>
           <dl className="numeros">
             <div>

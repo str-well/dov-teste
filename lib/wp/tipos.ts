@@ -110,6 +110,11 @@ export type Verbete = {
   id: number;
   slug: string;
   titulo: string;
+  /**
+   * "substantivo masculino". Campo novo no mu-plugin, ainda vazio em todos os
+   * verbetes — a linha de gramática compõe com o que houver.
+   */
+  classeGramatical: string;
   /** Uma frase. Alimenta os cards do índice A–Z e a busca. */
   definicaoCurta: string;
   /** Frequentemente vazios — a linha inteira desaparece quando os dois são. */
@@ -154,6 +159,11 @@ export type Pagina = {
   resumo: string;
   conteudoHtml: string;
   modificadoUtc: string;
+  /**
+   * `dov_imagens` passou a ser registrado para `page` no mu-plugin, então página
+   * agora pode ter imagem destacada. Continua `null` até alguém subir uma.
+   */
+  imagens: Imagens | null;
 };
 
 /**
@@ -224,6 +234,7 @@ export type BrutoVerbete = {
   content?: Renderizado;
   dov_imagens: BrutoImagens | null;
   meta: {
+    dov_classe_gramatical?: string;
     dov_definicao_curta?: string;
     dov_etimologia?: string;
     dov_pronuncia?: string;
@@ -253,6 +264,7 @@ export type BrutoPagina = {
   title: Renderizado;
   excerpt?: Renderizado;
   content?: Renderizado;
+  dov_imagens: BrutoImagens | null;
 };
 
 export type BrutoTermo = {

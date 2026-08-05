@@ -226,6 +226,11 @@
 .sem-imagem--4x3 {
   aspect-ratio: 4 / 3;
 }
+/* Retrato. A prancha institucional pede 4:5, e nenhum tamanho do mu-plugin tem
+   essa proporção — quem serve é o `dov_corpo`, de altura livre. */
+.sem-imagem--4x5 {
+  aspect-ratio: 4 / 5;
+}
 .sem-imagem--1x1 {
   aspect-ratio: 1 / 1;
 }
@@ -1651,6 +1656,13 @@ a.etiqueta--verde:hover {
 /* O tratamento de cor das fotos é do designer, e vale para toda foto emoldurada. */
 .moldura > img {
   filter: sepia(0.22) saturate(0.82) contrast(1.05);
+}
+
+/* A moldura é só borda: quem manda na proporção é a imagem, ou o estado vazio. */
+.moldura > * {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .legenda {

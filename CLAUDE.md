@@ -82,10 +82,9 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   as duas precisam de rota estática própria.
 
 - **Verbete** (`/almanaque/[termo]`) — pronto. Os 22 verbetes pré-gerados, com
-  etimologia e pronúncia compondo uma linha que desaparece quando as duas faltam,
-  caixa "Na prática", relacionados na ordem editorial, matérias que citam o termo
-  e anterior/próximo alfabético. **Não há campo de classe gramatical** no
-  mu-plugin — a prancha pede "substantivo masculino", e isso seria campo novo.
+  a linha `classe · etimologia · pronúncia` compondo com o que existir e
+  desaparecendo quando os três faltam, caixa "Na prática", relacionados na ordem
+  editorial, matérias que citam o termo e anterior/próximo alfabético.
 
 - **Índice A–Z** (`/almanaque`) — pronto. Tira de letras sticky com as vazias em
   cinza e fora da tabulação, blocos por letra, e busca com Fuse.js que filtra na
@@ -98,7 +97,9 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   `lib/site.ts`, por slug — a API não sabe qual editoria merece a home.
 
 - **Institucionais** — prontas. `/quem-somos` e `/contato` são **rotas estáticas**,
-  e é isso que as tira do 404 da rota de categoria. `/busca` com filtro por tipo,
+  e é isso que as tira do 404 da rota de categoria. Quem Somos mostra a coluna da
+  foto só quando existe imagem — `dov_imagens` já vale para `page`, mas nenhuma
+  página tem foto ainda. `/busca` com filtro por tipo,
   realce em `<mark>` e os dois estados vazios da §7. `not-found.tsx` e `error.tsx`
   dividem o layout da tela 16.
 
@@ -110,9 +111,7 @@ formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
 | O que | Por quê |
 |---|---|
 | Evento sem página | O CPT tem corpo de texto e **nenhuma rota** no `Anexo C`. O cartão da agenda só é link com `dov_link` externo. Criar `/agenda/[slug]`, ou remover o campo de corpo do mu-plugin |
-| Foto em página | `dov_imagens` não é registrado para `page` — a foto de Quem Somos não tem de onde vir. Uma linha no mu-plugin resolve |
 | Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin |
-| Classe gramatical | O verbete não tem campo para "substantivo masculino", que a prancha pede |
 | "Mais lidas" e "mais buscados" | As duas exigem contagem que não existe — sem analytics no projeto |
 | Tira de letras em telas ≤360px | Duas linhas de 13 não alcançam o alvo de 24px de largura. Só três linhas resolveriam |
 
@@ -375,6 +374,10 @@ otimizados em runtime.
 | Corpo do texto | `dov_corpo` | livre | 1200 de largura |
 | Card padrão | `dov_card` | 3:2 | 800×533 |
 | Retrato / autor | `dov_retrato` | 1:1 | 240×240 |
+
+**Não existe tamanho 4:5**, que a prancha institucional pede. Foto em retrato usa
+`dov_corpo`, de largura fixa e altura livre — ele preserva a proporção do arquivo
+enviado, então quem sobe a foto de Quem Somos define a altura da coluna.
 
 ## Convenções de código
 

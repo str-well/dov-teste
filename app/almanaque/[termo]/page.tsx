@@ -21,22 +21,15 @@ type Props = { params: Promise<{ termo: string }> };
 /**
  * Verbete do Almanaque — `/almanaque/[termo]`.
  *
- * Duas coisas que a prancha pede e a API não tem:
+ * A linha de gramática é `classe · etimologia · pronúncia`: compõe com o que
+ * existir e desaparece inteira quando os três faltam — o caso da maioria dos 22
+ * verbetes. `dov_classe_gramatical` entrou no mu-plugin e já chega pela API,
+ * vazio em todos, então a linha se comporta como antes até alguém preencher.
  *
- * 1. **Classe gramatical.** A linha de gramática da prancha começa com
- *    "substantivo masculino", e **não existe campo para isso** no mu-plugin —
- *    os campos do verbete são definição curta, etimologia, pronúncia, "na
- *    prática" e relacionados. A linha é montada com o que existe: etimologia e
- *    pronúncia. Se a classe gramatical importar, é um campo novo no mu-plugin.
- *
- * 2. **Busca só de verbetes.** A caixa da lateral diz "Buscar outro verbete", e
- *    uma busca restrita ao Almanaque é a do índice A–Z com Fuse.js, que é o
- *    próximo template. Até lá a caixa aponta para a busca geral, com o texto
- *    ajustado para não prometer um escopo que ainda não existe.
- *
- * A linha de gramática desaparece inteira quando etimologia e pronúncia estão
- * as duas vazias — o que é o caso da maioria dos verbetes, conforme o
- * `docs/BACKEND.md`.
+ * **Uma coisa da prancha que a API ainda não entrega:** a caixa da lateral diz
+ * "Buscar outro verbete", e uma busca restrita ao Almanaque é a do índice A–Z
+ * com Fuse.js. A caixa aponta para a busca geral, com o texto ajustado para não
+ * prometer um escopo que não existe.
  */
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -80,6 +73,7 @@ export default async function Page({ params }: Props) {
   ]);
 
   const gramatica = [
+    verbete.classeGramatical,
     verbete.etimologia,
     verbete.pronuncia && `pronuncia-se “${verbete.pronuncia}”`,
   ].filter(Boolean);

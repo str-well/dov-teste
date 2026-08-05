@@ -151,6 +151,7 @@ export function mapearVerbete(bruto: BrutoVerbete): Verbete {
     id: bruto.id,
     slug: bruto.slug,
     titulo,
+    classeGramatical: opcional(bruto.meta?.dov_classe_gramatical),
     definicaoCurta: opcional(bruto.meta?.dov_definicao_curta),
     etimologia: opcional(bruto.meta?.dov_etimologia),
     pronuncia: opcional(bruto.meta?.dov_pronuncia),
@@ -194,6 +195,7 @@ export function mapearPagina(bruto: BrutoPagina): Pagina {
     resumo: paraTextoSimples(bruto.excerpt?.rendered),
     conteudoHtml: bruto.content?.rendered ?? '',
     modificadoUtc: bruto.modified_gmt ?? '',
+    imagens: mapearImagens(bruto.dov_imagens),
   };
 }
 
