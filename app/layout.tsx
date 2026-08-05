@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Cormorant_Garamond, DM_Sans } from 'next/font/google';
 
 import { Cabecalho } from '@/components/cabecalho';
+import { Consentimento } from '@/components/consentimento';
 import { Rodape } from '@/components/rodape';
 import { SITE } from '@/lib/site';
 
@@ -57,6 +58,11 @@ export default function RootLayout({
         <Cabecalho />
         {children}
         <Rodape />
+
+        {/* No fim do documento: o banner não bloqueia a leitura, e o teclado o
+            alcança depois do rodapé em vez de antes do conteúdo. Não renderiza
+            nada sem `NEXT_PUBLIC_GA_ID`. */}
+        <Consentimento />
       </body>
     </html>
   );

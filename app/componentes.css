@@ -4093,3 +4093,94 @@ a.agenda__item:focus-visible {
     opacity: 1;
   }
 }
+
+/* ==========================================================================
+   22 · CONSENTIMENTO DE COOKIES
+
+   Sem prancha: o banner é posterior ao pacote do designer, e nasceu da decisão
+   de usar GA4. Montado só com tokens e com os botões da seção 3 — nenhuma
+   variante nova de botão, nenhum valor novo.
+
+   Fundo claro de propósito. Um banner escuro pediria um par de botões que não
+   existe, e "aceitar" e "recusar" precisam ser o mesmo botão em dois estilos
+   que já estão prontos: primário e contorno.
+   ========================================================================== */
+
+/* Sem animação de entrada, de propósito. O banner é um controle funcional: se a
+   animação não avançar — e o navegador embutido do editor congela o relógio de
+   animação —, o aviso fica inteiro fora da tela e sobra um retângulo fixo
+   invisível interceptando toque no rodapé. 250ms de deslize não paga isso. */
+.consentimento {
+  position: fixed;
+  inset-inline: 0;
+  bottom: 0;
+  /* Acima do conteúdo e do sticky, abaixo das sugestões da busca e do menu
+     mobile — que podem estar abertos sobre ele e devem vencer. */
+  z-index: var(--dov-z-cabecalho);
+  padding: var(--dov-esp-4);
+}
+
+.consentimento__caixa {
+  display: flex;
+  align-items: center;
+  gap: var(--dov-esp-6);
+  max-width: var(--dov-largura-conteudo);
+  margin-inline: auto;
+  padding: var(--dov-esp-5) var(--dov-esp-6);
+  border-radius: var(--dov-raio-grande);
+  background: var(--dov-branco);
+  box-shadow: var(--dov-sombra-grande);
+}
+
+.consentimento__texto {
+  font-size: var(--dov-t-corpo-compacto);
+  line-height: var(--dov-lh-corpo-compacto);
+  color: var(--dov-texto-suave);
+}
+
+.consentimento__acoes {
+  display: flex;
+  gap: var(--dov-esp-3);
+  /* O par de botões não encolhe: quebrar "Recusar" em duas linhas o faria
+     parecer a opção de segunda classe. */
+  flex-shrink: 0;
+}
+
+@media (max-width: 767px) {
+  .consentimento__caixa {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--dov-esp-5);
+  }
+  .consentimento__texto {
+    font-size: var(--dov-t-corpo-compacto-mobile);
+    line-height: var(--dov-lh-corpo-compacto-mobile);
+  }
+  /* Grade de duas colunas iguais, não `flex: 1`: com base zero o flex soma a
+     borda do `.botao--contorno` por fora, e "Recusar" saía 2px mais largo que
+     "Aceitar". Diferença pequena, mas é exatamente o eixo em que um banner de
+     consentimento não pode ter assimetria. */
+  .consentimento__acoes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .consentimento__acoes > .botao {
+    padding-inline: var(--dov-esp-4);
+  }
+}
+
+/* O revogar, no rodapé. Botão porque abre um painel, não navega. */
+.rodape__preferencias {
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  color: var(--dov-texto-meta-sobre-escuro);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+  cursor: pointer;
+}
+.rodape__preferencias:hover {
+  color: var(--dov-menta);
+}

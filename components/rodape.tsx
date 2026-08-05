@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { BotaoPreferencias } from '@/components/consentimento';
 import { ALMANAQUE, PAGINAS_LEGAIS, SITE, ordenarEditorias } from '@/lib/site';
 import { listarCategorias } from '@/lib/wp';
 
@@ -107,6 +108,10 @@ export async function Rodape() {
                 {pagina.rotulo}
               </Link>
             ))}
+            {/* Só aparece quando há GA para consentir. Revogar tem de ser tão
+                fácil quanto aceitar, e depois da primeira decisão o banner não
+                volta sozinho. */}
+            <BotaoPreferencias />
             <p className="rodape__aviso">{SITE.avisoLegal}</p>
           </div>
         </div>

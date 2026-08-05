@@ -8,17 +8,23 @@ import { SITE } from '@/lib/site';
 /**
  * ⚠️ RASCUNHO — precisa de revisão jurídica antes do lançamento.
  *
- * O texto descreve **só o que o site faz de fato hoje**: newsletter e formulário
- * de contato, sem analytics e sem cookie de rastreamento. Nada foi inventado
+ * O texto descreve **só o que o site faz de fato hoje**: newsletter, formulário
+ * de contato e Google Analytics 4 mediante consentimento. Nada foi inventado
  * para parecer completo. O que depende de informação que não temos — razão
- * social, CNPJ, endereço, encarregado de dados — está marcado no próprio texto
- * como pendência visível, de propósito: assim ninguém publica sem preencher.
+ * social, CNPJ, endereço, encarregado de dados, retenção — está marcado no
+ * próprio texto como pendência visível, de propósito: assim ninguém publica sem
+ * preencher.
  *
- * Se o inventário de dados mudar (analytics, pixel, comentários, login), esta
- * página muda junto. Está no checklist da Fase 5.
+ * A seção de cookies **é o par textual de `components/consentimento.tsx`**. Se
+ * um dos dois mudar sem o outro, a política vira declaração falsa — foi
+ * exatamente o que aconteceu quando o GA4 entrou e o texto ainda dizia que não
+ * havia analytics. Mexer nos dois no mesmo commit.
+ *
+ * Se o inventário de dados mudar (pixel, comentários, login), esta página muda
+ * junto. Está no checklist da Fase 5.
  */
 
-const ATUALIZADO_EM = '2026-08-03T12:00:00Z';
+const ATUALIZADO_EM = '2026-08-05T12:00:00Z';
 
 export const metadata: Metadata = {
   title: `Política de privacidade · ${SITE.nome}`,
@@ -57,7 +63,7 @@ export default function Page() {
 
       <h2>Que dados coletamos</h2>
 
-      <p>Só o que você digita, e apenas em dois lugares:</p>
+      <p>O que você digita, em dois lugares:</p>
 
       <ul>
         <li>
@@ -71,6 +77,12 @@ export default function Page() {
       </ul>
 
       <p>
+        E, <strong>só se você autorizar</strong>, dados de navegação para medir audiência:
+        páginas visitadas, tempo de leitura, tipo de aparelho e navegador, cidade
+        aproximada e de onde você veio. Detalhe na seção sobre cookies, abaixo.
+      </p>
+
+      <p>
         Não pedimos CPF, telefone, endereço nem dados de pagamento. Não há área de
         cadastro, login ou comentários no site.
       </p>
@@ -78,9 +90,44 @@ export default function Page() {
       <h2>Cookies e medição de audiência</h2>
 
       <p>
-        O site <strong>não usa cookies de rastreamento, nem pixel de publicidade, nem
-        ferramenta de analytics</strong>. Não há perfilamento de comportamento e não há
-        banner de consentimento porque não há o que consentir.
+        O site usa o <strong>Google Analytics 4</strong> para medir audiência: quantas
+        pessoas leem cada matéria, por qual caminho chegaram e em que tipo de aparelho.
+        Ele grava cookies no seu navegador — os que começam com <strong>_ga</strong> — e
+        gera um identificador aleatório do seu dispositivo, não do seu nome.
+      </p>
+
+      <p>
+        <strong>Nada disso é carregado antes de você autorizar.</strong> Na primeira
+        visita aparece um aviso com as opções aceitar e recusar, e enquanto você não
+        escolher, o site não pede nada ao Google e não escreve cookie de medição. Se
+        recusar, o Analytics simplesmente não é carregado, e o site funciona igual.
+      </p>
+
+      <p>
+        Você pode mudar de ideia quando quiser: o link{' '}
+        <strong>&ldquo;Preferências de cookies&rdquo;</strong>, no rodapé de qualquer
+        página, reabre o aviso. Ao revogar, apagamos os cookies de medição que já
+        estiverem no seu navegador.
+      </p>
+
+      <p>
+        A base legal desse tratamento é o <strong>seu consentimento</strong>. Também não
+        usamos pixel de publicidade, não fazemos perfilamento para anúncio e não cruzamos
+        os dados de audiência com o e-mail que você informa nos formulários.
+      </p>
+
+      <p>
+        <strong>Transferência internacional.</strong> O Google Analytics é operado pelo
+        Google, e os dados de audiência são processados <strong>fora do Brasil</strong>,
+        em servidores nos Estados Unidos e em outros países onde o Google mantém
+        infraestrutura. Isso é transferência internacional de dados, permitida pela LGPD
+        com o seu consentimento — que é exatamente o que o aviso pede.
+      </p>
+
+      <p>
+        O único cookie que existe sem pedir nada a você é o registro da <em>sua própria
+        escolha</em> no aviso acima, guardado no armazenamento local do navegador. Sem
+        ele, o aviso reapareceria em cada página.
       </p>
 
       <p>
@@ -118,6 +165,11 @@ export default function Page() {
         <li>
           <strong>DNS</strong> — Cloudflare, que resolve o endereço do site.
         </li>
+        <li>
+          <strong>Medição de audiência</strong> — Google, pelo Google Analytics 4, e
+          somente se você autorizar. Recebe os dados de navegação descritos acima, nunca
+          o seu e-mail nem o conteúdo das suas mensagens.
+        </li>
       </ul>
 
       <p>
@@ -135,6 +187,12 @@ export default function Page() {
         <li>
           <strong>Contato</strong> — <mark>[prazo — definir]</mark> após a resposta, salvo
           quando a mensagem precisar ser mantida por obrigação legal.
+        </li>
+        <li>
+          <strong>Medição de audiência</strong> — <mark>[período de retenção configurado
+          no Google Analytics — confirmar]</mark>. Os cookies de medição expiram
+          por conta em até dois anos, e são apagados antes disso se você revogar o
+          consentimento.
         </li>
       </ul>
 

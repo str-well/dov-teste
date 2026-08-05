@@ -58,7 +58,8 @@ Conexão do front com a API validada em 226 ms.
   Cabeçalho nos dois estados, cabeçalho mobile, menu em tela cheia com Radix,
   rodapé, cartão nas 3 variações, imagem com estado vazio, paginação, botões,
   chips e etiquetas. Prancha viva em **`/componentes`**, para comparar com o
-  HTML do designer.
+  HTML do designer. O banner de consentimento entrou depois, na seção 22 —
+  é o único componente sem prancha.
 
 - **Busca com sugestões** — `components/busca-com-sugestoes.tsx`, combobox com
   `downshift` servido por `GET /api/sugestoes`. Tira de chips com rolagem em
@@ -116,12 +117,43 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
 **Fase 3 concluída.** Todas as rotas do `Anexo C` respondem, menos as de
 formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
 
+### Analytics e consentimento
+
+Google Analytics 4, escolhido por você, em `components/consentimento.tsx`.
+
+**A regra: nada de GA antes do "aceitar".** Não é modo de consentimento com ping
+anônimo — é ausência de script. Enquanto não há decisão, o site não pede nada ao
+Google e não escreve cookie de medição nenhum. Verificado no navegador: zero
+requisição a `googletagmanager` e `document.cookie` vazio antes do clique.
+
+- **Sem `NEXT_PUBLIC_GA_ID` nada aparece** — nem banner, nem script, nem o botão
+  do rodapé. É o estado local e o da build atual.
+- **A decisão fica no `localStorage`**, em `dov:consentimento:v1`, não em cookie:
+  cookie de consentimento é ele mesmo um cookie e precisaria de cláusula. O `v1`
+  existe para o dia em que a lista de finalidades mudar — subir para `v2` faz
+  todo mundo decidir de novo, que é o comportamento certo.
+- **Revogar recarrega a página.** Desmontar a tag não descarrega o `gtag` que já
+  está em memória, então a recusa só valeria na página seguinte. O reload também
+  vem depois de expirar os `_ga*` — parar de carregar o script não apaga o
+  identificador, que ficaria dois anos esperando um novo "aceitar".
+- **"Preferências de cookies" no rodapé** reabre o banner. A LGPD exige que
+  revogar seja tão fácil quanto consentir, e o banner não volta sozinho depois da
+  primeira decisão.
+- **Sem prancha.** O banner é posterior ao pacote do designer. Montado só com
+  tokens e com os botões da seção 3 do `componentes.css` — `--primario` e
+  `--contorno`, mesmo tamanho e mesmo peso, porque recusar não pode ser mais
+  difícil que aceitar. No mobile é grade de duas colunas iguais.
+- **`app/politica-de-privacidade/page.tsx` é o par textual deste componente.**
+  A página afirmava por escrito que o site não usava analytics. Se um dos dois
+  mudar sem o outro, a política vira declaração falsa. **Mexer nos dois no mesmo
+  commit.**
+
 ### Pendências que precisam de decisão sua
 
 | O que | Por quê |
 |---|---|
 | Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin. **Adiado por você** — "não precisa agora" |
-| "Mais lidas" e "mais buscados" | Exigem contagem de acesso. Desbloqueia com o GA4, que você aprovou, mas só depois de haver histórico |
+| "Mais lidas" e "mais buscados" | Exigem contagem de acesso. O GA4 já está no código, mas o número só existe depois de semanas de histórico — e traria o front a depender de uma API do Google em runtime |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
@@ -151,6 +183,9 @@ chegarem — no máximo um por seção.
 | **shadcn/ui completo** | Traz componentes já estilizados, e o estilo vem do designer. Só os primitivos: Radix Dialog e `downshift`. |
 | **`cmdk` no combobox da busca** | É paleta de comandos: filtra a própria lista em memória. A §5 pede busca no servidor com debounce e `<mark>` no trecho que casa — `downshift` é agnóstico a async. |
 | **Lib de compartilhamento** | `navigator.share` é API nativa. Reserva no desktop: copiar-link e WhatsApp, cujos ícones já existem no pacote. |
+| **Google Consent Mode v2** | Manda o script subir com consentimento negado e enviar ping sem cookie antes da escolha. Continua sendo requisição ao Google e coleta antes do "sim" — mais difícil de defender do que não carregar nada, e sem ganho para um portal editorial que não faz remarketing. |
+| **`@next/third-parties/google`** | O `<GoogleAnalytics>` de lá é essencialmente as duas tags que já estão no `consentimento.tsx`, e o valor do arquivo está justamente em **quando** elas montam. Uma dependência para embrulhar 4 linhas que precisam ficar visíveis. |
+| **Animação de entrada no banner** | O banner é controle funcional, não decoração. Animação que não avança deixa o aviso inteiro fora da tela e sobra um retângulo fixo invisível interceptando toque no rodapé — e o navegador embutido do editor congela o relógio de animação, então isso não é hipótese. 250ms de deslize não paga o risco. |
 | **`next/image` para logo e blobs** | O dimensionamento é por altura com `aspect-ratio`, e o `next/image` insere `width`/`height` que brigam com isso. Não há o que otimizar num SVG. `next/image` é para as fotos do WordPress. |
 
 **Regra que sustenta a saída de emergência:** nada de código específico de host,
@@ -273,9 +308,16 @@ Cadastradas no painel da Hostinger, nunca no repositório:
 WORDPRESS_API_URL=https://wp.descubraovinho.com.br/wp-json/wp/v2
 REVALIDATE_SECRET=<segredo compartilhado com o wp-config.php>
 RESEND_API_KEY=<pendente>
+NEXT_PUBLIC_GA_ID=<pendente — ID de medição do GA4, formato G-XXXXXXXXXX>
 ```
 
 O `.env.local` não sobe no deploy.
+
+**`NEXT_PUBLIC_GA_ID` é a única variável com `NEXT_PUBLIC_`, e é de propósito:**
+o consentimento e o `gtag` rodam no navegador, então o ID precisa ir no pacote do
+cliente. Não é segredo — sai no HTML de qualquer site que use GA. Enquanto ela
+não existir, **o banner e o script não aparecem**, e é assim que o ambiente local
+e a build atual ficam limpos.
 
 ---
 

@@ -280,10 +280,12 @@ no caso difícil.
 
 **Três coisas da prancha que o dado não sustenta:**
 
-- **"Mais buscados"** nos chips do hero exigiria dado de busca, e não há analytics
-  no projeto. O que a API sustenta é "mais publicados" — as tags com mais
-  matérias. O rótulo virou "Comece por aqui" para não prometer o que não medimos.
-  Se "mais buscados" importar, é preciso decidir de onde vem o número.
+- **"Mais buscados"** nos chips do hero exigiria dado de busca. O GA4 entrou
+  depois, mas não resolve isso de graça: o número só existe após semanas de
+  histórico, e ler a API de relatórios do Google em runtime poria o front a
+  depender de um serviço externo a cada render. O que a API do WordPress sustenta
+  é "mais publicados" — as tags com mais matérias. O rótulo virou "Comece por
+  aqui" para não prometer o que não medimos.
 - **As letras da chamada do Almanaque** aparecem na prancha de A a N, como se
   todas levassem a algum lugar. Só entram as que **têm** verbete — hoje 9.
 - **"Ver todas" das últimas publicações saiu.** Não existe rota que signifique
@@ -371,10 +373,12 @@ preenchido pela ordem editorial.
 ### Notas do arquivo de categoria
 
 - **"Mais lidas" saiu da ordenação.** A prancha oferece essa opção, e ela exige
-  contagem de visualização — não há analytics nem plugin de contador, por decisão
-  de não instalar nada. Ficaram "Mais recentes", "Mais antigas" e "Título A–Z",
-  que a API entrega com `orderby`. Se o cliente quiser "Mais lidas", é preciso
-  decidir de onde vem o número.
+  contagem de visualização, que não existe no WordPress por decisão de não
+  instalar plugin de contador. Ficaram "Mais recentes", "Mais antigas" e
+  "Título A–Z", que a API entrega com `orderby`. O GA4 entrou depois e **não
+  destrava isso**: o número vive no Google, não no `orderby` do WordPress, então
+  ordenar por ele exigiria trazer os dados de volta e gravá-los em algum lugar
+  que a consulta alcance.
 - **As tags do filtro são só as usadas naquela editoria.** A API não cruza
   taxonomias, então `tagsDaCategoria()` levanta as tags das matérias da
   categoria. Sem isso a tira mostraria as 16 tags do site e a maioria daria lista
@@ -447,13 +451,26 @@ oficial. Sem OpenNext, sem KV, sem wrangler.
 - [ ] **Revisão jurídica da política de privacidade e dos termos de uso.** Os dois
       são rascunho, e trazem pendências marcadas em `<mark>` que aparecem na tela
       de propósito: razão social e CNPJ, encarregado de dados, prazo de retenção
-      das mensagens de contato, declaração de publicidade e comarca do foro.
-      **Enquanto houver um `<mark>` na página, ela não está pronta para publicar**
+      das mensagens de contato, declaração de publicidade, comarca do foro e o
+      período de retenção do Analytics.
+      **Enquanto houver um `<mark>` na página, ela não está pronta para publicar**.
+      A seção de cookies foi reescrita quando o GA4 entrou: ela é o par textual de
+      `components/consentimento.tsx`, e antes afirmava que o site não usava
+      analytics
 - [ ] **Confirmar os perfis de Instagram e YouTube com o cliente.** Os endereços
       em `lib/site.ts` são o handle da marca, não confirmados — podem pertencer a
       outra pessoa, e o rodapé apontaria para um terceiro
 - [ ] Remover as rotas internas `/diagnostico` e `/componentes`
 - [ ] Tirar o `robots: { index: false }` do `app/layout.tsx`
+- [ ] **Criar a propriedade do Google Analytics 4 e cadastrar `NEXT_PUBLIC_GA_ID`**
+      no painel da Hostinger. Sem a variável o banner e o script não aparecem, e é
+      esse o estado da build atual — o código está pronto e desligado
+- [ ] **Conferir no GA4:** retenção de dados (o padrão são 14 meses) e a medição
+      aprimorada com "alterações no histórico" ligada, que é o que conta pageview
+      na navegação do App Router. Sem ela, só a primeira página de cada visita
+      seria medida
+- [ ] **Preencher a retenção do Analytics na política de privacidade** — está
+      marcada em `<mark>`, como as outras pendências jurídicas
 - [ ] Monitor externo de uptime (UptimeRobot free) apontado para `/api/health`
 - [ ] Domínio apontado, Cloudflare configurado
 - [ ] Documentar para o cliente: onde publicar, quanto tempo leva para aparecer
