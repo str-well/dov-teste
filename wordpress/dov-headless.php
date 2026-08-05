@@ -32,6 +32,11 @@ function dov_esquema() {
 		'verbete' => array(
 			'titulo' => 'Dados do verbete',
 			'campos' => array(
+				'dov_classe_gramatical' => array(
+					'label' => 'Classe gramatical',
+					'tipo'  => 'text',
+					'ajuda' => 'Ex.: substantivo masculino. Abre a linha logo abaixo do título.',
+				),
 				'dov_definicao_curta' => array(
 					'label' => 'Definição curta',
 					'tipo'  => 'textarea',
@@ -480,7 +485,8 @@ add_filter( 'intermediate_image_sizes_advanced', function ( $sizes ) {
  * porque o plano é compartilhado com outros sites.
  */
 add_action( 'rest_api_init', function () {
-	foreach ( array( 'post', 'verbete', 'evento' ) as $tipo ) {
+	// `page` está na lista por causa da foto de Quem Somos, que não tinha de onde vir.
+	foreach ( array( 'post', 'page', 'verbete', 'evento' ) as $tipo ) {
 		register_rest_field( $tipo, 'dov_imagens', array(
 			'get_callback' => function ( $obj ) {
 				$id = get_post_thumbnail_id( $obj['id'] );

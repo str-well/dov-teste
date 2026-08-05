@@ -5,8 +5,10 @@ import { BuscaComSugestoes } from '@/components/busca-com-sugestoes';
 import { CartaoCompacto, CartaoMateria } from '@/components/cartao';
 import { IconeSetaDireita } from '@/components/icones';
 import { ImagemWp } from '@/components/imagem-wp';
-import { dataCurta, dataParaAtributo, intervaloDeDatas, plural, tempoDeLeitura } from '@/lib/formato';
+import { ItemDaAgenda } from '@/components/item-da-agenda';
+import { dataCurta, dataParaAtributo, plural, tempoDeLeitura } from '@/lib/formato';
 import {
+  AGENDA,
   ALMANAQUE,
   HOME_EDITORIAS_DUPLAS,
   HOME_EDITORIA_DESTAQUE,
@@ -19,7 +21,6 @@ import {
   listarMaterias,
   listarTags,
   listarVerbetes,
-  type Evento,
   type Materia,
   type Termo,
 } from '@/lib/wp';
@@ -240,11 +241,12 @@ export default async function Page() {
                   Agenda das próximas semanas
                 </h2>
               </div>
-              {porSlug.has('programe-se') && (
-                <Link className="link-texto" href="/programe-se">
-                  Agenda completa
-                </Link>
-              )}
+              {/* Aponta para `/agenda`, que lista **eventos**. Antes ia para
+                  `/programe-se`, que é o arquivo de matérias da editoria — o
+                  destino errado, e o único que existia. */}
+              <Link className="link-texto" href={AGENDA.href}>
+                Agenda completa
+              </Link>
             </div>
 
             <div className="agenda">
@@ -403,37 +405,5 @@ async function Dupla({ categoria }: { categoria: Termo }) {
         </ol>
       )}
     </div>
-  );
-}
-
-/**
- * Um evento da agenda.
- *
- * **Evento não tem página própria:** o CPT existe e tem corpo de texto, mas não
- * há rota para ele no `Anexo C` do plano nem template na Fase 3. Então o cartão
- * é link só quando existe `dov_link` externo; sem ele, é um bloco informativo.
- * Hoje os 3 eventos de teste estão sem link, e nenhum é clicável.
- *
- * Isso é uma lacuna real do plano, não uma decisão — ver `docs/PLANO`.
- */
-function ItemDaAgenda({ evento }: { evento: Evento }) {
-  const conteudo = (
-    <>
-      <p className="agenda__data">
-        <time dateTime={evento.dataInicio}>
-          {intervaloDeDatas(evento.dataInicio, evento.dataFim)}
-        </time>
-        {evento.local && ` · ${evento.local}`}
-      </p>
-      <h3 className="agenda__titulo">{evento.titulo}</h3>
-    </>
-  );
-
-  return evento.link ? (
-    <a className="agenda__item" href={evento.link} target="_blank" rel="noopener noreferrer">
-      {conteudo}
-    </a>
-  ) : (
-    <article className="agenda__item">{conteudo}</article>
   );
 }

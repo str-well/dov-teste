@@ -291,16 +291,37 @@ no caso difícil.
   mentir sobre o destino. Volta quando a página de busca puder listar tudo sem
   termo.
 
-**Uma lacuna real do plano:** o CPT `evento` tem corpo de texto e **nenhuma rota**
-— não está no `Anexo C` nem na lista de templates. Por isso o cartão da agenda é
-link só quando existe `dov_link` externo; sem ele é um bloco informativo. Os 3
-eventos de teste estão sem link, e nenhum é clicável. Decidir: criar
-`/agenda/[slug]`, ou aceitar que evento é só um cartão com data e local.
+**Uma lacuna real do plano, agora fechada:** o CPT `evento` tinha corpo de texto e
+**nenhuma rota** — não estava no `Anexo C` nem na lista de templates. Por isso o
+cartão da agenda só era link quando existia `dov_link` externo, e como nenhum dos
+3 eventos tem, nenhum era clicável. Resolvido criando `/agenda` e `/agenda/[slug]`
+por decisão sua — **as duas primeiras rotas fora do `Anexo C`**. Notas abaixo.
 
 **A curadoria da home é constante, não dado.** `HOME_EDITORIA_DESTAQUE` e
 `HOME_EDITORIAS_DUPLAS` em `lib/site.ts`, por slug: a API não sabe qual editoria
 merece a home desta semana. Slug que desaparecer é ignorado, e o lugar é
 preenchido pela ordem editorial.
+
+### Notas da agenda
+
+- **`/agenda` não é `/programe-se`.** A editoria "Programe-se" é taxonomia de
+  *matéria* e seu arquivo continua sendo `/programe-se`; a agenda lista o CPT
+  `evento`. São dois conteúdos diferentes com nomes vizinhos, e o mu-plugin já
+  declarava `'rewrite' => array('slug' => 'agenda')` — a intenção original era
+  esta.
+- **O índice separa futuros de passados.** "Próximos eventos" primeiro, "Já
+  aconteceram" depois, em ordem decrescente. Sem evento futuro entra o estado
+  vazio da §7; a lista de passados nunca vira estado vazio, só desaparece.
+- **O link externo saiu do cartão e virou botão dentro da página.** No cartão ele
+  competia com o destino natural, e um cartão que às vezes leva para fora e às
+  vezes não leva a lugar nenhum é imprevisível. Agora o cartão sempre abre o
+  evento, e "Site oficial" é uma ação explícita lá dentro.
+- **Evento que já passou ganha um aviso, não um 404.** A página continua no ar com
+  `role="status"` dizendo que aconteceu — matéria antiga não desaparece, e evento
+  antigo é registro pelo mesmo motivo.
+- **Cartão único**, em `components/item-da-agenda.tsx`, compartilhado com a home.
+  A home passava a ter uma segunda cópia do mesmo bloco, que era como o link
+  externo tinha sobrevivido em dois lugares com regras diferentes.
 
 ### Notas do índice A–Z
 
@@ -327,11 +348,11 @@ preenchido pela ordem editorial.
 
 ### Notas do verbete
 
-- **Não existe campo de classe gramatical.** A prancha abre a linha com
-  "substantivo masculino", e os campos do verbete no mu-plugin são definição
-  curta, etimologia, pronúncia, "na prática" e relacionados. A linha é montada
-  com o que existe. Se a classe gramatical importar, é um campo novo — decisão do
-  cliente.
+- **A classe gramatical existe desde que você mexeu no mu-plugin.**
+  `dov_classe_gramatical` já aparece no meta da API, e o template a usa como
+  primeiro pedaço da linha abaixo do título — que é o que a prancha mostra com
+  "substantivo masculino". Está **vazia nos 22 verbetes**: é preenchimento
+  editorial, um campo de texto por verbete no editor.
 - **A linha desaparece inteira** quando etimologia e pronúncia estão as duas
   vazias, como manda o `BACKEND.md` — o que é o caso da maioria dos 22 verbetes.
   Com só uma das duas, ela aparece com o que tem: `brut` mostra apenas a pronúncia.

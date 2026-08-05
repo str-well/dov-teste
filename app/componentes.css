@@ -1507,6 +1507,11 @@ a.etiqueta--verde:hover {
   line-height: var(--dov-lh-h1-institucional);
 }
 
+/* Botão de inscrição na cabeça do evento. */
+.evento__acoes {
+  margin-top: var(--dov-esp-6);
+}
+
 .cabeca-institucional__lead {
   max-width: 680px;
   font-size: var(--dov-t-lead);

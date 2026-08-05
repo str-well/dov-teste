@@ -103,6 +103,16 @@ sidebar sticky, `navigator.share`. Detalhe em `docs/DESIGN.md`.
   realce em `<mark>` e os dois estados vazios da §7. `not-found.tsx` e `error.tsx`
   dividem o layout da tela 16.
 
+- **Agenda** — `/agenda` e `/agenda/[slug]`, prontas. **Rota fora do `Anexo C`**,
+  acrescentada por decisão sua: o CPT `evento` tinha corpo de texto e nenhum lugar
+  para aparecer, então o cartão só era clicável quando havia `dov_link` externo —
+  e nenhum dos três eventos tem, ou seja, **nenhum cartão era clicável**. Agora o
+  destino é sempre a página do evento, e o link externo virou botão dentro dela.
+  O índice separa "Próximos eventos" de "Já aconteceram" e tem o estado vazio da
+  §7 quando não há futuros. Cartão único em `components/item-da-agenda.tsx`,
+  compartilhado com a home. **Não confundir `/agenda` com `/programe-se`**, que é
+  o arquivo de *matérias* da editoria de mesmo nome.
+
 **Fase 3 concluída.** Todas as rotas do `Anexo C` respondem, menos as de
 formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
 
@@ -110,9 +120,8 @@ formulário. **Fase 4 é o próximo passo:** deploy e revalidação.
 
 | O que | Por quê |
 |---|---|
-| Evento sem página | O CPT tem corpo de texto e **nenhuma rota** no `Anexo C`. O cartão da agenda só é link com `dov_link` externo. Criar `/agenda/[slug]`, ou remover o campo de corpo do mu-plugin |
-| Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin |
-| "Mais lidas" e "mais buscados" | As duas exigem contagem que não existe — sem analytics no projeto |
+| Trecho da busca | A prancha mostra recorte do corpo em volta do termo; a API não devolve. Exigiria endpoint próprio no mu-plugin. **Adiado por você** — "não precisa agora" |
+| "Mais lidas" e "mais buscados" | Exigem contagem de acesso. Desbloqueia com o GA4, que você aprovou, mas só depois de haver histórico |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.

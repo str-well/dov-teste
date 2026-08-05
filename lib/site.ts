@@ -78,6 +78,15 @@ export const ALMANAQUE: ItemNav = { rotulo: 'Almanaque', href: '/almanaque' };
 export const BUSCA: ItemNav = { rotulo: 'Buscar', href: '/busca' };
 
 /**
+ * A agenda de eventos.
+ *
+ * Rota **fora do `Anexo C`** do plano, acrescentada por decisão sua: o CPT
+ * `evento` tinha corpo de texto e nenhum lugar para aparecer. Não confundir com
+ * `/programe-se`, que é o arquivo de **matérias** da editoria de mesmo nome.
+ */
+export const AGENDA: ItemNav = { rotulo: 'Agenda', href: '/agenda' };
+
+/**
  * A largura em que o cabeçalho troca de hambúrguer para menu completo.
  *
  * **Precisa acompanhar** `--breakpoint-menu` no `app/globals.css` e as media
