@@ -312,9 +312,9 @@ preenchido pela ordem editorial.
 - **No mobile são duas linhas de 13, com vão zero.** A §6 pede duas linhas *e*
   alvos de 36px, e as duas coisas não cabem: com 4px de vão a célula fica com
   22px de largura, abaixo do mínimo de 24×24 do WCAG 2.5.8. Sem vão dá 25,8px em
-  tela de 375px, e a altura de 36px é preservada. **Em telas de 360px ou menos
-  nem isso alcança 24px** — aí só três linhas resolveriam, e é uma pergunta para
-  o designer.
+  tela de 375px, e a altura de 36px é preservada. Medido: **360px dá 24,6px e
+  passa; 320px dá 21,5px e reprova.** O limiar é `13 × 24 + 40 = 352px` de
+  viewport — abaixo disso só três linhas resolveriam, e é pergunta para o designer.
 - **A tira gruda abaixo do cabeçalho reduzido** (68px) no desktop e no topo no
   mobile, onde o cabeçalho rola com a página. A âncora das seções desconta
   cabeçalho + tira + 16px: 160px no desktop, 116px no mobile.

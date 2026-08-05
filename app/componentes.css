@@ -2994,9 +2994,10 @@ a.etiqueta--verde:hover {
      **Vão zero de propósito.** A §6 pede duas linhas de 13 *e* alvos de 36px, e
      as duas coisas não cabem juntas: 26 letras em duas linhas de 335px dão
      25,8px de largura por célula, e com 4px de vão cairiam para 22px — abaixo
-     do mínimo de 24×24 do WCAG 2.5.8. Sem vão, a largura passa do mínimo em
-     telas de 375px. A altura de 36px é preservada. Em telas de 360px ou menos
-     nem isso alcança 24px, e aí só três linhas resolveriam. */
+     do mínimo de 24×24 do WCAG 2.5.8. Sem vão, a altura de 36px é preservada e a
+     largura passa do mínimo até **352px de viewport** (`13 × 24 + 40`): medido,
+     360px dá 24,6px e passa, 320px dá 21,5px e reprova. Abaixo de 352px só três
+     linhas resolveriam. */
   .letras {
     padding-block: 14px;
   }
