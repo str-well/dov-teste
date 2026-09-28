@@ -53,10 +53,44 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export async function generateStaticParams() {
-  const verbetes = await listarVerbetes();
+/**
+ * Cinco minutos, declarado e não inferido.
+ *
+ * O Next deduz o `revalidate` da rota a partir dos `next: { revalidate }` dos
+ * fetches — mas só consegue deduzir das páginas que ele renderiza no build, e
+ * esta rota não pré-gera nenhuma. Sem a linha abaixo o valor fica implícito e
+ * some da tabela de rotas, que é onde a gente confere.
+ *
+ * `dynamicParams` fica no padrão (`true`): verbete que não existia é gerado na
+ * primeira visita.
+ */
+export const revalidate = 300;
 
-  return verbetes.map((verbete) => ({ termo: verbete.slug }));
+/**
+ * **Nenhum verbete é pré-gerado no build, e isso mudou com a importação.**
+ *
+ * Com 22 verbetes, pré-gerar todos era barato e era o que esta função fazia.
+ * Com 141 deixou de ser: cada página dispara um `search=` no `/posts` para
+ * montar "matérias que usam o termo", que no WordPress é `LIKE` sobre o corpo
+ * do texto e não se repete entre verbetes — 141 consultas caras e distintas,
+ * em rajada, num plano cujos processos PHP são divididos com o WordPress e
+ * outros 6 sites de clientes. A API passou a responder 500 e o build morria.
+ *
+ * Não é só o nosso build que sofre: saturar os processos PHP durante o deploy
+ * aparece como lentidão nos outros sites do plano. "Evitar consultas
+ * desnecessárias não é otimização prematura, é requisito" — e 141 páginas
+ * regeradas a cada deploy, quando o conteúdo mal muda, são desnecessárias.
+ *
+ * O custo: a primeira visita a cada verbete paga uma ida ao WordPress. Depois
+ * disso o `revalidate` de 300s mantém a página estática, e o mu-plugin
+ * revalida no save. É o mesmo mecanismo que já aceitamos para matéria
+ * publicada depois do build.
+ *
+ * O índice `/almanaque` **continua pré-gerado** — ele é uma página só, e é por
+ * onde quase todo mundo entra.
+ */
+export function generateStaticParams() {
+  return [];
 }
 
 export default async function Page({ params }: Props) {

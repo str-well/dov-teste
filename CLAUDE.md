@@ -215,10 +215,15 @@ Newsletter e contato, as duas últimas rotas do `Anexo C`. `/api/newsletter`,
 
 ### Almanaque — a importação do cliente
 
-126 verbetes recebidos em 23/09/2026, convertidos em seis lotes JSON em
-`almanaque/`. **124 a importar, 2 retidos**; com os 17 de teste que ficam, o
-Almanaque vai a **141**. O importador é `scripts/importar-almanaque.mjs`, e o
-passo a passo está em `almanaque/LEIA-ME.md`.
+**Feita em 27/09/2026: 119 criados, 5 atualizados, 0 erros. O Almanaque tem 141
+verbetes em produção.** Os seis termos de `verbete_tipo` foram criados junto —
+Uvas 31, Vinhos e estilos 30, Produção 19, Países e regiões 18, Denominações 15,
+Harmonização 11. O mu-plugin v2.3.0 está no ar; o que rodava antes está guardado
+em `wordpress/backup/`, que é o artefato de reversão.
+
+Os lotes em `almanaque/` continuam sendo a fonte de verdade do conteúdo: rodar o
+importador de novo casa por slug e atualiza, sem duplicar. **2 verbetes seguem
+retidos** aguardando o cliente — ver a tabela de pendências.
 
 O que mudou no front por causa disso:
 
@@ -238,6 +243,20 @@ O que mudou no front por causa disso:
 - **`dov_curiosidade` é uma segunda caixa destacada**, mesmo componente com outro
   rótulo, em `components/caixa-destacada.tsx`. Independente de "Na prática": um
   verbete pode ter as duas, e "Na prática" vem primeiro.
+- **O build deixou de pré-gerar as páginas de verbete.** Com 22 era barato; com
+  141 não é, porque cada página dispara um `search=` no `/posts` — `LIKE` sobre
+  o corpo do texto, distinto por verbete, incacheável. Em rajada isso saturou os
+  processos PHP do plano e o WordPress passou a responder **500**, matando o
+  `next build`. `generateStaticParams` do verbete devolve `[]`, e o ISR gera na
+  primeira visita, que é o mesmo mecanismo já aceito para matéria nova. O índice
+  `/almanaque` continua pré-gerado — é uma página só e é por onde se entra.
+  A geração estática também caiu para 4 páginas em paralelo, com 2 tentativas,
+  em `next.config.js`: saturar o plano durante o deploy aparece como lentidão
+  nos outros 6 sites, não só no nosso.
+- **`materiasQueCitam` é a única consulta que falha em silêncio.** A regra do
+  módulo é que `ErroWordPress` sobe para o `error.tsx`; aqui não, porque o bloco
+  é enriquecimento e derrubar o verbete inteiro troca uma seção ausente por uma
+  tela de erro. O `revalidate` cura na visita seguinte.
 - **Definições longas cortam.** 32 das 124 passam de 180 caracteres, a maior tem
   240. O card do índice corta em 2 linhas; a caixa "Do Almanaque", numa lateral de
   300px, corta em 3 — sem isso ela ia de 245px para 334px, e a matéria pode listar

@@ -13,7 +13,7 @@ import { cache } from 'react';
 
 import { MAXIMO_POR_PAGINA, REVALIDAR } from './config';
 import { compararChaves } from './html';
-import { buscarLista, buscarPorId, buscarPorSlug, buscarTudo } from './http';
+import { ErroWordPress, buscarLista, buscarPorId, buscarPorSlug, buscarTudo } from './http';
 import {
   mapearAutor,
   mapearEvento,
@@ -185,9 +185,34 @@ export async function materiasQueCitam(
 ): Promise<Materia[]> {
   if (!termo.trim()) return [];
 
-  const { itens } = await listarMaterias({ busca: termo, porPagina: quantidade });
+  try {
+    const { itens } = await listarMaterias({ busca: termo, porPagina: quantidade });
 
-  return itens;
+    return itens;
+  } catch (erro) {
+    // **Esta consulta falha em silêncio de propósito, e é a única do módulo que
+    // faz isso.** A regra geral é que `ErroWordPress` sobe para o `error.tsx`,
+    // porque uma matéria que não carrega não tem página. Aqui é o contrário: o
+    // bloco "matérias que usam o termo" é enriquecimento, e derrubar o verbete
+    // inteiro por causa dele troca uma seção ausente por uma tela de erro.
+    //
+    // Não é hipótese. Cada página de verbete dispara um `search=` no `/posts`,
+    // que no WordPress é `LIKE` sobre o corpo do texto — caro. Com 22 verbetes
+    // o build fazia 22 dessas; com 141 ele faz 141, em paralelo, contra um
+    // plano dividido com outros 6 sites. O WordPress passou a responder 500, e
+    // o `next build` inteiro morria em `/almanaque/australia`.
+    //
+    // O `revalidate` de 300s cura a ausência sozinho na visita seguinte.
+    if (erro instanceof ErroWordPress) {
+      console.warn(
+        `[materiasQueCitam] "${termo}" falhou (${erro.status}); a seção fica vazia.`,
+      );
+
+      return [];
+    }
+
+    throw erro;
+  }
 }
 
 /** Total de matérias publicadas. Vem do header, sem baixar as matérias. */
