@@ -1,0 +1,130 @@
+{
+  "lote": "lote-06-denominacoes",
+  "fonte": {
+    "titulo": "Denominações e classificações",
+    "google_doc": "https://docs.google.com/document/d/1yPOjZZH_sYIFSoMk-IXDnY9EpaCV_1etRXmPFYx9y4w"
+  },
+  "recebido_em": "2026-09-23",
+  "verbetes": [
+    {
+      "titulo": "AOC / AOP (Appellation d'Origine Contrôlée / Protégée)",
+      "slug": "aoc-aop",
+      "tipo": "denominacoes",
+      "definicao_curta": "Sistema francês e europeu que certifica e protege vinhos produzidos em uma região geográfica delimitada, exigindo o cumprimento de regras rígidas sobre uvas autorizadas, rendimento máximo por hectare e métodos de vinificação.",
+      "definicao": "Sistema francês e europeu que certifica e protege vinhos produzidos em uma região geográfica delimitada, exigindo o cumprimento de regras rígidas sobre uvas autorizadas, rendimento máximo por hectare e métodos de vinificação.",
+      "curiosidade": "A primeira região a receber a regulamentação nos moldes da AOC na França foi Roquefort (para queijos) e, no mundo do vinho, Châteauneuf-du-Pape foi a pioneira na delimitação de suas fronteiras na década de 1930."
+    },
+    {
+      "titulo": "AVA (American Viticultural Area)",
+      "slug": "ava",
+      "tipo": "denominacoes",
+      "definicao_curta": "Região de cultivo de uvas oficialmente reconhecida nos Estados Unidos que estabelece a origem geográfica das uvas no rótulo, sem impor regras sobre castas, rendimentos de colheita ou tempo de envelhecimento.",
+      "definicao": "Região de cultivo de uvas oficialmente reconhecida nos Estados Unidos que estabelece a origem geográfica das uvas no rótulo, sem impor regras sobre castas, rendimentos de colheita ou tempo de envelhecimento.",
+      "curiosidade": "Augusta, no estado do Missouri, tornou-se a primeira AVA aprovada nos EUA em 1980, oito meses antes de Napa Valley obter o mesmo status."
+    },
+    {
+      "titulo": "Classificação de 1855 (Bordeaux)",
+      "slug": "classificacao-de-1855",
+      "tipo": "denominacoes",
+      "definicao_curta": "Sistema histórico que hierarquizou os melhores produtores de vinho tinto de Médoc e vinhos doces de Sauternes em cinco níveis (*Premiers Grands Crus* a *Cinquièmes Crus*), criado para a Exposição Universal de Paris a pedido de Napoleão III.",
+      "definicao": "Sistema histórico que hierarquizou os melhores produtores de vinho tinto de Médoc e vinhos doces de Sauternes em cinco níveis (*Premiers Grands Crus* a *Cinquièmes Crus*), criado para a Exposição Universal de Paris a pedido de Napoleão III.",
+      "curiosidade": "Apenas uma alteração ocorreu na lista dos vinhos tintos desde 1855: em 1973, o Château Mouton Rothschild foi promovido do segundo para o primeiro nível (*Premier Grand Cru*)."
+    },
+    {
+      "titulo": "DO (Denominação de Origem)",
+      "slug": "denominacao-de-origem",
+      "tipo": "denominacoes",
+      "definicao_curta": "Selo de qualidade adotado na Espanha, Portugal, Brasil e América Latina para atestar que o vinho foi elaborado dentro de uma área delimitada, seguindo padrões específicos de cultivo e vinificação associados ao seu *terroir*.",
+      "definicao": "Selo de qualidade adotado na Espanha, Portugal, Brasil e América Latina para atestar que o vinho foi elaborado dentro de uma área delimitada, seguindo padrões específicos de cultivo e vinificação associados ao seu *terroir*.",
+      "curiosidade": "No Brasil, o Vale dos Vinhedos conquistou a primeira Denominação de Origem (DO) do país em 2012, após ter iniciado sua trajetória de reconhecimento como Indicação de Procedência (IP) em 2002."
+    },
+    {
+      "titulo": "DOC (Denominação de Origem Controlada)",
+      "slug": "doc",
+      "tipo": "denominacoes",
+      "definicao_curta": "Categoria tradicional de regulamentação utilizada na Itália e em Portugal para identificar vinhos originários de regiões demarcadas com características ímpares de solo, clima e variedades autorizadas.",
+      "definicao": "Categoria tradicional de regulamentação utilizada na Itália e em Portugal para identificar vinhos originários de regiões demarcadas com características ímpares de solo, clima e variedades autorizadas.",
+      "curiosidade": "A Região Demarcada do Douro, criada em 1756 pelo Marquês de Pombal, é o sistema de demarcação vitivinícola formalizado mais antigo do mundo."
+    },
+    {
+      "titulo": "DOCa (Denominación de Origen Calificada)",
+      "slug": "doca",
+      "tipo": "denominacoes",
+      "definicao_curta": "O nível mais elevado do sistema de classificação de vinhos na Espanha, concedido exclusivamente a regiões com histórico excepcional e critérios de controle de qualidade ainda mais rigorosos que uma DO tradicional.",
+      "definicao": "O nível mais elevado do sistema de classificação de vinhos na Espanha, concedido exclusivamente a regiões com histórico excepcional e critérios de controle de qualidade ainda mais rigorosos que uma DO tradicional.",
+      "curiosidade": "Apenas duas regiões espanholas possuem essa certificação: Rioja (concedida em 1991) e Priorat (concedida em 2000, onde é denominada DOQ em catalão)."
+    },
+    {
+      "titulo": "DOCG (Denominazione di Origine Controllata e Garantita)",
+      "slug": "docg",
+      "tipo": "denominacoes",
+      "definicao_curta": "O topo da pirâmide de qualidade dos vinhos italianos, que exige análises laboratoriais e degustações de um comitê oficial antes de liberar o selo público numerado aplicado no gargalo de cada garrafa.",
+      "definicao": "O topo da pirâmide de qualidade dos vinhos italianos, que exige análises laboratoriais e degustações de um comitê oficial antes de liberar o selo público numerado aplicado no gargalo de cada garrafa.",
+      "curiosidade": "Brunello di Montalcino e Barolo foram os primeiros vinhos tintos a receber a certificação DOCG quando o sistema estreou na Itália em 1980."
+    },
+    {
+      "titulo": "Grand Cru",
+      "slug": "grand-cru",
+      "tipo": "denominacoes",
+      "definicao_curta": "Termo francês que designa vinhedos ou propriedades de prestígio superior; na Borgonha identifica os melhores vinhedos individuais, enquanto em Bordeaux e Saint-Émilion classifica as propriedades (*châteaux*) de elite.",
+      "definicao": "Termo francês que designa vinhedos ou propriedades de prestígio superior; na Borgonha identifica os melhores vinhedos individuais, enquanto em Bordeaux e Saint-Émilion classifica as propriedades (*châteaux*) de elite.",
+      "curiosidade": "Na Borgonha, os vinhedos com status de Grand Cru correspondem a apenas cerca de 1% de toda a produção de vinho da região."
+    },
+    {
+      "titulo": "IGP / IP (Indicação Geográfica Protegida / Indicação de Procedência)",
+      "slug": "igp-ip",
+      "tipo": "denominacoes",
+      "definicao_curta": "Categoria de regulamentação que garante a origem regional do vinho, mas com regras bem mais flexíveis do que a Denominação de Origem, permitindo maior liberdade técnica aos enólogos.",
+      "definicao": "Categoria de regulamentação que garante a origem regional do vinho, mas com regras bem mais flexíveis do que a Denominação de Origem, permitindo maior liberdade técnica aos enólogos.",
+      "curiosidade": "Permite aos produtores testar variedades de uvas não tradicionais e métodos modernos de vinificação sem perder a indicação geográfica no rótulo."
+    },
+    {
+      "titulo": "IGT (Indicazione Geografica Tipica)",
+      "slug": "igt",
+      "tipo": "denominacoes",
+      "definicao_curta": "Categoria italiana criada na década de 1990 para enquadrar vinhos regionais de altíssima qualidade que não seguiam as regras rígidas das DOCs tradicionais, como o uso exclusivo de uvas nativas.",
+      "definicao": "Categoria italiana criada na década de 1990 para enquadrar vinhos regionais de altíssima qualidade que não seguiam as regras rígidas das DOCs tradicionais, como o uso exclusivo de uvas nativas.",
+      "curiosidade": "A categoria surgiu em grande parte para regulamentar os \"Super Toscanos\", vinhos icônicos feitos com uvas de origem francesa que eram anteriormente rotulados como simples \"vinhos de mesa\"."
+    },
+    {
+      "titulo": "Premier Cru",
+      "slug": "premier-cru",
+      "tipo": "denominacoes",
+      "definicao_curta": "Termo francês que indica qualidade elevada; na Borgonha representa o segundo degrau na hierarquia (abaixo apenas dos *Grand Crus*), enquanto em Bordeaux designa o topo da classificação de 1855.",
+      "definicao": "Termo francês que indica qualidade elevada; na Borgonha representa o segundo degrau na hierarquia (abaixo apenas dos *Grand Crus*), enquanto em Bordeaux designa o topo da classificação de 1855.",
+      "curiosidade": "Na Borgonha existem mais de 600 vinhedos individualmente delimitados e reconhecidos com o status de Premier Cru."
+    },
+    {
+      "titulo": "Prädikatswein",
+      "slug": "pradikatswein",
+      "tipo": "denominacoes",
+      "definicao_curta": "O nível mais elevado na classificação de vinhos da Alemanha e da Áustria, que categoriza vinhos sem adição artificial de açúcar segundo a densidade e maturação natural da uva na colheita (ex: *Kabinett*, *Spätlese*, *Auslese*).",
+      "definicao": "O nível mais elevado na classificação de vinhos da Alemanha e da Áustria, que categoriza vinhos sem adição artificial de açúcar segundo a densidade e maturação natural da uva na colheita (ex: *Kabinett*, *Spätlese*, *Auslese*).",
+      "curiosidade": "Os níveis do sistema não medem a doçura final do vinho engarrafado, mas sim a quantidade de açúcar natural presente no mosto da uva no momento em que é colhida."
+    },
+    {
+      "titulo": "Reserva e Gran Reserva",
+      "slug": "reserva-e-gran-reserva",
+      "tipo": "denominacoes",
+      "definicao_curta": "Designações tradicionais na Espanha e Portugal para vinhos que passaram por períodos mínimos obrigatórios de envelhecimento em barrica e garrafa; no Novo Mundo, são termos comerciais para linhas superiores do produtor.",
+      "definicao": "Designações tradicionais na Espanha e Portugal para vinhos que passaram por períodos mínimos obrigatórios de envelhecimento em barrica e garrafa; no Novo Mundo, são termos comerciais para linhas superiores do produtor.",
+      "curiosidade": "Um vinho *Gran Reserva* tinto da DOCa Rioja precisa envelhecer por no mínimo 5 anos antes de ir ao mercado, dos quais pelo menos 2 anos em barris de carvalho."
+    },
+    {
+      "titulo": "Super Toscano",
+      "slug": "super-toscano",
+      "tipo": "denominacoes",
+      "definicao_curta": "Termo não oficial criado pela crítica internacional para descrever vinhos tintos produzidos na Toscana que utilizavam uvas internacionais (como Cabernet Sauvignon e Merlot) à revelia da legislação de Chianti.",
+      "definicao": "Termo não oficial criado pela crítica internacional para descrever vinhos tintos produzidos na Toscana que utilizavam uvas internacionais (como Cabernet Sauvignon e Merlot) à revelia da legislação de Chianti.",
+      "curiosidade": "O icônico Sassicaia foi o precursor desse movimento e acabou conquistando, anos mais tarde, sua própria apelação de origem exclusiva: Bolgheri Sassicaia DOC."
+    },
+    {
+      "titulo": "Vin de France / Vinho de Mesa",
+      "slug": "vin-de-france-vinho-de-mesa",
+      "tipo": "denominacoes",
+      "definicao_curta": "Categoria de entrada na hierarquia vitivinícola que exige conformidade sanitária básica, permitindo ao produtor mesclar uvas de diferentes regiões e safras sem indicar uma origem geográfica específica.",
+      "definicao": "Categoria de entrada na hierarquia vitivinícola que exige conformidade sanitária básica, permitindo ao produtor mesclar uvas de diferentes regiões e safras sem indicar uma origem geográfica específica.",
+      "curiosidade": "Sob as normas europeias atuais, vinhos rotulados como *Vin de France* têm permissão para informar a variedade da uva e o ano da safra no rótulo, algo estritamente proibido no passado."
+    }
+  ]
+}

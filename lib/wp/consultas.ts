@@ -12,7 +12,8 @@
 import { cache } from 'react';
 
 import { MAXIMO_POR_PAGINA, REVALIDAR } from './config';
-import { buscarLista, buscarPorId, buscarPorSlug } from './http';
+import { compararChaves } from './html';
+import { buscarLista, buscarPorId, buscarPorSlug, buscarTudo } from './http';
 import {
   mapearAutor,
   mapearEvento,
@@ -204,21 +205,39 @@ export const contarMaterias = cache(async (): Promise<number> => {
 // ===========================================================================
 
 /**
- * Todos os verbetes em ordem alfabética, para o índice A–Z.
+ * Todos os verbetes na ordem do índice A–Z.
  *
- * O índice é uma página só, com navegação por letra — paginar não faria
- * sentido. São 22 verbetes hoje; o `per_page` do WordPress trava em 100, então
- * esta função busca até 100 e para. Passando de 100, virar paginação aqui.
+ * O índice é uma página só, com navegação por letra — paginar a tela não faria
+ * sentido, mas **a busca na API precisa paginar**: o `per_page` trava em 100 e
+ * uma coleção maior volta cortada em silêncio. Com a importação do cliente o
+ * Almanaque passou de 22 para 141 verbetes, então `buscarTudo` percorre as
+ * páginas pelo `X-WP-TotalPages`.
+ *
+ * **A ordenação é feita aqui, não na API.** `orderby=title` ordenaria pelo
+ * título, e o índice se ordena por `dov_ordenacao` quando ele existe — um campo
+ * de `meta`, que a REST API não sabe ordenar. Ordenar em JavaScript só é
+ * correto porque a lista vem inteira; com paginação parcial, ordenar o pedaço
+ * daria uma ordem plausível e errada.
+ *
+ * Cacheada por render: o índice, os vizinhos e o JSON da busca compartilham
+ * esta lista e as suas duas requisições.
  */
 export const listarVerbetes = cache(async (): Promise<Verbete[]> => {
-  const { dados } = await buscarLista<BrutoVerbete>('verbetes', {
-    per_page: MAXIMO_POR_PAGINA,
+  const brutos = await buscarTudo<BrutoVerbete>('verbetes', {
     orderby: 'title',
     order: 'asc',
     _fields: CAMPOS.verbete,
   });
 
-  return dados.map(mapearVerbete);
+  return brutos
+    .map(mapearVerbete)
+    .sort(
+      (a, b) =>
+        compararChaves(a.chaveOrdenacao, b.chaveOrdenacao) ||
+        // Desempate pelo título: duas chaves iguais sairiam em ordem instável
+        // entre um build e outro, e a paginação do índice ficaria piscando.
+        compararChaves(a.titulo, b.titulo),
+    );
 });
 
 /**
@@ -277,10 +296,12 @@ export async function verbetesPorIds(ids: number[]): Promise<Verbete[]> {
 }
 
 /**
- * O verbete anterior e o próximo, em ordem alfabética.
+ * O verbete anterior e o próximo, na ordem do índice.
  *
- * Reaproveita a lista completa já cacheada por render, em vez de duas
- * consultas ordenadas na API.
+ * Reaproveita a lista completa já cacheada por render, em vez de duas consultas
+ * ordenadas na API — e é isso que faz os vizinhos seguirem a **mesma** chave do
+ * índice, `dov_ordenacao` inclusive. Consultar a API com `orderby=title` daria
+ * uma sequência que não bate com a que o leitor acabou de percorrer.
  */
 export async function verbeteVizinhos(
   slug: string,
@@ -651,6 +672,10 @@ export async function sugestoes(termo: string, limite = 8): Promise<Sugestao[]> 
 export async function indiceDoAlmanaque(): Promise<
   Array<{ slug: string; titulo: string; definicao: string; letra: string }>
 > {
+  // Já vem ordenado por `listarVerbetes`, e o componente do índice **preserva a
+  // ordem** — ele só filtra por letra e pela busca. Mudar a ordenação lá em cima
+  // muda o índice inteiro sem tocar no cliente.
+
   const verbetes = await listarVerbetes();
 
   return verbetes.map(({ slug, titulo, definicaoCurta, letra }) => ({

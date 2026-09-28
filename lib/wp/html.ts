@@ -127,19 +127,53 @@ export function paraTextoSimples(html: string | null | undefined): string {
 }
 
 /**
- * Primeira letra de um título, para o índice A–Z do Almanaque.
+ * Texto sem acento e em maiúsculas, para comparar e agrupar.
  *
- * Não existe campo para a letra na API — ela é derivada aqui. O acento é
- * normalizado antes de agrupar, para "Á" cair em "A"; o que não for letra
- * de A a Z vai para "#".
+ * O `NFD` separa a letra do acento e a faixa `\u0300-\u036f` remove os sinais
+ * combinantes que sobram, então "Á" vira "A" e "ñ" vira "N". Escrita como
+ * escape, e não com os caracteres literais, porque combinante solto em código
+ * é invisível no editor e no diff.
  */
-export function letraInicial(titulo: string): string {
-  const primeira = titulo
+function semAcento(texto: string): string {
+  return texto
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .trim()
-    .charAt(0)
     .toUpperCase();
+}
+
+/**
+ * A chave que ordena o índice A–Z e decide a letra de um verbete.
+ *
+ * Recebe `dov_ordenacao` quando o verbete tem, senão o título. É a mesma chave
+ * para as duas coisas de propósito: letra e posição precisam sair da mesma
+ * origem, senão "Vinho Natural" apareceria sob N e ordenado entre os V.
+ */
+export function chaveDeOrdenacao(ordenacao: string, titulo: string): string {
+  return semAcento(ordenacao.trim() || titulo);
+}
+
+/**
+ * Primeira letra da chave, para o índice A–Z do Almanaque.
+ *
+ * Não existe campo para a letra na API — ela é derivada aqui. O que não for
+ * letra de A a Z vai para "#".
+ */
+export function letraInicial(chaveOuTitulo: string): string {
+  const primeira = semAcento(chaveOuTitulo).charAt(0);
 
   return /^[A-Z]$/.test(primeira) ? primeira : '#';
+}
+
+/**
+ * Comparador do índice, em português.
+ *
+ * `Intl.Collator` e não `<`: comparação de string em JavaScript é por ponto de
+ * código, e lá "Z" vem antes de "á". A chave já chega sem acento, mas o
+ * collator continua valendo para o resto — cedilha, hífen, dígito.
+ */
+const colador = new Intl.Collator('pt-BR', { numeric: true, sensitivity: 'base' });
+
+export function compararChaves(a: string, b: string): number {
+  return colador.compare(a, b);
 }

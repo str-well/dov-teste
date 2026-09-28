@@ -1,0 +1,332 @@
+{
+  "lote": "lote-01-uvas-e-vinhos",
+  "fonte": {
+    "titulo": "Verbetes Almanaque do Vinho",
+    "google_doc": "https://docs.google.com/document/d/1Oh9uLWQi2n2IDVkwbpZP_AesujSCCPDmrn5S8H_dP68"
+  },
+  "recebido_em": "2026-09-23",
+  "verbetes": [
+    {
+      "titulo": "Airén",
+      "slug": "airen",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca originária da Espanha, é uma das variedades mais plantadas do mundo, sobretudo na região de Castilla-La Mancha.",
+      "definicao": "Uva branca originária da Espanha, é uma das variedades mais plantadas do mundo, sobretudo na região de Castilla-La Mancha. Resiste bem à seca e ao calor, e é usada tanto para vinhos brancos simples quanto para a produção de brandy.",
+      "curiosidade": "Por muitos anos disputou com a Cabernet Sauvignon o posto de uva vinífera mais cultivada do planeta em área plantada, mesmo sendo praticamente desconhecida fora da Espanha."
+    },
+    {
+      "titulo": "Albariño (Alvarinho)",
+      "slug": "alvarinho",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca originária da Galiza, no noroeste da Espanha, onde é a variedade símbolo da região de Rías Baixas.",
+      "definicao": "Uva branca originária da Galiza, no noroeste da Espanha, onde é a variedade símbolo da região de Rías Baixas. Em Portugal, na região dos Vinhos Verdes (especialmente Monção e Melgaço), é conhecida como Alvarinho. Produz vinhos brancos frescos, de acidez marcante, com notas cítricas, de pêssego e flores brancas.",
+      "curiosidade": "Albariño e Alvarinho são a mesma uva com dois nomes — um de cada lado da fronteira. O clima atlântico de ambas as regiões explica por que essa casta resulta em vinhos tão vibrantes e salinos."
+    },
+    {
+      "titulo": "Alicante Bouschet",
+      "slug": "alicante-bouschet",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta de casca e polpa coloridas — uma \"tinturaria\", termo usado para uvas cujo suco já nasce vermelho, diferente da maioria das tintas, cuja polpa é clara.",
+      "definicao": "Uva tinta de casca e polpa coloridas — uma \"tinturaria\", termo usado para uvas cujo suco já nasce vermelho, diferente da maioria das tintas, cuja polpa é clara. Cultivada na França e amplamente adaptada no Brasil, especialmente em Minas Gerais.",
+      "curiosidade": "Foi criada no século XIX pelo botânico francês Henri Bouschet, cruzando a Petit Bouschet com a Grenache, justamente para obter uma uva com mais cor e usá-la em misturas com variedades mais pálidas."
+    },
+    {
+      "titulo": "Barbera",
+      "slug": "barbera",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta italiana, típica do Piemonte, conhecida pela acidez elevada e taninos leves.",
+      "definicao": "Uva tinta italiana, típica do Piemonte, conhecida pela acidez elevada e taninos leves. Produz vinhos frutados, de cor intensa, geralmente para consumo mais jovem.",
+      "curiosidade": "Depois do Sangiovese, é a segunda uva tinta mais plantada da Itália, mas viveu décadas na sombra do Nebbiolo antes de conquistar reconhecimento próprio."
+    },
+    {
+      "titulo": "Bonarda",
+      "slug": "bonarda",
+      "tipo": "uvas",
+      "definicao_curta": "Nome usado na Argentina para a uva tinta Corbeau, de origem francesa.",
+      "definicao": "Nome usado na Argentina para a uva tinta Corbeau, de origem francesa. Produz vinhos de cor escura, taninos macios e acidez moderada.",
+      "curiosidade": "Por muito tempo achou-se que a Bonarda argentina fosse a mesma uva italiana de nome parecido; análises de DNA mostraram que se trata de variedades diferentes."
+    },
+    {
+      "titulo": "Cabernet Franc",
+      "slug": "cabernet-franc",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta francesa, de amadurecimento mais precoce que a Cabernet Sauvignon, com taninos mais suaves e notas herbáceas e de pimentão características.",
+      "definicao": "Uva tinta francesa, de amadurecimento mais precoce que a Cabernet Sauvignon, com taninos mais suaves e notas herbáceas e de pimentão características. É um dos pais genéticos da Cabernet Sauvignon.",
+      "curiosidade": "No Vale do Loire, na França, ela é a estrela solo — não coadjuvante — em regiões como Chinon e Bourgueil."
+    },
+    {
+      "titulo": "Cabernet Sauvignon",
+      "slug": "cabernet-sauvignon",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta originária de Bordeaux, resultado do cruzamento natural entre Cabernet Franc e Sauvignon Blanc.",
+      "definicao": "Uva tinta originária de Bordeaux, resultado do cruzamento natural entre Cabernet Franc e Sauvignon Blanc. Tem casca grossa, boa resistência a doenças e se adapta a climas quentes e temperados, o que explica sua presença em quase todas as regiões vinícolas do mundo.",
+      "curiosidade": "É a uva vinífera mais plantada do planeta para produção de vinho, com cerca de 340 mil hectares, segundo levantamentos da Universidade de Adelaide — só perde em área total para a Kyoho, uva de mesa chinesa."
+    },
+    {
+      "titulo": "Carignan (Cariñena)",
+      "slug": "carignan",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta de origem espanhola, mais precisamente da região de Aragão, onde ainda é chamada de Cariñena (ou Mazuelo, em Rioja).",
+      "definicao": "Uva tinta de origem espanhola, mais precisamente da região de Aragão, onde ainda é chamada de Cariñena (ou Mazuelo, em Rioja). Migrou para o sul da França no século XII e hoje está mais associada ao Languedoc-Roussillon. Produz vinhos de casca grossa, tanino firme e boa acidez, usados sobretudo em cortes com Grenache, Syrah e Mourvèdre.",
+      "curiosidade": "Já foi a uva mais plantada da França entre 1960 e 2000, mas boa parte dos vinhedos foi arrancada nos anos 1980 por gerar vinhos de mesa em excesso. Hoje, os pés-velhos de Carignan que sobraram são valorizados por produzir vinhos bem mais concentrados e elegantes."
+    },
+    {
+      "titulo": "Carménère",
+      "slug": "carmenere",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta originária de Bordeaux, quase extinta na França após a praga da filoxera no século XIX.",
+      "definicao": "Uva tinta originária de Bordeaux, quase extinta na França após a praga da filoxera no século XIX. Encontrou no Chile seu novo lar e hoje é considerada a uva-símbolo do país.",
+      "curiosidade": "Por décadas, produtores chilenos cultivavam Carménère acreditando se tratar de Merlot; a confusão só foi esclarecida em 1994, por meio de estudos ampelográficos."
+    },
+    {
+      "titulo": "Champagne",
+      "slug": "champagne",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho espumante produzido exclusivamente na região de Champagne, no nordeste da França, a partir de três uvas principais — Chardonnay, Pinot Noir e Pinot Meunier.",
+      "definicao": "Vinho espumante produzido exclusivamente na região de Champagne, no nordeste da França, a partir de três uvas principais — Chardonnay, Pinot Noir e Pinot Meunier. Segue o método tradicional (méthode champenoise), no qual a segunda fermentação, responsável pelas borbulhas, acontece dentro da própria garrafa.",
+      "curiosidade": "Só pode ser chamado de Champagne o espumante feito nessa região específica, sob as regras da Appellation d'Origine Contrôlée. Qualquer espumante produzido fora dali, mesmo usando o mesmo método e as mesmas uvas, recebe outro nome — como \"espumante\" no Brasil ou \"cava\" na Espanha."
+    },
+    {
+      "titulo": "Chardonnay",
+      "slug": "chardonnay",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca originária da Borgonha, na França, uma das mais versáteis do mundo.",
+      "definicao": "Uva branca originária da Borgonha, na França, uma das mais versáteis do mundo. Adapta-se a diferentes climas e estilos de vinificação, resultando em vinhos que vão do leve e mineral ao encorpado e amanteigado, quando passa por barril de carvalho.",
+      "curiosidade": "É a uva branca internacional mais plantada do mundo e também a base espumante de grande parte dos Champagnes do tipo Blanc de Blancs."
+    },
+    {
+      "titulo": "Chenin Blanc",
+      "slug": "chenin-blanc",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca originária do Vale do Loire, na França, valorizada pela acidez marcante e versatilidade: rende vinhos secos, doces, e também espumantes.",
+      "definicao": "Uva branca originária do Vale do Loire, na França, valorizada pela acidez marcante e versatilidade: rende vinhos secos, doces, e também espumantes.",
+      "curiosidade": "Fora da França, encontrou uma segunda casa na África do Sul, onde é a uva branca mais plantada do país e por lá também é conhecida pelo nome Steen."
+    },
+    {
+      "titulo": "Chianti",
+      "slug": "chianti",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho tinto da Toscana, elaborado principalmente com a uva Sangiovese.",
+      "definicao": "Vinho tinto da Toscana, elaborado principalmente com a uva Sangiovese. Existe em duas denominações centrais: o Chianti DOCG, mais amplo e com pelo menos 70% de Sangiovese, e o Chianti Classico DOCG, produzido na zona histórica entre Florença e Siena, com no mínimo 80% da uva e regras mais rígidas.",
+      "curiosidade": "O símbolo do Chianti Classico é um galo preto (Gallo Nero), que remonta a uma lenda medieval sobre a disputa de fronteira entre Florença e Siena — resolvida, segundo a história, por uma corrida de cavaleiros que partiam ao cantar do galo de cada cidade."
+    },
+    {
+      "titulo": "Gewürztraminer",
+      "slug": "gewurztraminer",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca aromática, de casca rosada, associada à região da Alsácia, na França.",
+      "definicao": "Uva branca aromática, de casca rosada, associada à região da Alsácia, na França. Produz vinhos de aroma intenso, com notas florais e de frutas como lichia.",
+      "curiosidade": "O nome vem do alemão: \"Gewürz\" significa \"tempero\" ou \"especiaria\", referência direta à intensidade aromática da uva."
+    },
+    {
+      "titulo": "Grenache (Garnacha)",
+      "slug": "grenache",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta de origem espanhola, provavelmente da região de Aragão, onde é chamada de Garnacha.",
+      "definicao": "Uva tinta de origem espanhola, provavelmente da região de Aragão, onde é chamada de Garnacha. Na França, onde é conhecida como Grenache, é peça-chave dos blends do Vale do Rhône, como Châteauneuf-du-Pape. De casca fina e alto teor de açúcar, produz vinhos de corpo médio a encorpado, com fruta madura e álcool elevado.",
+      "curiosidade": "Por causa da casca fina, é uma das uvas mais usadas no mundo para fazer rosé — ela cede cor e aroma ao mosto sem carregar o vinho de taninos."
+    },
+    {
+      "titulo": "Lambrusco",
+      "slug": "lambrusco",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho tinto (também produzido em versão rosé) originário da Emilia-Romagna, na Itália, elaborado a partir de um grupo de uvas também chamadas Lambrusco — existem cerca de 13 variedades reconhecidas.",
+      "definicao": "Vinho tinto (também produzido em versão rosé) originário da Emilia-Romagna, na Itália, elaborado a partir de um grupo de uvas também chamadas Lambrusco — existem cerca de 13 variedades reconhecidas. É frisante ou espumante, geralmente leve, frutado e levemente adocicado.",
+      "curiosidade": "Ao contrário do que muita gente pensa, Lambrusco não é um vinho, e sim uma família de uvas com o mesmo nome — e há indícios de que os etruscos já produziam bebidas com essa fruta há mais de dois mil anos."
+    },
+    {
+      "titulo": "Malbec",
+      "slug": "malbec",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta originária do sudoeste da França, hoje mais associada à Argentina, onde encontrou condições ideais de altitude e clima seco, sobretudo em Mendoza.",
+      "definicao": "Uva tinta originária do sudoeste da França, hoje mais associada à Argentina, onde encontrou condições ideais de altitude e clima seco, sobretudo em Mendoza. Produz vinhos de cor escura, taninos macios e frutas maduras.",
+      "curiosidade": "Na França ainda é cultivada, especialmente na região de Cahors, onde é chamada de Côt e produz vinhos mais rústicos e tânicos que os argentinos."
+    },
+    {
+      "titulo": "Marselan",
+      "slug": "marselan",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta francesa criada em 1961 pelo pesquisador Paul Truel, a partir do cruzamento entre Cabernet Sauvignon e Grenache.",
+      "definicao": "Uva tinta francesa criada em 1961 pelo pesquisador Paul Truel, a partir do cruzamento entre Cabernet Sauvignon e Grenache. Seu nome homenageia a cidade de Marseillan, no litoral do Mediterrâneo. Produz vinhos de cor intensa, taninos macios e aromas de frutas vermelhas e negras.",
+      "curiosidade": "A uva quase não deu certo: o objetivo original era criar uma variedade de bagas grandes e alto rendimento, mas o resultado foi o oposto — bagas pequenas, que só décadas depois passaram a ser valorizadas por concentrar mais cor e sabor no vinho."
+    },
+    {
+      "titulo": "Merlot",
+      "slug": "merlot",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta francesa, uma das mais plantadas do mundo, conhecida por taninos macios e frutosidade que a tornam acessível mesmo para quem está começando a beber vinho tinto.",
+      "definicao": "Uva tinta francesa, uma das mais plantadas do mundo, conhecida por taninos macios e frutosidade que a tornam acessível mesmo para quem está começando a beber vinho tinto. É a uva dominante em Bordeaux, incluindo em rótulos icônicos da margem direita, como Pomerol.",
+      "curiosidade": "No Brasil, é a uva tinta mais cultivada na Serra Gaúcha, principal região produtora do país."
+    },
+    {
+      "titulo": "Moscato (Muscat)",
+      "slug": "moscato",
+      "tipo": "uvas",
+      "definicao_curta": "Família de uvas aromáticas, brancas e tintas, entre as mais antigas cultivadas pelo homem.",
+      "definicao": "Família de uvas aromáticas, brancas e tintas, entre as mais antigas cultivadas pelo homem. Dá origem a vinhos leves, doces e frisantes, como o Moscato d'Asti italiano.",
+      "curiosidade": "É uma das poucas famílias de uvas em que o vinho tem cheiro muito parecido ao da fruta fresca — a maioria das uvas de vinho não tem esse aroma tão \"direto\"."
+    },
+    {
+      "titulo": "Nebbiolo",
+      "slug": "nebbiolo",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta do Piemonte, na Itália, base dos vinhos Barolo e Barbaresco.",
+      "definicao": "Uva tinta do Piemonte, na Itália, base dos vinhos Barolo e Barbaresco. Produz vinhos de cor relativamente clara, mas com taninos e acidez elevados, e grande potencial de guarda.",
+      "curiosidade": "O nome deriva de \"nebbia\", neblina em italiano — em referência à neblina que costuma cobrir os vinhedos do Piemonte na época da colheita, em outubro."
+    },
+    {
+      "titulo": "Pinot Grigio / Pinot Gris",
+      "slug": "pinot-grigio-pinot-gris",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca de casca acinzentada, mutação da Pinot Noir.",
+      "definicao": "Uva branca de casca acinzentada, mutação da Pinot Noir. Na Itália, como Pinot Grigio, costuma dar vinhos leves e neutros; na Alsácia francesa, como Pinot Gris, tende a vinhos mais encorpados e aromáticos.",
+      "curiosidade": "É a mesma uva com dois estilos de vinificação tão distintos que, para quem está começando, é difícil acreditar que vêm da mesma casta."
+    },
+    {
+      "titulo": "Pinot Noir",
+      "slug": "pinot-noir",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta originária da Borgonha, na França, considerada uma das mais difíceis de cultivar por sua casca fina e sensibilidade a variações de clima e solo.",
+      "definicao": "Uva tinta originária da Borgonha, na França, considerada uma das mais difíceis de cultivar por sua casca fina e sensibilidade a variações de clima e solo. Produz vinhos de cor clara, taninos delicados e aromas complexos.",
+      "curiosidade": "É também uma das principais uvas usadas na produção de espumantes pelo método tradicional, incluindo boa parte dos Champagnes."
+    },
+    {
+      "titulo": "Pinotage",
+      "slug": "pinotage",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta criada na África do Sul em 1925 pelo professor Abraham Izak Perold, da Universidade de Stellenbosch, a partir do cruzamento entre Pinot Noir e Cinsault (localmente chamada de Hermitage — daí o nome).",
+      "definicao": "Uva tinta criada na África do Sul em 1925 pelo professor Abraham Izak Perold, da Universidade de Stellenbosch, a partir do cruzamento entre Pinot Noir e Cinsault (localmente chamada de Hermitage — daí o nome). É considerada a casta símbolo do país e produz vinhos encorpados, de cor escura e taninos marcantes.",
+      "curiosidade": "As primeiras mudas quase se perderam: foram plantadas no jardim de Perold e quase arrancadas por um jardineiro antes de serem resgatadas por um colega professor."
+    },
+    {
+      "titulo": "Prosecco",
+      "slug": "prosecco",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho espumante italiano produzido no Vêneto e no Friuli-Venezia Giulia, principalmente a partir da uva Glera.",
+      "definicao": "Vinho espumante italiano produzido no Vêneto e no Friuli-Venezia Giulia, principalmente a partir da uva Glera. Ao contrário do Champagne, usa o método Charmat (ou Martinotti), no qual a segunda fermentação ocorre em grandes tanques de aço inox, e não dentro da garrafa.",
+      "curiosidade": "Até 2009, \"Prosecco\" era o nome da própria uva. Quando a região de Conegliano-Valdobbiadene recebeu o status DOCG, a casta foi rebatizada oficialmente como Glera, reservando o nome Prosecco só para o vinho de origem protegida."
+    },
+    {
+      "titulo": "Riesling",
+      "slug": "riesling",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca alemã, aromática e de acidez muito elevada, o que permite produzir desde vinhos secos até doces de sobremesa, com boa capacidade de guarda.",
+      "definicao": "Uva branca alemã, aromática e de acidez muito elevada, o que permite produzir desde vinhos secos até doces de sobremesa, com boa capacidade de guarda.",
+      "curiosidade": "É considerada por muitos especialistas uma das uvas brancas mais nobres do mundo, embora ainda enfrente, no imaginário do consumidor, a fama antiga de \"vinho sempre doce\"."
+    },
+    {
+      "titulo": "Rosé",
+      "slug": "rose",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Categoria de vinho com coloração entre o branco e o tinto, obtida principalmente a partir de uvas tintas que ficam pouco tempo em contato com a casca — de 6 a 48 horas, dependendo do método e do resultado desejado.",
+      "definicao": "Categoria de vinho com coloração entre o branco e o tinto, obtida principalmente a partir de uvas tintas que ficam pouco tempo em contato com a casca — de 6 a 48 horas, dependendo do método e do resultado desejado. Os principais processos são a maceração de pele curta, a prensagem direta e a sangria (saignée).",
+      "curiosidade": "A primeira definição técnica de vinho rosé é creditada ao francês Dr. Jules Guyot, no século XIX, em seu livro sobre viticultura e enologia — antes disso, a cor rosada era mais um efeito colateral de técnicas rudimentares de produção do que um estilo buscado de propósito."
+    },
+    {
+      "titulo": "Sangiovese",
+      "slug": "sangiovese",
+      "tipo": "uvas",
+      "definicao_curta": "Principal uva tinta da Itália, base do Chianti, na Toscana.",
+      "definicao": "Principal uva tinta da Itália, base do Chianti, na Toscana. Produz vinhos de acidez elevada, taninos firmes e notas de cereja e ervas.",
+      "curiosidade": "O nome viria da expressão latina \"sanguis Jovis\", \"sangue de Júpiter\", em referência à cor intensa do vinho."
+    },
+    {
+      "titulo": "Sauvignon Blanc",
+      "slug": "sauvignon-blanc",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca originária de Bordeaux, hoje um símbolo da Nova Zelândia, onde ganhou estilo próprio, mais frutado e tropical.",
+      "definicao": "Uva branca originária de Bordeaux, hoje um símbolo da Nova Zelândia, onde ganhou estilo próprio, mais frutado e tropical. Produz vinhos de acidez marcante e aromas herbáceos, cítricos ou de frutas tropicais, dependendo do clima.",
+      "curiosidade": "É um dos pais genéticos da Cabernet Sauvignon — o cruzamento natural com a Cabernet Franc, ainda no século XVII, deu origem à uva mais plantada do mundo."
+    },
+    {
+      "titulo": "Spritz",
+      "slug": "spritz",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Coquetel à base de vinho, típico do Vêneto, no norte da Itália.",
+      "definicao": "Coquetel à base de vinho, típico do Vêneto, no norte da Itália. Na versão mais popular, o Aperol Spritz, mistura prosecco, Aperol e água com gás. O nome vem do alemão \"spritzen\" (borrifar), numa referência ao hábito de diluir vinho com água.",
+      "curiosidade": "A tradição nasceu no século XIX, durante a ocupação austríaca do norte da Itália, quando soldados que achavam os vinhos locais fortes demais pediam para diluí-los com água. O Aperol só entrou na receita décadas depois, criado pelos irmãos Barbieri em 1919, em Pádua."
+    },
+    {
+      "titulo": "Syrah / Shiraz",
+      "slug": "syrah-shiraz",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta originária do Vale do Ródano, na França, de cor escura, taninos firmes e notas de pimenta-do-reino e frutas negras.",
+      "definicao": "Uva tinta originária do Vale do Ródano, na França, de cor escura, taninos firmes e notas de pimenta-do-reino e frutas negras. Na Austrália, onde é chamada de Shiraz, costuma resultar em vinhos mais encorpados e frutados.",
+      "curiosidade": "Estudos de DNA mostraram que a Syrah é filha de duas uvas praticamente desconhecidas do sudeste da França, a Dureza e a Mondeuse Blanche — nada a ver com a Síria, como sugeria uma teoria antiga sobre sua origem."
+    },
+    {
+      "titulo": "Tannat",
+      "slug": "tannat",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta originária do sudoeste da França, de taninos muito concentrados.",
+      "definicao": "Uva tinta originária do sudoeste da França, de taninos muito concentrados. Ganhou identidade própria no Uruguai, onde é considerada a uva nacional.",
+      "curiosidade": "É uma das uvas com maior concentração de compostos antioxidantes entre as variedades comerciais, o que rendeu ao vinho uruguaio fama associada a benefícios à saúde cardiovascular."
+    },
+    {
+      "titulo": "Tempranillo",
+      "slug": "tempranillo",
+      "tipo": "uvas",
+      "definicao_curta": "Principal uva tinta da Espanha, base dos vinhos de Rioja e Ribera del Duero.",
+      "definicao": "Principal uva tinta da Espanha, base dos vinhos de Rioja e Ribera del Duero. Produz vinhos equilibrados, com boa estrutura para envelhecimento em barril.",
+      "curiosidade": "O nome vem de \"temprano\", cedo em espanhol, referência ao fato de amadurecer antes da maioria das outras uvas tintas espanholas."
+    },
+    {
+      "titulo": "Torrontés",
+      "slug": "torrontes",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca aromática típica da Argentina, mais cultivada na região de Salta, no norte do país.",
+      "definicao": "Uva branca aromática típica da Argentina, mais cultivada na região de Salta, no norte do país. Produz vinhos de aroma floral intenso, lembrando a Moscato, mas geralmente vinificados secos.",
+      "curiosidade": "Apesar do nome único, existem pelo menos três variedades distintas de Torrontés na Argentina — Riojano, Sanjuanino e Mendocino —, sendo o Riojano o mais valorizado."
+    },
+    {
+      "titulo": "Verdejo",
+      "slug": "verdejo",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca espanhola, principal variedade da região de Rueda, em Castilla y León.",
+      "definicao": "Uva branca espanhola, principal variedade da região de Rueda, em Castilla y León. Produz vinhos frescos, frutados e de acidez marcante, com notas cítricas, de maçã verde e ervas — e um leve amargor final, característico da casta.",
+      "curiosidade": "Sua origem é incerta: uma das teorias mais aceitas é que tenha vindo do norte da África, trazida à Península Ibérica pelos moçárabes por volta do século XI. Não deve ser confundida com a portuguesa Verdelho, uma casta diferente apesar do nome parecido."
+    },
+    {
+      "titulo": "Vermouth",
+      "slug": "vermouth",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho aromatizado e fortificado, ou seja, um vinho-base com destilado adicionado para elevar o teor alcoólico, infusionado com botânicos como ervas, raízes e cascas cítricas.",
+      "definicao": "Vinho aromatizado e fortificado, ou seja, um vinho-base com destilado adicionado para elevar o teor alcoólico, infusionado com botânicos como ervas, raízes e cascas cítricas. Por definição, precisa levar alguma planta da família Artemisia — geralmente a losna (wormwood), de onde vem seu nome.",
+      "curiosidade": "\"Vermouth\" é a pronúncia francesa da palavra alemã \"Wermut\" (losna). A bebida nasceu como tônico medicinal no século XVI e só bem depois se tornou o ingrediente clássico de coquetéis como Martini, Manhattan e Negroni."
+    },
+    {
+      "titulo": "Viognier",
+      "slug": "viognier",
+      "tipo": "uvas",
+      "definicao_curta": "Uva branca originária do Vale do Ródano, na França, de aroma intenso, com notas florais e de damasco.",
+      "definicao": "Uva branca originária do Vale do Ródano, na França, de aroma intenso, com notas florais e de damasco. Produz vinhos encorpados para uma uva branca.",
+      "curiosidade": "Chegou a ser considerada quase extinta nas décadas de 1960 e 1970, restrita a poucos hectares na região francesa de Condrieu, antes de ser redescoberta por produtores em outros países."
+    },
+    {
+      "titulo": "Vinho do Porto",
+      "slug": "vinho-do-porto",
+      "ordenacao": "Porto, vinho do",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho fortificado produzido na Região Demarcada do Douro, em Portugal — a mais antiga região vinícola demarcada do mundo, reconhecida oficialmente em 1756.",
+      "definicao": "Vinho fortificado produzido na Região Demarcada do Douro, em Portugal — a mais antiga região vinícola demarcada do mundo, reconhecida oficialmente em 1756. Durante a fermentação, é adicionada aguardente vínica, o que interrompe o processo e preserva parte do açúcar da uva, resultando em um vinho doce e de alta graduação (18% a 22%). Divide-se em dois grandes estilos: Ruby (mais frutado e jovem) e Tawny (envelhecido em madeira, mais oxidativo).",
+      "curiosidade": "A denominação surgiu por causa do comércio britânico: para que o vinho resistisse à viagem marítima até a Inglaterra, os comerciantes passaram a fortificá-lo com aguardente, dando origem ao estilo que conhecemos hoje."
+    },
+    {
+      "titulo": "Vinho Laranja (Orange Wine)",
+      "slug": "vinho-laranja",
+      "ordenacao": "Laranja, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho branco vinificado como se fosse tinto: o mosto das uvas brancas fica em contato prolongado com as cascas, o que confere cor âmbar ou alaranjada e uma estrutura tânica incomum para um branco.",
+      "definicao": "Vinho branco vinificado como se fosse tinto: o mosto das uvas brancas fica em contato prolongado com as cascas, o que confere cor âmbar ou alaranjada e uma estrutura tânica incomum para um branco. A Organização Internacional da Vinha e do Vinho (OIV) recomenda um período mínimo de maceração de um mês para o estilo.",
+      "curiosidade": "A técnica é milenar e remonta à Geórgia, onde as uvas fermentam em ânforas de barro enterradas, chamadas qvevri. O termo \"orange wine\" só ganhou força a partir dos anos 2000, quando o enólogo italiano Josko Gravner trouxe o método georgiano para sua vinícola em Friuli-Venezia Giulia."
+    },
+    {
+      "titulo": "Zinfandel / Primitivo",
+      "slug": "zinfandel-primitivo",
+      "tipo": "uvas",
+      "definicao_curta": "Uva tinta que ganhou identidade californiana como Zinfandel, mas tem origem na Croácia e chegou à Itália como Primitivo, na região da Puglia.",
+      "definicao": "Uva tinta que ganhou identidade californiana como Zinfandel, mas tem origem na Croácia e chegou à Itália como Primitivo, na região da Puglia. Produz vinhos encorpados, de teor alcoólico elevado e frutas maduras.",
+      "curiosidade": "Estudos de DNA confirmaram que Zinfandel, Primitivo e a croata Crljenak Kaštelanski são geneticamente a mesma uva, apesar dos nomes e das histórias completamente diferentes em cada país."
+    }
+  ]
+}

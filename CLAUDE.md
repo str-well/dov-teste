@@ -213,6 +213,50 @@ Newsletter e contato, as duas últimas rotas do `Anexo C`. `/api/newsletter`,
   significado não fica por conta da cor, o que satisfaz o WCAG 1.4.1. **Cor de
   erro é pergunta em aberto para o designer.**
 
+### Almanaque — a importação do cliente
+
+126 verbetes recebidos em 23/09/2026, convertidos em seis lotes JSON em
+`almanaque/`. **124 a importar, 2 retidos**; com os 17 de teste que ficam, o
+Almanaque vai a **141**. O importador é `scripts/importar-almanaque.mjs`, e o
+passo a passo está em `almanaque/LEIA-ME.md`.
+
+O que mudou no front por causa disso:
+
+- **Paginação obrigatória.** `per_page` trava em 100 e o que passa volta cortado
+  **sem erro nenhum** — 200, lista bem-formada, itens além do centésimo
+  inexistentes. `buscarTudo()` em `lib/wp/http.ts` percorre pelo
+  `X-WP-TotalPages`, em sequência e não em paralelo por causa do plano
+  compartilhado. `listarVerbetes` passou a usá-lo, e com ele o índice A–Z, o JSON
+  do Fuse e o anterior/próximo, que todos derivam dessa lista.
+- **`dov_ordenacao` governa letra e posição, não o título exibido.** 22 títulos
+  começam com "Vinho": sem o campo, V teria 27 verbetes. Com ele, V fica com 6 e
+  "Vinho Natural" cai em N, entre Moscato e Nebbiolo — medido.
+- **Letra, ordem e vizinhos saem da mesma chave**, `chaveOrdenacao`. Separá-las
+  poria o verbete sob N e ordenado entre os V. A ordenação roda em JavaScript
+  porque `meta` não é ordenável na API, e **só é correta porque a lista vem
+  inteira**.
+- **`dov_curiosidade` é uma segunda caixa destacada**, mesmo componente com outro
+  rótulo, em `components/caixa-destacada.tsx`. Independente de "Na prática": um
+  verbete pode ter as duas, e "Na prática" vem primeiro.
+- **Definições longas cortam.** 32 das 124 passam de 180 caracteres, a maior tem
+  240. O card do índice corta em 2 linhas; a caixa "Do Almanaque", numa lateral de
+  300px, corta em 3 — sem isso ela ia de 245px para 334px, e a matéria pode listar
+  mais de um verbete. Na busca **não corta**: é lista vertical, sem grade para
+  desalinhar, e os resumos de matéria já ocupam 4 linhas ali.
+
+**A taxonomia `verbete_tipo` existe no WordPress e não é consumida.** Não está em
+prancha nenhuma, e navegação por tipo é decisão de produto — por isso ela nem
+entra no `_fields` das consultas: não se paga payload por dado que ninguém lê.
+Foi registrada agora porque classificar 141 verbetes depois sairia caro.
+
+⚠️ **O `dov-headless.php` que veio no pacote como v2.2.0 não podia ser copiado por
+cima.** Ele saiu de uma base anterior a `0b90fc2` e `7bad09d`, e substituir teria
+apagado em silêncio: `dov_classe_gramatical`, o `page` em `dov_imagens` (a foto de
+Quem Somos), a revalidação da `/agenda`, e **o CPT `assinante` inteiro com as
+rotas `dov/v1`** — ou seja, a newsletter pararia de gravar. O arquivo no repo é a
+**v2.3.0**, mesclada: tudo que era nosso mais tudo que a v2.2.0 trouxe. Passa em
+`php -l` sob PHP 8.2.
+
 ### Pendências que precisam de decisão sua
 
 | O que | Por quê |
@@ -222,6 +266,9 @@ Newsletter e contato, as duas últimas rotas do `Anexo C`. `/api/newsletter`,
 | Cor de erro não existe nos tokens | O pacote do designer não tem vermelho nem token de alerta. O aviso de erro dos formulários usa ênfase da paleta, e o WCAG está satisfeito porque o significado não é só cor — mas é decisão do designer se quer uma cor própria |
 | Formulários exigem JavaScript | A rota responde JSON, e sem JS o leitor veria `{"ok":true}` numa tela branca. Resolver pede server action em vez de rota de API — outra forma, e o plano especifica `/api/contato` e `/api/newsletter` |
 | Opt-in simples na newsletter | Quem envia está inscrito na hora, então **nada impede alguém de inscrever o e-mail de outra pessoa**. Opt-in duplo resolve, e pede um estado `confirmado` no CPT, uma rota de confirmação e uma página de destino |
+| Dois verbetes retidos | "Rosé" e "Vinho Laranja" vêm em dois documentos com textos diferentes. Foi importada a versão do doc 1; a do doc 2 está no JSON com `importar: false`. Inverter e reimportar para trocar |
+| Seis correções editoriais | Listadas no fim de `almanaque/LEIA-ME.md` — Lambrusco se contradiz, Alemanha com "68 graus", Rega diz que irrigação é proibida em Rioja, e três erros de digitação. Importados como vieram, sem correção |
+| "Mais de 400 verbetes" em Quem Somos | O texto da página no WordPress promete 400. O Almanaque terá 141 |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.

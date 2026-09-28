@@ -1,0 +1,304 @@
+{
+  "lote": "lote-03-paises",
+  "fonte": {
+    "titulo": "Verbetes Almanaque do Vinho - Paises e regiões produtoras",
+    "google_doc": "https://docs.google.com/document/d/1tX62u7Zf3YinlQrrssM7SFgDDVt38LRZQ0KJz72BCxA"
+  },
+  "recebido_em": "2026-09-23",
+  "verbetes": [
+    {
+      "titulo": "Alemanha",
+      "slug": "alemanha",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "País europeu famoso por seus vinhos brancos de alta acidez e mineralidade, produzidos em encostas íngremes ao longo de vales fluviais.",
+      "definicao": "País europeu famoso por seus vinhos brancos de alta acidez e mineralidade, produzidos em encostas íngremes ao longo de vales fluviais.",
+      "regioes": [
+        "Mosel",
+        "Rheingau",
+        "Pfalz",
+        "Rheinhessen",
+        "Baden",
+        "Ahr",
+        "Nahe",
+        "Franken"
+      ],
+      "curiosidade": "O vale do Mosel possui os vinhedos mais íngremes do mundo, com inclinações de até 68 graus, onde a colheita é feita totalmente de forma manual."
+    },
+    {
+      "titulo": "Áustria",
+      "slug": "austria",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Nação europeia reconhecida por vinhos brancos expressivos e secos, além de tintos elegantes e vinhos doces de botrytis.",
+      "definicao": "Nação europeia reconhecida por vinhos brancos expressivos e secos, além de tintos elegantes e vinhos doces de botrytis.",
+      "regioes": [
+        "Wachau",
+        "Kamptal",
+        "Kremstal",
+        "Burgenland",
+        "Steiermark (Estíria)",
+        "Weinviertel"
+      ],
+      "curiosidade": "O país é referência mundial em viticultura orgânica e biodinâmica, com uma das legislações vitivinícolas mais rígidas do planeta."
+    },
+    {
+      "titulo": "Espanha",
+      "slug": "espanha",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Maior país em área de vinhedos do mundo, com tradição secular de envelhecimento em carvalho e ampla diversidade de terroirs.",
+      "definicao": "Maior país em área de vinhedos do mundo, com tradição secular de envelhecimento em carvalho e ampla diversidade de terroirs.",
+      "regioes": [
+        "Rioja",
+        "Ribera del Duero",
+        "Priorat",
+        "Rías Baixas",
+        "Jerez-Xérès-Sherry",
+        "Penedès",
+        "Toro",
+        "Rueda",
+        "Valdepeñas"
+      ],
+      "curiosidade": "Espanha é a terra natal do *Cava*, o principal vinho espumante feito pelo método tradicional fora da França."
+    },
+    {
+      "titulo": "França",
+      "slug": "franca",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Referência global da vitivinicultura moderna, berço das principais castas internacionais e do conceito de *terroir*.",
+      "definicao": "Referência global da vitivinicultura moderna, berço das principais castas internacionais e do conceito de *terroir*.",
+      "regioes": [
+        "Bordeaux",
+        "Borgonha (*Bourgogne*)",
+        "Champagne",
+        "Vale do Loire",
+        "Vale do Rhône",
+        "Alsácia",
+        "Provença",
+        "Languedoc-Roussillon",
+        "Sudoeste"
+      ],
+      "curiosidade": "O sistema de Apelação de Origem Controlada (AOC) francês serviu de modelo para regulamentações de vinhos no mundo inteiro."
+    },
+    {
+      "titulo": "Itália",
+      "slug": "italia",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "País com a maior diversidade de castas autóctones (nativas) e produção presente em absolutamente todas as suas regiões administrativas.",
+      "definicao": "País com a maior diversidade de castas autóctones (nativas) e produção presente em absolutamente todas as suas regiões administrativas.",
+      "regioes": [
+        "Piemonte",
+        "Toscana",
+        "Vêneto",
+        "Sicília",
+        "Apúlia (*Puglia*)",
+        "Alto Adige",
+        "Abruzzo",
+        "Campânia",
+        "Friuli-Venezia Giulia"
+      ],
+      "curiosidade": "A Itália abriga mais de 500 variedades de uvas nativas registradas comercialmente, desde a Sangiovese até a Nebbiolo."
+    },
+    {
+      "titulo": "Portugal",
+      "slug": "portugal",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "País ibérico célebre por seus vinhos fortificados históricos e pela preservação de centenas de uvas nativas em cortes complexos.",
+      "definicao": "País ibérico célebre por seus vinhos fortificados históricos e pela preservação de centenas de uvas nativas em cortes complexos.",
+      "regioes": [
+        "Douro",
+        "Alentejo",
+        "Vinho Verde (Minho)",
+        "Dão",
+        "Bairrada",
+        "Lisboa",
+        "Península de Setúbal",
+        "Ilha da Madeira"
+      ],
+      "curiosidade": "A Região Demarcada do Douro, criada em 1756, é a região demarcada e regulamentada mais antiga do mundo."
+    },
+    {
+      "titulo": "Argentina",
+      "slug": "argentina",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Maior produtor da América do Sul, famoso pelos vinhedos de grande altitude aos pés da Cordilheira dos Andes.",
+      "definicao": "Maior produtor da América do Sul, famoso pelos vinhedos de grande altitude aos pés da Cordilheira dos Andes.",
+      "regioes": [
+        "Mendoza (Valle de Uco, Luján de Cuyo)",
+        "Salta (Cafayate)",
+        "San Juan",
+        "Patagônia (Río Negro, Neuquén)",
+        "La Rioja"
+      ],
+      "curiosidade": "Os vinhedos de Cafayate, em Salta, estão entre os mais altos do mundo, ultrapassando os 3.000 metros de altitude em relação ao nível do mar."
+    },
+    {
+      "titulo": "Brasil",
+      "slug": "brasil",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Produtor emergente focado na elaboração de espumantes de alta qualidade e no desenvolvimento de novas fronteiras vitícolas.",
+      "definicao": "Produtor emergente focado na elaboração de espumantes de alta qualidade e no desenvolvimento de novas fronteiras vitícolas.",
+      "regioes": [
+        "Serra Gaúcha",
+        "Campanha Gaúcha",
+        "Serra do Sudeste",
+        "Planalto Catarinense",
+        "Vale do São Francisco",
+        "Região da Poda de Inverno (SP, MG, GO)"
+      ],
+      "curiosidade": "O Vale do São Francisco é uma das poucas regiões tropicais do mundo onde se realizam até duas colheitas de uvas por ano devido ao irrigado clima semiárido."
+    },
+    {
+      "titulo": "Chile",
+      "slug": "chile",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "País abençoado por barreiras geográficas naturais que protegem seus vinhedos e garantem condições sanitárias ímpares.",
+      "definicao": "País abençoado por barreiras geográficas naturais que protegem seus vinhedos e garantem condições sanitárias ímpares.",
+      "regioes": [
+        "Vale del Maipo",
+        "Vale del Colchagua",
+        "Vale del Casablanca",
+        "Vale del Leyda",
+        "Vale del Curicó",
+        "Vale del Biobío",
+        "Vale del Itata"
+      ],
+      "curiosidade": "O Chile é um dos raros países imunes à praga da filoxera, permitindo que a maioria das vinhas seja plantada em pé-franco (sem enxerto)."
+    },
+    {
+      "titulo": "Uruguai",
+      "slug": "uruguai",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "País marcado pela influência do Oceano Atlântico e pela consolidação da uva Tannat como sua identidade nacional.",
+      "definicao": "País marcado pela influência do Oceano Atlântico e pela consolidação da uva Tannat como sua identidade nacional.",
+      "regioes": [
+        "Canelones",
+        "Maldonado",
+        "San José",
+        "Colonia",
+        "Rivera"
+      ],
+      "curiosidade": "O Uruguai possui mais hectares plantados da variedade Tannat do que o seu país de origem, a França."
+    },
+    {
+      "titulo": "Canadá",
+      "slug": "canada",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Produtor de clima frio conhecido mundialmente pela elaboração do *Icewine* (vinho do gelo).",
+      "definicao": "Produtor de clima frio conhecido mundialmente pela elaboração do *Icewine* (vinho do gelo).",
+      "regioes": [
+        "Niagara Peninsula",
+        "Okanagan Valley",
+        "Prince Edward County",
+        "Nova Escócia"
+      ],
+      "curiosidade": "Para a produção do Icewine canadense, as uvas precisam congelar naturalmente na videira a uma temperatura de pelo menos -8 °C antes de serem colhidas."
+    },
+    {
+      "titulo": "Estados Unidos",
+      "slug": "estados-unidos",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Quarto maior produtor global, liderado pela Califórnia, com foco em tecnologia e expressão de fruta madura.",
+      "definicao": "Quarto maior produtor global, liderado pela Califórnia, com foco em tecnologia e expressão de fruta madura.",
+      "regioes": [
+        "Napa Valley",
+        "Sonoma County",
+        "Willamette Valley (Oregon)",
+        "Columbia Valley (Washington)",
+        "Paso Robles",
+        "Central Coast"
+      ],
+      "curiosidade": "O \"Julgamento de Paris\" em 1976 colocou Napa Valley no mapa mundial ao fazer vinhos californianos superarem rótulos franceses em uma degustação às cegas."
+    },
+    {
+      "titulo": "México",
+      "slug": "mexico",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "O produtor vitivinícola mais antigo das Américas, vivenciando um renascimento focado em vinhos de autor e climas áridos.",
+      "definicao": "O produtor vitivinícola mais antigo das Américas, vivenciando um renascimento focado em vinhos de autor e climas áridos.",
+      "regioes": [
+        "Valle de Guadalupe",
+        "Parras",
+        "Valle de San Vicente",
+        "Querétaro"
+      ],
+      "curiosidade": "A vinícola Casa Madero, localizada em Parras, foi fundada em 1597 e é a vinícola mais antiga em operação contínua em todo o continente americano."
+    },
+    {
+      "titulo": "África do Sul",
+      "slug": "africa-do-sul",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Nação com tradição vitivinícola desde o século XVII, integrando a elegância do Velho Mundo à intensidade do Novo Mundo.",
+      "definicao": "Nação com tradição vitivinícola desde o século XVII, integrando a elegância do Velho Mundo à intensidade do Novo Mundo.",
+      "regioes": [
+        "Stellenbosch",
+        "Franschhoek",
+        "Paarl",
+        "Swartland",
+        "Walker Bay",
+        "Elgin",
+        "Constantia"
+      ],
+      "curiosidade": "O país criou a uva Pinotage em 1925, um cruzamento entre as variedades francesas Pinot Noir e Hermitage (Cinsaut)."
+    },
+    {
+      "titulo": "Austrália",
+      "slug": "australia",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Potência do Novo Mundo conhecida por inovações técnicas na vinificação e por seus Shiraz encorpados.",
+      "definicao": "Potência do Novo Mundo conhecida por inovações técnicas na vinificação e por seus Shiraz encorpados.",
+      "regioes": [
+        "Barossa Valley",
+        "Margaret River",
+        "Yarra Valley",
+        "Hunter Valley",
+        "Coonawarra",
+        "McLaren Vale",
+        "Clare Valley"
+      ],
+      "curiosidade": "Barossa Valley abriga algumas das vinhas de Shiraz mais antigas do mundo, plantadas na década de 1840 e imunes a pragas devastadoras."
+    },
+    {
+      "titulo": "Nova Zelândia",
+      "slug": "nova-zelandia",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "País Insular de clima frio célebre pela pureza aromática de seus brancos e elegância de seus tintos.",
+      "definicao": "País Insular de clima frio célebre pela pureza aromática de seus brancos e elegância de seus tintos.",
+      "regioes": [
+        "Marlborough",
+        "Hawke's Bay",
+        "Central Otago",
+        "Martinborough",
+        "Gisborne"
+      ],
+      "curiosidade": "Central Otago é a região vitivinícola mais ao sul do planeta Terra."
+    },
+    {
+      "titulo": "China",
+      "slug": "china",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Mercado e produtor em expansão acelerada, com pesados investimentos em vinhedos aos pés de grandes cadeias de montanhas.",
+      "definicao": "Mercado e produtor em expansão acelerada, com pesados investimentos em vinhedos aos pés de grandes cadeias de montanhas.",
+      "regioes": [
+        "Ningxia (Helan Mountain)",
+        "Shandong",
+        "Xinjiang",
+        "Yunnan",
+        "Shanxi"
+      ],
+      "curiosidade": "Na região de Ningxia, os produtores enterram as videiras sob a terra durante o inverno para protegê-las de temperaturas abaixo de -20 °C."
+    },
+    {
+      "titulo": "Japão",
+      "slug": "japao",
+      "tipo": "paises-e-regioes",
+      "definicao_curta": "Produtor focado na precisão técnica e no cultivo de castas adaptadas ao clima úmido e solos vulcânicos.",
+      "definicao": "Produtor focado na precisão técnica e no cultivo de castas adaptadas ao clima úmido e solos vulcânicos.",
+      "regioes": [
+        "Yamanashi",
+        "Nagano",
+        "Hokkaido",
+        "Yamagata"
+      ],
+      "curiosidade": "A uva emblemática do país é a Koshu, uma variedade de casca rosada adaptada ao clima japonês que produz brancos extremamente delicados e minerais."
+    }
+  ]
+}

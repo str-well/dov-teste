@@ -21,12 +21,21 @@ instalado em produção como mu-plugin.
 | Eventos | `/eventos` | CPT `evento` |
 | Páginas | `/pages` | Quem Somos, Contato |
 | Autores | `/users` | minibio e retrato em `meta` |
+| Tipos de verbete | `/verbete_tipos` | taxonomia `verbete_tipo`, desde a v2.2.0 |
 
 Parâmetros úteis: `per_page` (máx. 100), `page`, `categories`, `tags`, `slug`,
 `search`, `orderby`, `order`, `_fields`, `_embed`.
 
 Paginação vem nos headers `X-WP-Total` e `X-WP-TotalPages` — necessários para o
-componente de paginação.
+componente de paginação **e para qualquer coleção que precise vir inteira.**
+
+⚠️ **`per_page` trava em 100, e o que passa disso volta cortado sem sinal
+nenhum:** status 200, lista bem-formada, e os itens além do centésimo
+simplesmente não existem para quem chamou. Com 141 verbetes, o Almanaque passou
+a depender disso — `buscarTudo()` em `lib/wp/http.ts` percorre as páginas pelo
+`X-WP-TotalPages`, em sequência e não em paralelo, porque o plano é
+compartilhado. Pedir uma página além da última responde **400**, não lista
+vazia, então o total tem de vir do header e nunca de tentativa e erro.
 
 ---
 
@@ -54,20 +63,47 @@ Todos ficam sob a chave `meta`. Prefixo `dov_`.
 
 ```json
 "meta": {
+  "dov_classe_gramatical": "substantivo masculino",
+  "dov_ordenacao": "Natural, vinho",
   "dov_definicao_curta": "O conjunto de solo, clima, relevo e mão humana que faz um vinho ser daquele lugar e de nenhum outro.",
   "dov_etimologia": "do francês terre, terra",
   "dov_pronuncia": "terruár",
   "dov_na_pratica": "Quando um rótulo diz \"vinhedo único\", está dizendo que não quis diluir o terroir misturando parcelas.",
+  "dov_curiosidade": "É o método de produção de espumantes mais antigo do mundo, antecedendo o método tradicional em séculos.",
   "dov_relacionados": [23, 24, 33, 26]
 }
 ```
 
-- `dov_definicao_curta` — usada nos cards do índice A–Z e nos resultados de busca
+- `dov_classe_gramatical` — "substantivo masculino"; abre a linha sob o título
+- `dov_definicao_curta` — usada nos cards do índice A–Z e nos resultados de busca.
+  **32 das 124 definições importadas passam de 180 caracteres**, e a maior tem 240:
+  o card do índice corta em 2 linhas e a caixa "Do Almanaque" em 3, com `line-clamp`
 - `dov_etimologia` e `dov_pronuncia` — muitas vezes vazios; a linha inteira deve
   desaparecer quando ambos estiverem vazios
 - `dov_na_pratica` — caixa destacada, opcional
-- **A letra do índice A–Z é derivada do título no front.** Não existe campo para ela.
-  Normalizar acento antes de agrupar (`Á` cai em `A`)
+- `dov_curiosidade` — segunda caixa destacada, mesmo componente com o rótulo
+  "Curiosidade". **Independente da anterior:** um verbete pode ter as duas, e a
+  ordem é "Na prática" primeiro
+- `dov_ordenacao` — **governa letra e posição no índice A–Z sem mudar o título
+  exibido.** Vazio na maioria; quem não tem ordena pelo título. Existe porque 22
+  títulos começam com "Vinho": sem ele a letra V teria 27 verbetes e as outras
+  ficariam vazias. Com ele, V fica com 6 e "Vinho Natural" cai em N
+- **A letra do índice A–Z é derivada no front**, de `dov_ordenacao` quando
+  preenchido e do título quando não. Não existe campo para ela. Acento é
+  normalizado antes de agrupar (`Á` cai em `A`, `Albariño` cai em A)
+- **Letra, ordem e anterior/próximo saem da mesma chave.** Separá-las poria
+  "Vinho Natural" sob o N mas ordenado entre os V
+
+#### Tipo de verbete (`/verbete_tipos`)
+
+Taxonomia `verbete_tipo`, hierárquica, seis termos: uvas, vinhos e estilos, países
+e regiões, produção, harmonização, denominações.
+
+**Capturada no WordPress e ainda não consumida pelo front.** Não está em nenhuma
+prancha do designer, e criar navegação por tipo é decisão de produto, não de
+implementação — por isso ela não entra no `_fields` das consultas de verbete: não
+se paga payload por dado que ninguém lê. Foi registrada agora porque classificar
+141 verbetes depois custaria muito mais caro que classificar na importação.
 
 ### Evento (`/eventos`)
 
@@ -125,9 +161,43 @@ Estilizar via um wrapper com escopo, não tentar normalizar no servidor.
 
 **Datas.** `date` é local (São Paulo), `date_gmt` é UTC. Usar `date` para exibição.
 
+**Coleção acima de 100 volta cortada em silêncio.** `per_page` trava em 100 e não
+há erro: a resposta é 200 com uma lista bem-formada e mais curta do que a verdade.
+Toda coleção que precise vir inteira tem de percorrer as páginas pelo
+`X-WP-TotalPages` — é o que `buscarTudo()` faz. Pedir página além da última
+responde 400, então não dá para descobrir o fim por tentativa.
+
+**`meta` não é ordenável.** `orderby` cobre data, título, id e contagem, não campo
+personalizado. O índice A–Z ordena por `dov_ordenacao`, então a ordenação acontece
+em JavaScript — o que **só é correto porque a lista vem inteira**. Ordenar um
+pedaço paginado daria uma ordem plausível e errada.
+
 **`_embed`** traz autor, imagem e termos numa requisição, mas infla a resposta.
 Preferir `_fields` explícito e, quando precisar de termos, buscar a lista de
 categorias e tags uma vez e cachear.
+
+---
+
+## Escrita — namespace `dov/v1`
+
+O único lugar em que o front **grava** no WordPress. Fora daqui tudo é leitura.
+
+| Rota | Papel |
+|---|---|
+| `POST /dov/v1/assinantes` | Cria o assinante da newsletter. Idempotente: e-mail repetido devolve `ja_assinava: true` e o token existente |
+| `POST /dov/v1/assinantes/cancelar` | Cancela pelo token. Marca como rascunho, não apaga |
+
+Autenticadas por `DOV_ASSINANTES_SECRET` no cabeçalho `X-Dov-Segredo`, comparado
+com `hash_equals`. **Segredo separado do de revalidação**, que viaja em query
+string e portanto entra em log de servidor e de proxy.
+
+Namespace próprio em vez de `wp/v2` com senha de aplicativo: a senha daria ao
+portador tudo que o usuário pode fazer no WordPress; aqui o segredo abre duas
+operações e nada mais.
+
+O CPT `assinante` tem **`show_in_rest => false`** — é o único do projeto que tem.
+Com `true`, a lista inteira de e-mails ficaria pública em
+`/wp-json/wp/v2/assinantes`.
 
 ---
 
@@ -165,9 +235,17 @@ editorias com menos copy terem duas matérias e a paginação renderizar.
 
 ### Verbetes
 
-22 publicados. Letras cobertas: A, B, C, D, E, M, S, T, V.
-**K, Q, W, X, Y, Z estão vazias de propósito** — é o que permite testar o estado
-cinza sem link no índice A–Z.
+**22 de teste até a importação do cliente; 141 depois dela** — 124 novos mais 17
+de teste que permanecem. Cinco dos de teste são atualizados no lugar, mantendo id
+e slug, porque matérias apontam para verbete por id e a da Serra Gaúcha linka
+`/almanaque/denominacao-de-origem` no corpo.
+
+Passar de 100 é o que torna a paginação obrigatória em toda busca de verbete.
+Ver o aviso em **Endpoints**.
+
+As letras vazias deixam de ser as mesmas: com 141 verbetes só sobram algumas, e o
+estado cinza sem link do índice A–Z passa a ser exercitado por menos delas. Vale
+conferir quais depois da importação, em vez de confiar na lista antiga.
 
 O mais completo é `terroir` (id 30): tem etimologia, pronúncia, "Na prática",
 4 relacionados e corpo de texto real. É o melhor caso para desenvolver o template.
@@ -196,8 +274,19 @@ Caminhos invalidados por tipo:
 |---|---|
 | Matéria | `/`, `/{categoria}`, `/{categoria}/{slug}` |
 | Verbete | `/`, `/almanaque`, `/almanaque/{slug}` |
-| Evento | `/`, `/programe-se` |
+| Evento | `/`, `/agenda`, `/agenda/{slug}` |
 | Página | `/`, `/{slug}` |
+
+Desde a v2.2.0 **mudança de termo também revalida**, o que antes não acontecia:
+renomear uma editoria deixava o nome antigo no menu até o fallback de 5 minutos.
+Editoria e tag invalidam a home e todos os arquivos de editoria — não há como
+saber quais páginas exibiam o valor antigo. Tipo de verbete invalida só
+`/almanaque`.
+
+**Modo lote:** gravação REST autenticada com `?dov_lote=1` não dispara
+revalidação. Sem isso, importar 124 verbetes geraria ~370 chamadas saindo do
+WordPress num plano compartilhado com outros 6 sites. O importador revalida uma
+vez, no final.
 
 A rota do front precisa aceitar esses caminhos e responder rápido. Manter um
 fallback por tempo (`revalidate: 300`) nas listagens, para o caso de o hook falhar

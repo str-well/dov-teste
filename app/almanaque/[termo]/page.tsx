@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { Busca } from '@/components/busca';
+import { CaixaDestacada } from '@/components/caixa-destacada';
 import { IconeSetaDireita, IconeSetaEsquerda } from '@/components/icones';
 import { Migalhas } from '@/components/migalhas';
 import { ALMANAQUE, SITE } from '@/lib/site';
@@ -118,12 +119,14 @@ export default async function Page({ params }: Props) {
           )}
 
           {verbete.naPratica && (
-            <aside className="na-pratica">
-              <p className="kicker kicker--pequeno kicker--verde na-pratica__titulo">
-                Na prática
-              </p>
-              <p className="na-pratica__texto">{verbete.naPratica}</p>
-            </aside>
+            <CaixaDestacada rotulo="Na prática">{verbete.naPratica}</CaixaDestacada>
+          )}
+
+          {/* Independente de "Na prática": um verbete pode ter as duas, e a
+              ordem é a da prancha — o que o termo significa na vida real antes
+              do que é curioso sobre ele. */}
+          {verbete.curiosidade && (
+            <CaixaDestacada rotulo="Curiosidade">{verbete.curiosidade}</CaixaDestacada>
           )}
 
           {(vizinhos.anterior || vizinhos.proximo) && (

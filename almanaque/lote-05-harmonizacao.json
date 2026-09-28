@@ -1,0 +1,98 @@
+{
+  "lote": "lote-05-harmonizacao",
+  "fonte": {
+    "titulo": "Verbetes - Harmonização",
+    "google_doc": "https://docs.google.com/document/d/1G3-uX7XOJQFh5xAmh3u8DlqJZA4CGYv2rHGuvI4sErs"
+  },
+  "recebido_em": "2026-09-23",
+  "verbetes": [
+    {
+      "titulo": "Acidez na Harmonização",
+      "slug": "acidez-na-harmonizacao",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Princípio em que a acidez do vinho deve igualar ou superar a acidez do prato para evitar que a bebida pareça insípida, ajudando também a cortar a gordura de molhos e carnes.",
+      "definicao": "Princípio em que a acidez do vinho deve igualar ou superar a acidez do prato para evitar que a bebida pareça insípida, ajudando também a cortar a gordura de molhos e carnes.",
+      "curiosidade": "Pratos salgados tendem a destacar o caráter frutado do vinho e a suavizar a percepção de sua acidez."
+    },
+    {
+      "titulo": "Açúcar e Doçura",
+      "slug": "acucar-e-docura",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Regra fundamental que estabelece que o vinho deve ser pelo menos tão doce quanto a sobremesa acompanhada para evitar que a bebida pareça amarga e adstringente.",
+      "definicao": "Regra fundamental que estabelece que o vinho deve ser pelo menos tão doce quanto a sobremesa acompanhada para evitar que a bebida pareça amarga e adstringente.",
+      "curiosidade": "A doçura do vinho é o melhor recurso para neutralizar o ardor e a picância de pratos altamente apimentados das culinárias baiana, mexicana ou tailandesa."
+    },
+    {
+      "titulo": "Harmonização por Contraste",
+      "slug": "harmonizacao-por-contraste",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Técnica de combinar elementos opostos no prato e no vinho (como salgado com doce ou gordura com acidez alta) para criar um equilíbrio sensorial surpreendente.",
+      "definicao": "Técnica de combinar elementos opostos no prato e no vinho (como salgado com doce ou gordura com acidez alta) para criar um equilíbrio sensorial surpreendente.",
+      "curiosidade": "A dupla clássica entre o queijo azul salgado (como o Roquefort) e o vinho doce botritizado (como o Sauternes) é a maior expressão dessa regra."
+    },
+    {
+      "titulo": "Harmonização por Intensidade (ou Peso)",
+      "slug": "harmonizacao-por-intensidade",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Conceito de alinhar o corpo, o teor alcoólico e a concentração do vinho com a estrutura, a gordura e o peso do prato, evitando que um se sobreponha ao outro.",
+      "definicao": "Conceito de alinhar o corpo, o teor alcoólico e a concentração do vinho com a estrutura, a gordura e o peso do prato, evitando que um se sobreponha ao outro.",
+      "curiosidade": "Um prato leve como peixe cozido no vapor desaparece ao lado de um tinto encorpado, da mesma forma que um Cabernet Sauvignon é anulado por uma salada simples."
+    },
+    {
+      "titulo": "Harmonização por Semelhança (ou Concordância)",
+      "slug": "harmonizacao-por-semelhanca",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Abordagem que busca unir características e aromas idênticos entre a comida e a bebida, multiplicando os sabores em comum no paladar.",
+      "definicao": "Abordagem que busca unir características e aromas idênticos entre a comida e a bebida, multiplicando os sabores em comum no paladar.",
+      "curiosidade": "Acompanhar um frango ao molho de cogumelos com um Pinot Noir evoluído funciona porque ambos compartilham notas terrosas e vegetais."
+    },
+    {
+      "titulo": "Harmonização Regional (\"O que cresce junto, combina junto\")",
+      "slug": "harmonizacao-regional",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Tradição gastronômica baseada na evolução histórica paralela entre a culinária local e os vinhos produzidos no mesmo terroir.",
+      "definicao": "Tradição gastronômica baseada na evolução histórica paralela entre a culinária local e os vinhos produzidos no mesmo terroir.",
+      "curiosidade": "O clássico prato italiano *Bistecca alla Fiorentina* combina perfeitamente com os vinhos de Chianti (Sangiovese) desenvolvidos na mesma região da Toscana há séculos."
+    },
+    {
+      "titulo": "Inimigos do Vinho",
+      "slug": "inimigos-do-vinho",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Termo atribuído a alimentos ricos em compostos sulfurados ou acidez extrema (como alcachofra, aspargos, ovos e vinagre) que distorcem o sabor do vinho no paladar.",
+      "definicao": "Termo atribuído a alimentos ricos em compostos sulfurados ou acidez extrema (como alcachofra, aspargos, ovos e vinagre) que distorcem o sabor do vinho no paladar.",
+      "curiosidade": "A alcachofra contém uma substância chamada cinarina, que bloqueia temporariamente os receptores doces da língua, fazendo com que qualquer vinho tomado a seguir pareça estranhamente adocicado."
+    },
+    {
+      "titulo": "Limpeza de Paladar (Efeito Limpador)",
+      "slug": "limpeza-de-paladar",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Capacidade dos taninos, da acidez e do gás carbônico de cortar a camada de gordura deixada pelos alimentos na boca, renovando as papilas gustativas a cada gole.",
+      "definicao": "Capacidade dos taninos, da acidez e do gás carbônico de cortar a camada de gordura deixada pelos alimentos na boca, renovando as papilas gustativas a cada gole.",
+      "curiosidade": "A efervescência e a alta acidez dos espumantes atuam como uma \"vassoura\" no paladar, tornando-os a combinação perfeita para frituras e queijos gordurosos."
+    },
+    {
+      "titulo": "Ponte de Harmonização",
+      "slug": "ponte-de-harmonizacao",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Utilização de um ingrediente secundário no prato (como ervas, molhos, especiarias ou raspas de cítricos) para criar uma ligação direta com o perfil aromático do vinho.",
+      "definicao": "Utilização de um ingrediente secundário no prato (como ervas, molhos, especiarias ou raspas de cítricos) para criar uma ligação direta com o perfil aromático do vinho.",
+      "curiosidade": "Salpicar alecrim ou tomilho em uma carne assada cria uma ponte instantânea com as notas herbáceas típicas da uva Cabernet Franc."
+    },
+    {
+      "titulo": "Taninos e Proteína/Gordura",
+      "slug": "taninos-e-proteina-gordura",
+      "tipo": "harmonizacao",
+      "definicao_curta": "Interação química na qual as proteínas e gorduras da carne vermelha se ligam aos taninos do vinho tinto, reduzindo a sensação de adstringência e amaciando a bebida.",
+      "definicao": "Interação química na qual as proteínas e gorduras da carne vermelha se ligam aos taninos do vinho tinto, reduzindo a sensação de adstringência e amaciando a bebida.",
+      "curiosidade": "Quanto mais jovem, tanico e adstringente for um vinho tinto, mais gorda e suculenta deve ser a carne para amaciar o impacto na boca."
+    },
+    {
+      "titulo": "Umami na Harmonização",
+      "slug": "umami-na-harmonizacao",
+      "tipo": "harmonizacao",
+      "definicao_curta": "O quinto gosto (presente em cogumelos, queijos curados, molho de soja e tomates maduros), que tende a acentuar a percepção de amargor, acidez e taninos do vinho.",
+      "definicao": "O quinto gosto (presente em cogumelos, queijos curados, molho de soja e tomates maduros), que tende a acentuar a percepção de amargor, acidez e taninos do vinho.",
+      "curiosidade": "Pratos ricos em umami sem adição de sal podem fazer um vinho encorpado parecer metálico; a solução é escolher vinhos bastante frutados e de taninos baixos."
+    }
+  ]
+}

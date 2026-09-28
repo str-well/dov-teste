@@ -1,0 +1,220 @@
+{
+  "lote": "lote-02-estilos",
+  "fonte": {
+    "titulo": "Almanaque do Vinho - Estilos de Vinho",
+    "google_doc": "https://docs.google.com/document/d/13dDFEtA7SmdABVBxobETWnJ_-K7mAn5HX-r61MrZlrs"
+  },
+  "recebido_em": "2026-09-23",
+  "verbetes": [
+    {
+      "titulo": "Pétillant Naturel (Pét-Nat)",
+      "slug": "petillant-naturel",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho efervescente elaborado pelo Método Ancestral, em que a fermentação é interrompida no tanque e finalizada dentro da própria garrafa, sem adição de açúcar, leveduras comerciais ou filtragem.",
+      "definicao": "Vinho efervescente elaborado pelo Método Ancestral, em que a fermentação é interrompida no tanque e finalizada dentro da própria garrafa, sem adição de açúcar, leveduras comerciais ou filtragem.",
+      "curiosidade": "É o método de produção de espumantes mais antigo do mundo, antecedendo o método tradicional em séculos, resultando em vinhos frequentemente turvos e de perfil rústico."
+    },
+    {
+      "titulo": "Vinho Biodinâmico",
+      "slug": "vinho-biodinamico",
+      "ordenacao": "Biodinâmico, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho originado de uvas cultivadas sob a filosofia biodinâmica, que trata o vinhedo como um ecossistema autossustentável e alinha os trabalhos agrícolas ao calendário astronômico.",
+      "definicao": "Vinho originado de uvas cultivadas sob a filosofia biodinâmica, que trata o vinhedo como um ecossistema autossustentável e alinha os trabalhos agrícolas ao calendário astronômico.",
+      "curiosidade": "Os viticultores utilizam preparados naturais específicos, como chifres de vaca preenchidos com esterco e quartzo moído enterrados no solo para nutrir a terra."
+    },
+    {
+      "titulo": "Vinho Branco Aromático",
+      "slug": "vinho-branco-aromatico",
+      "ordenacao": "Branco aromático, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho branco caracterizado por aromas intensos e expansivos de flores, frutas tropicais e especiarias, produzido com variedades de uvas naturalmente ricas em compostos terpênicos, como Gewürztraminer, Moscato e Riesling.",
+      "definicao": "Vinho branco caracterizado por aromas intensos e expansivos de flores, frutas tropicais e especiarias, produzido com variedades de uvas naturalmente ricas em compostos terpênicos, como Gewürztraminer, Moscato e Riesling.",
+      "curiosidade": "Os aromas marcantes desse estilo vêm dos terpenos, compostos aromáticos também presentes na casca de frutas cítricas, óleos essenciais e pétalas de flores."
+    },
+    {
+      "titulo": "Vinho Branco Encorpado",
+      "slug": "vinho-branco-encorpado",
+      "ordenacao": "Branco encorpado, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de textura cremosa, maior densidade no paladar e acidez integrada, frequentemente estagiado em barricas de carvalho e submetido à fermentação malolática, tendo a Chardonnay como principal expoente.",
+      "definicao": "Vinho de textura cremosa, maior densidade no paladar e acidez integrada, frequentemente estagiado em barricas de carvalho e submetido à fermentação malolática, tendo a Chardonnay como principal expoente.",
+      "curiosidade": "A sensação aveludada do estilo é gerada pela conversão do ácido málico (massa mais acentuada, como a da maçã) em ácido lático (sensação macia, similar ao leite)."
+    },
+    {
+      "titulo": "Vinho Branco Leve e Fresco",
+      "slug": "vinho-branco-leve-e-fresco",
+      "ordenacao": "Branco leve e fresco, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de acidez destacada, baixo teor alcoólico e aromas predominantemente cítricos e minerais, vinificado sem contato com madeira para preservar o caráter primário da fruta.",
+      "definicao": "Vinho de acidez destacada, baixo teor alcoólico e aromas predominantemente cítricos e minerais, vinificado sem contato com madeira para preservar o caráter primário da fruta.",
+      "curiosidade": "É engarrafado majoritariamente com vedação *screwcap* (tampa de rosca) para barrar a entrada de oxigênio e manter o frescor intacto até o consumo."
+    },
+    {
+      "titulo": "Vinho de Sobremesa (Colheita Tardia e Botritizado)",
+      "slug": "vinho-de-sobremesa",
+      "ordenacao": "Sobremesa, vinho de",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho doce natural elaborado com uvas colhidas após o ponto normal de maturação (*Late Harvest*) ou afetadas pelo fungo *Botrytis cinerea* (\"podridão nobre\"), que desidrata o bago e concentra açúcares e ácidos.",
+      "definicao": "Vinho doce natural elaborado com uvas colhidas após o ponto normal de maturação (*Late Harvest*) ou afetadas pelo fungo *Botrytis cinerea* (\"podridão nobre\"), que desidrata o bago e concentra açúcares e ácidos.",
+      "curiosidade": "Nos vinhos botritizados icônicos (como o Sauternes francês), a colheita é feita manualmente bago a bago, selecionando apenas as uvas atacadas pelo fungo no momento certo."
+    },
+    {
+      "titulo": "Vinho de Gelo (Icewine / Eiswein)",
+      "slug": "vinho-de-gelo",
+      "ordenacao": "Gelo, vinho de",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de sobremesa raríssimo feito com uvas que congelaram naturalmente ainda na videira, permitindo a extração de um mosto altamente concentrado em açúcares e acidez.",
+      "definicao": "Vinho de sobremesa raríssimo feito com uvas que congelaram naturalmente ainda na videira, permitindo a extração de um mosto altamente concentrado em açúcares e acidez.",
+      "curiosidade": "Como a água da uva vira gelo e fica retida na prensa, a quantidade de suco extraído é mínima, exigindo uma quantidade imensa de cachos para encher uma única garrafa."
+    },
+    {
+      "titulo": "Vinho de Talha",
+      "slug": "vinho-de-talha",
+      "ordenacao": "Talha, vinho de",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Estilo fermentado e estagiado em grandes ânforas de barro (talhas), permitindo a micro-oxigenação constante do vinho através da porosidade da argila sem aportar aromas de carvalho.",
+      "definicao": "Estilo fermentado e estagiado em grandes ânforas de barro (talhas), permitindo a micro-oxigenação constante do vinho através da porosidade da argila sem aportar aromas de carvalho.",
+      "curiosidade": "É um método ancestral praticado continuamente no Alentejo (Portugal) desde o Império Romano, onde o topo da talha costuma ser selado com azeite de oliva."
+    },
+    {
+      "titulo": "Vinho Desalcoolizado (Sem Álcool)",
+      "slug": "vinho-desalcoolizado",
+      "ordenacao": "Desalcoolizado, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho que passa pelo processo completo de fermentação tradicional e, em seguida, tem seu álcool extraído por tecnologias como destilação a vácuo ou osmose reversa, mantendo o teor alcoólico abaixo de 0,5%.",
+      "definicao": "Vinho que passa pelo processo completo de fermentação tradicional e, em seguida, tem seu álcool extraído por tecnologias como destilação a vácuo ou osmose reversa, mantendo o teor alcoólico abaixo de 0,5%.",
+      "curiosidade": "Ao contrário do suco de uva simples, o vinho desalcoolizado preserva os ácidos, taninos e compostos de aromas gerados pela fermentação alcoólica original."
+    },
+    {
+      "titulo": "Vinho Espumante (Método Charmat)",
+      "slug": "espumante-metodo-charmat",
+      "ordenacao": "Espumante, método Charmat",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho efervescente cuja segunda fermentação ocorre dentro de grandes tanques herméticos de aço inoxidável (autoclaves) sob pressão, preservando o perfil jovem e frutado da bebida.",
+      "definicao": "Vinho efervescente cuja segunda fermentação ocorre dentro de grandes tanques herméticos de aço inoxidável (autoclaves) sob pressão, preservando o perfil jovem e frutado da bebida.",
+      "curiosidade": "Criado pelo italiano Federico Martinotti em 1895 e patenteado pelo francês Eugène Charmat em 1907, é o método oficial de produção do Prosecco."
+    },
+    {
+      "titulo": "Vinho Espumante (Método Tradicional)",
+      "slug": "espumante-metodo-tradicional",
+      "ordenacao": "Espumante, método tradicional",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho efervescente em que a segunda fermentação acontece dentro da própria garrafa, resultando em borbulhas (*perlage*) finas e notas complexas de pão fresco, brioche e frutos secos.",
+      "definicao": "Vinho efervescente em que a segunda fermentação acontece dentro da própria garrafa, resultando em borbulhas (*perlage*) finas e notas complexas de pão fresco, brioche e frutos secos.",
+      "curiosidade": "Exige o processo de remuagem, no qual as garrafas são giradas e inclinadas diariamente até que os sedimentos de levedura se acumulem no gargalo para remoção."
+    },
+    {
+      "titulo": "Vinho Fortificado Doce",
+      "slug": "vinho-fortificado-doce",
+      "ordenacao": "Fortificado doce, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Estilo de vinho em que a fermentação é interrompida pela adição de aguardente vínica neutra enquanto ainda há açúcar residual da uva, resultando em teor alcoólico elevado (18% a 22%) e paladar doce.",
+      "definicao": "Estilo de vinho em que a fermentação é interrompida pela adição de aguardente vínica neutra enquanto ainda há açúcar residual da uva, resultando em teor alcoólico elevado (18% a 22%) e paladar doce.",
+      "curiosidade": "O Vinho do Porto é o grande representante deste estilo, criado no século XVII para impedir que o vinho estragasse nas viagens de navio até a Inglaterra."
+    },
+    {
+      "titulo": "Vinho Fortificado Seco",
+      "slug": "vinho-fortificado-seco",
+      "ordenacao": "Fortificado seco, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho que recebe adição de álcool vínico após o encerramento completo da fermentação, apresentando perfil seco, alto teor alcoólico e aromas complexos de amêndoas e leveduras.",
+      "definicao": "Vinho que recebe adição de álcool vínico após o encerramento completo da fermentação, apresentando perfil seco, alto teor alcoólico e aromas complexos de amêndoas e leveduras.",
+      "curiosidade": "No estilo Jerez Fino, cria-se uma camada natural de leveduras na superfície do barril chamada \"flor\", que protege o vinho do ar e confere sabor salino e seco."
+    },
+    {
+      "titulo": "Vinho Frisante",
+      "slug": "vinho-frisante",
+      "ordenacao": "Frisante, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho levemente efervescente, com metade da pressão de gás carbônico encontrada em um espumante tradicional, oferecendo uma sensação sutil de agulha na língua.",
+      "definicao": "Vinho levemente efervescente, com metade da pressão de gás carbônico encontrada em um espumante tradicional, oferecendo uma sensação sutil de agulha na língua.",
+      "curiosidade": "O gás pode ser fruto de uma leve fermentação natural ou incorporado artificialmente antes do envasamento, como ocorre em frisantes comerciais simples."
+    },
+    {
+      "titulo": "Vinho Laranja (ou Âmbar)",
+      "slug": "vinho-laranja",
+      "ordenacao": "Laranja, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho feito com uvas brancas vinificadas com maceração pelicular, mantendo o suco em contato prolongado com as cascas para extrair cor alaranjada, taninos e textura.",
+      "definicao": "Vinho feito com uvas brancas vinificadas com maceração pelicular, mantendo o suco em contato prolongado com as cascas para extrair cor alaranjada, taninos e textura.",
+      "curiosidade": "É um dos métodos mais antigos de vinificação da humanidade, nascido na Geórgia há mais de 8.000 anos em vasos de argila enterrados conhecidos como *Qvevri*.",
+      "importar": false,
+      "nota": "Duplicado de \"Vinho Laranja (Orange Wine)\", do lote 01, com texto diferente. Aguardando o cliente escolher uma versão."
+    },
+    {
+      "titulo": "Vinho Natural",
+      "slug": "vinho-natural",
+      "ordenacao": "Natural, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho produzido com a mínima intervenção humana possível, utilizando apenas leveduras selvagens, uvas de cultivo limpo e sem a adição de insumos enológicos ou sulfitos.",
+      "definicao": "Vinho produzido com a mínima intervenção humana possível, utilizando apenas leveduras selvagens, uvas de cultivo limpo e sem a adição de insumos enológicos ou sulfitos.",
+      "curiosidade": "Por não passar por clarificação ou filtragem industrial, apresenta frequentemente visual turvo e aromas imprevisíveis que mudam a cada garrafa."
+    },
+    {
+      "titulo": "Vinho Orgânico",
+      "slug": "vinho-organico",
+      "ordenacao": "Orgânico, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho feito exclusivamente com uvas cultivadas sem o uso de adubos sintéticos, pesticidas, herbicidas ou produtos químicos artificiais no vinhedo.",
+      "definicao": "Vinho feito exclusivamente com uvas cultivadas sem o uso de adubos sintéticos, pesticidas, herbicidas ou produtos químicos artificiais no vinhedo.",
+      "curiosidade": "A certificação orgânica exige um período de transição de pelo menos três anos para garantir que o solo esteja livre de resíduos químicos anteriores."
+    },
+    {
+      "titulo": "Vinho Passito (ou Vin de Paille)",
+      "slug": "vinho-passito",
+      "ordenacao": "Passito, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho concentrado (doce ou seco) elaborado com uvas colhidas maduras e deixadas para desidratar em esteiras de palha ou salas ventiladas (*fruttaio*) antes da prensagem.",
+      "definicao": "Vinho concentrado (doce ou seco) elaborado com uvas colhidas maduras e deixadas para desidratar em esteiras de palha ou salas ventiladas (*fruttaio*) antes da prensagem.",
+      "curiosidade": "Durante a desidratação (processo de *appassimento*), as uvas perdem até 40% de seu peso em água, concentrando açúcares, acidez e aromas de frutos secos."
+    },
+    {
+      "titulo": "Vinho Rosé",
+      "slug": "vinho-rose",
+      "ordenacao": "Rosé, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de tonalidade rosada elaborado a partir do contato breve entre o suco de uvas tintas e suas cascas (maceração) ou pela técnica de sangria durante a vinificação.",
+      "definicao": "Vinho de tonalidade rosada elaborado a partir do contato breve entre o suco de uvas tintas e suas cascas (maceração) ou pela técnica de sangria durante a vinificação.",
+      "curiosidade": "A intensidade da cor rosa varia conforme o tempo de contato com as cascas e não define se o vinho é seco ou doce; a maioria dos rosés modernos é totalmente seca.",
+      "importar": false,
+      "nota": "Duplicado de \"Rosé\", do lote 01, com texto diferente. Aguardando o cliente escolher uma versão."
+    },
+    {
+      "titulo": "Vinho Tinto de Corpo Médio",
+      "slug": "vinho-tinto-de-corpo-medio",
+      "ordenacao": "Tinto de corpo médio, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de textura equilibrada, com taninos moderados, boa acidez e presença marcante de frutas vermelhas e negras, muito versátil para a gastronomia.",
+      "definicao": "Vinho de textura equilibrada, com taninos moderados, boa acidez e presença marcante de frutas vermelhas e negras, muito versátil para a gastronomia.",
+      "curiosidade": "Variedades como Merlot, Sangiovese e Tempranillo representam a espinha dorsal deste estilo mundialmente consumido."
+    },
+    {
+      "titulo": "Vinho Tinto Encorpado",
+      "slug": "vinho-tinto-encorpado",
+      "ordenacao": "Tinto encorpado, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de cor escura e profunda, alta concentração de taninos, maior teor alcoólico e textura densa no paladar, geralmente estagiado por longos períodos em carvalho.",
+      "definicao": "Vinho de cor escura e profunda, alta concentração de taninos, maior teor alcoólico e textura densa no paladar, geralmente estagiado por longos períodos em carvalho.",
+      "curiosidade": "A alta concentração de taninos e extrato seco confere a esses vinhos o maior potencial de guarda do mundo enológico, podendo evoluir por décadas."
+    },
+    {
+      "titulo": "Vinho Tinto Leve",
+      "slug": "vinho-tinto-leve",
+      "ordenacao": "Tinto leve, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho de cor translúcida, baixa carga de taninos, acidez viva e perfil dominado por frutas vermelhas frescas, podendo ser consumido ligeiramente fresco.",
+      "definicao": "Vinho de cor translúcida, baixa carga de taninos, acidez viva e perfil dominado por frutas vermelhas frescas, podendo ser consumido ligeiramente fresco.",
+      "curiosidade": "A uva Pinot Noir e a Gamay (usada na região de Beaujolais) são as referências globais para tintos delicados e fáceis de beber."
+    },
+    {
+      "titulo": "Vinho Vulcânico",
+      "slug": "vinho-vulcanico",
+      "ordenacao": "Vulcânico, vinho",
+      "tipo": "vinhos-e-estilos",
+      "definicao_curta": "Vinho proveniente de vinhedos plantados em solos de cinzas, basalto e rochas de origem vulcânica, notável por sua alta acidez, acentuada mineralidade e toque salino.",
+      "definicao": "Vinho proveniente de vinhedos plantados em solos de cinzas, basalto e rochas de origem vulcânica, notável por sua alta acidez, acentuada mineralidade e toque salino.",
+      "curiosidade": "Regiões como o Monte Etna (Sicília), Ilhas Canárias e a ilha de Santorini são os principais expoentes globais desse estilo."
+    }
+  ]
+}

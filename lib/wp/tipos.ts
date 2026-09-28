@@ -122,11 +122,39 @@ export type Verbete = {
   pronuncia: string;
   /** Caixa destacada, opcional. */
   naPratica: string;
+  /**
+   * Segunda caixa destacada, opcional e independente de `naPratica` — um verbete
+   * pode ter as duas.
+   */
+  curiosidade: string;
+  /**
+   * Como o verbete se ordena no índice, quando o título não serve.
+   *
+   * "Vinho Natural" ordenado pelo título joga 22 verbetes na letra V. Com
+   * `ordenacao` igual a "Natural, vinho", ele cai em N. **O título exibido não
+   * muda** — isto só governa letra e posição.
+   *
+   * Vazio na maioria: quem não tem usa o título.
+   */
+  ordenacao: string;
   /** IDs de outros verbetes, na ordem definida no editor. */
   relacionados: number[];
   imagens: Imagens | null;
-  /** Derivada do título, com acento normalizado. "#" para o que não é A–Z. */
+  /**
+   * A letra do índice. Vem de `ordenacao` quando preenchido, senão do título,
+   * com acento normalizado. "#" para o que não começa com A–Z.
+   */
   letra: string;
+  /**
+   * A chave de comparação que ordena o índice e define anterior/próximo.
+   *
+   * Sem acento e em maiúsculas, derivada da mesma fonte que a `letra`. Existe
+   * como campo, e não como cálculo na hora de ordenar, para que **ordem, letra e
+   * vizinhos saiam sempre da mesma origem** — foi assim que a ordenação por
+   * título e a letra por título já combinavam, e é o que precisa continuar
+   * valendo agora que a origem pode ser outra.
+   */
+  chaveOrdenacao: string;
   data: string;
   dataUtc: string;
 };
@@ -235,10 +263,12 @@ export type BrutoVerbete = {
   dov_imagens: BrutoImagens | null;
   meta: {
     dov_classe_gramatical?: string;
+    dov_ordenacao?: string;
     dov_definicao_curta?: string;
     dov_etimologia?: string;
     dov_pronuncia?: string;
     dov_na_pratica?: string;
+    dov_curiosidade?: string;
     dov_relacionados?: number[];
   };
 };

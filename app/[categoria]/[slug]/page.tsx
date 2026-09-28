@@ -248,7 +248,7 @@ export default async function Page({ params }: Props) {
                 <p className="kicker kicker--pequeno kicker--verde caixa__titulo">Do Almanaque</p>
                 <h2 className="caixa__verbete">{verbete.titulo}</h2>
                 {verbete.definicaoCurta && (
-                  <p className="caixa__texto">{verbete.definicaoCurta}</p>
+                  <p className="caixa__texto caixa__texto--definicao">{verbete.definicaoCurta}</p>
                 )}
                 <Link className="link-texto" href={`/almanaque/${verbete.slug}`}>
                   Ver verbete

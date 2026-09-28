@@ -1,0 +1,162 @@
+{
+  "lote": "lote-04-producao",
+  "fonte": {
+    "titulo": "Verbetes - Produção do Vinho",
+    "google_doc": "https://docs.google.com/document/d/16WlMI6nmH15fypvGe1kD7oSX3I2-EyeVVyxsKlv2JCI"
+  },
+  "recebido_em": "2026-09-23",
+  "verbetes": [
+    {
+      "titulo": "Brotação",
+      "slug": "brotacao",
+      "tipo": "producao",
+      "definicao_curta": "Primeira fase do ciclo biológico anual da videira na primavera, quando as gemas despertam da dormência do inverno e começam a emitir os primeiros brotos e folhas verdes.",
+      "definicao": "Primeira fase do ciclo biológico anual da videira na primavera, quando as gemas despertam da dormência do inverno e começam a emitir os primeiros brotos e folhas verdes.",
+      "curiosidade": "Durante a brotação, as videiras são extremamente vulneráveis a geadas tardias de primavera, que podem queimar os brotos jovens e destruir antecipadamente toda a safra do ano."
+    },
+    {
+      "titulo": "Clarificação e Filtração",
+      "slug": "clarificacao-e-filtracao",
+      "tipo": "producao",
+      "definicao_curta": "Etapas finais de polimento do vinho antes do envasamento, destinadas a remover leveduras mortas, bactérias e partículas sólidas em suspensão para garantir estabilidade visual e microbiológica.",
+      "definicao": "Etapas finais de polimento do vinho antes do envasamento, destinadas a remover leveduras mortas, bactérias e partículas sólidas em suspensão para garantir estabilidade visual e microbiológica.",
+      "curiosidade": "Nem todos os produtores filtram seus vinhos; muitos preferem engarrafar \"sem filtragem\" para preservar pequenos compostos aromáticos e texturas originais do líquido."
+    },
+    {
+      "titulo": "Colheita (ou Vindima)",
+      "slug": "vindima",
+      "tipo": "producao",
+      "definicao_curta": "Momento de apanha das uvas no vinhedo quando atingem o equilíbrio ideal entre açúcares, ácidos, taninos e compostos aromáticos para o estilo de vinho desejado.",
+      "definicao": "Momento de apanha das uvas no vinhedo quando atingem o equilíbrio ideal entre açúcares, ácidos, taninos e compostos aromáticos para o estilo de vinho desejado.",
+      "curiosidade": "Em regiões de clima muito quente, a colheita é feita frequentemente durante a noite para evitar que o calor escaldante do dia inicie uma fermentação espontânea indesejada nas caixas de uva."
+    },
+    {
+      "titulo": "Corte (ou Assemblage)",
+      "slug": "assemblage",
+      "tipo": "producao",
+      "definicao_curta": "Etapa em que o enólogo mistura diferentes lotes de vinhos — seja de variedades de uvas distintas, parcelas de solo diferentes ou barricas específicas — para criar um vinho final mais complexo e harmonioso.",
+      "definicao": "Etapa em que o enólogo mistura diferentes lotes de vinhos — seja de variedades de uvas distintas, parcelas de solo diferentes ou barricas específicas — para criar um vinho final mais complexo e harmonioso.",
+      "curiosidade": "No famoso estilo Champagne, o corte pode envolver a combinação de dezenas de vinhos base de safras e vinhedos completamente diferentes para manter o estilo característico da vinícola constante ano após ano."
+    },
+    {
+      "titulo": "Desengaçe",
+      "slug": "desengace",
+      "tipo": "producao",
+      "definicao_curta": "Processo mecânico ou manual de separação das bagas de uva da sua estrutura vegetal verde (o engaço do cacho) antes de iniciar a vinificação.",
+      "definicao": "Processo mecânico ou manual de separação das bagas de uva da sua estrutura vegetal verde (o engaço do cacho) antes de iniciar a vinificação.",
+      "curiosidade": "Embora a maioria dos produtores desengace as uvas para evitar taninos herbáceos e amargos, alguns fermentam com \"cacho inteiro\" para trazer maior frescor e aromas florais ao tinto."
+    },
+    {
+      "titulo": "Engarrafamento",
+      "slug": "engarrafamento",
+      "tipo": "producao",
+      "definicao_curta": "Fase final da produção em que o vinho é transferido para a garrafa sob condições estéreis, vedado com rolha ou tampa de rosca (*screwcap*) e rotulado para comercialização.",
+      "definicao": "Fase final da produção em que o vinho é transferido para a garrafa sob condições estéreis, vedado com rolha ou tampa de rosca (*screwcap*) e rotulado para comercialização.",
+      "curiosidade": "Antes de receber o vinho, as garrafas costumam ser injetadas com um gás inerte (como nitrogênio ou argônio) para expulsar o oxigênio e evitar a oxidação precoce da bebida."
+    },
+    {
+      "titulo": "Envelhecimento em Garrafa",
+      "slug": "envelhecimento-em-garrafa",
+      "tipo": "producao",
+      "definicao_curta": "Período em que o vinho, já engarrafado e vedado, repousa na vinícola ou na adega, passando por micro-oxigenação lentíssima pela rolha para arredondar taninos e desenvolver aromas complexos de evolução.",
+      "definicao": "Período em que o vinho, já engarrafado e vedado, repousa na vinícola ou na adega, passando por micro-oxigenação lentíssima pela rolha para arredondar taninos e desenvolver aromas complexos de evolução.",
+      "curiosidade": "Grandes vinhos como os Rioja Gran Reserva espanhóis precisam obrigatoriamente estagiar por pelo menos três anos na garrafa antes de poderem ser colocados à venda."
+    },
+    {
+      "titulo": "Fermentação Alcoólica",
+      "slug": "fermentacao-alcoolica",
+      "tipo": "producao",
+      "definicao_curta": "O coração da produção do vinho, no qual leveduras consomem os açúcares naturais do suco de uva e os transformam em álcool etílico, dióxido de carbono e calor.",
+      "definicao": "O coração da produção do vinho, no qual leveduras consomem os açúcares naturais do suco de uva e os transformam em álcool etílico, dióxido de carbono e calor.",
+      "curiosidade": "O processo gera tanto calor que os tanques modernos precisam de cintas de refrigeração para manter a temperatura controlada, evitando que o calor excessivo mate as leveduras."
+    },
+    {
+      "titulo": "Fermentação Malolática",
+      "slug": "fermentacao-malolatica",
+      "tipo": "producao",
+      "definicao_curta": "Transformação biológica secundária conduzida por bactérias láticas que convertem o ácido málico (de sabor agudo) em ácido lático (de sabor macio), reduzindo a acidez e conferindo textura aveludada ao vinho.",
+      "definicao": "Transformação biológica secundária conduzida por bactérias láticas que convertem o ácido málico (de sabor agudo) em ácido lático (de sabor macio), reduzindo a acidez e conferindo textura aveludada ao vinho.",
+      "curiosidade": "Esta fase é a grande responsável por dar aos vinhos brancos da uva Chardonnay estagiados em carvalho aquele característico aroma de manteiga, creme e avelã."
+    },
+    {
+      "titulo": "Floração e Vingamento",
+      "slug": "floracao-e-vingamento",
+      "tipo": "producao",
+      "definicao_curta": "Etapa em que a videira produz minúsculas flores que são autopolinizadas e se transformam em pequenos bagos verdes de uva (vingamento dos frutos).",
+      "definicao": "Etapa em que a videira produz minúsculas flores que são autopolinizadas e se transformam em pequenos bagos verdes de uva (vingamento dos frutos).",
+      "curiosidade": "Como a videira (*Vitis vinifera*) é hermafrodita e se autopoliniza, ela não depende diretamente de abelhas ou de ventos fortes para fertilizar suas flores e gerar os cachos."
+    },
+    {
+      "titulo": "Maceração",
+      "slug": "maceracao",
+      "tipo": "producao",
+      "definicao_curta": "Período em que o suco de uva (mosto) permanece em contato direto com as cascas e sementes durante ou após a fermentação, extraindo cor, taninos e compostos aromáticos.",
+      "definicao": "Período em que o suco de uva (mosto) permanece em contato direto com as cascas e sementes durante ou após a fermentação, extraindo cor, taninos e compostos aromáticos.",
+      "curiosidade": "O suco de quase todas as uvas tintas é transparente; toda a cor escura dos vinhos tintos vem exclusivamente do tempo de maceração do líquido com as cascas."
+    },
+    {
+      "titulo": "Maturação das Uvas",
+      "slug": "maturacao-das-uvas",
+      "tipo": "producao",
+      "definicao_curta": "Período crítico entre a mudança de cor do cacho e a colheita, no qual a uva acumula açúcares, reduz sua acidez e desenvolve seus compostos aromáticos e fenólicos.",
+      "definicao": "Período crítico entre a mudança de cor do cacho e a colheita, no qual a uva acumula açúcares, reduz sua acidez e desenvolve seus compostos aromáticos e fenólicos.",
+      "curiosidade": "Os enólogos medem a maturação não apenas pelo nível de açúcar, mas provando as sementes da uva: quando elas ficam marrons e crocantes, a maturação fenólica ideal foi atingida."
+    },
+    {
+      "titulo": "Poda de Inverno",
+      "slug": "poda-de-inverno",
+      "tipo": "producao",
+      "definicao_curta": "Intervenção técnica realizada quando a videira está em dormência vegetativa, cortando os ramos secos do ano anterior para direcionar a força da planta para a safra seguinte.",
+      "definicao": "Intervenção técnica realizada quando a videira está em dormência vegetativa, cortando os ramos secos do ano anterior para direcionar a força da planta para a safra seguinte.",
+      "curiosidade": "A forma como a videira é podada (como o sistema *Guyot* ou *Cordon*) define a arquitetura do vinhedo e o rendimento máximo de uvas que a planta produzirá."
+    },
+    {
+      "titulo": "Poda Verde (Manejo de Canópia)",
+      "slug": "poda-verde",
+      "tipo": "producao",
+      "definicao_curta": "Conjunto de intervenções feitas na videira durante a fase de crescimento ativo, como desfolha, desbaste de cachos e corte de brotos indesejados para melhorar a ventilação e a insolação das uvas.",
+      "definicao": "Conjunto de intervenções feitas na videira durante a fase de crescimento ativo, como desfolha, desbaste de cachos e corte de brotos indesejados para melhorar a ventilação e a insolação das uvas.",
+      "curiosidade": "O \"clareamento de cachos\" consiste em cortar e descartar no chão cachos perfeitamente saudáveis no meio do verão para concentrar toda a energia da planta nos cachos restantes."
+    },
+    {
+      "titulo": "Prensagem",
+      "slug": "prensagem",
+      "tipo": "producao",
+      "definicao_curta": "Processo físico de aplicação de pressão sobre a massa de uvas ou bagaço para extrair o suco restante após o esmagamento ou a fermentação.",
+      "definicao": "Processo físico de aplicação de pressão sobre a massa de uvas ou bagaço para extrair o suco restante após o esmagamento ou a fermentação.",
+      "curiosidade": "Nos vinhos brancos, a prensagem ocorre imediatamente antes da fermentação; nos vinhos tintos, ela é feita no final do processo, após a maceração do suco com as cascas."
+    },
+    {
+      "titulo": "Rega (Irrigação)",
+      "slug": "rega",
+      "tipo": "producao",
+      "definicao_curta": "Fornecimento controlado de água aos vinhedos por meio de sistemas de gotejamento em regiões áridas ou durante períodos de seca severa.",
+      "definicao": "Fornecimento controlado de água aos vinhedos por meio de sistemas de gotejamento em regiões áridas ou durante períodos de seca severa.",
+      "curiosidade": "Na Europa tradicional (como em Bordeaux ou Rioja), a irrigação é severamente proibida por lei em vinhedos de qualidade para forçar a videira a buscar água nas profundezas do solo."
+    },
+    {
+      "titulo": "Remuagem e Dégorgement",
+      "slug": "remuagem-e-degorgement",
+      "tipo": "producao",
+      "definicao_curta": "Etapas do método tradicional de espumantes em que a garrafa é girada até que as leveduras mortas se acumulem no gargalo (remuagem) e, em seguida, o gargalo é congelado para expelir esse sedimento sob pressão (dégorgement).",
+      "definicao": "Etapas do método tradicional de espumantes em que a garrafa é girada até que as leveduras mortas se acumulem no gargalo (remuagem) e, em seguida, o gargalo é congelado para expelir esse sedimento sob pressão (dégorgement).",
+      "curiosidade": "Antigamente, a remuagem era feita 100% à mão por profissionais chamados *remueurs*, que giravam até 50.000 garrafas por dia; hoje, máquinas automatizadas (*gyropalettes*) realizam o trabalho."
+    },
+    {
+      "titulo": "Trasfega",
+      "slug": "trasfega",
+      "tipo": "producao",
+      "definicao_curta": "Processo de transferência do vinho de um recipiente (tanque ou barrica) para outro, separando o líquido limpo das borras e sedimentos sólidos acumulados no fundo.",
+      "definicao": "Processo de transferência do vinho de um recipiente (tanque ou barrica) para outro, separando o líquido limpo das borras e sedimentos sólidos acumulados no fundo.",
+      "curiosidade": "A trasfega também fornece pequenas doses de oxigênio ao vinho, ajudando a dissipar odores de redução e a acelerar o amaciamento dos taninos."
+    },
+    {
+      "titulo": "Veraison (Pintura do Cacho)",
+      "slug": "veraison",
+      "tipo": "producao",
+      "definicao_curta": "Fase de transição no ciclo da videira em que as uvas param de crescer, amolecem e mudam de cor (as brancas ficam translúcidas e as tintas ganham tom avermelhado/púrpura).",
+      "definicao": "Fase de transição no ciclo da videira em que as uvas param de crescer, amolecem e mudam de cor (as brancas ficam translúcidas e as tintas ganham tom avermelhado/púrpura).",
+      "curiosidade": "É a partir do *veraison* que a videira para de sintetizar ácidos e começa a produzir açúcares aceleradamente através da fotossíntese."
+    }
+  ]
+}

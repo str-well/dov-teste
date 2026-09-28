@@ -6,7 +6,7 @@
  * templates saibam tratar.
  */
 
-import { REVALIDAR, urlBase } from './config';
+import { MAXIMO_POR_PAGINA, REVALIDAR, urlBase } from './config';
 
 /**
  * Falha da API que a página não tem como resolver — rede fora, 500 do
@@ -85,6 +85,52 @@ export async function buscarLista<T>(
     total: numeroDoHeader(resposta, 'x-wp-total'),
     totalPaginas: numeroDoHeader(resposta, 'x-wp-totalpages'),
   };
+}
+
+/**
+ * Busca uma coleção **inteira**, percorrendo as páginas.
+ *
+ * O `per_page` da REST API trava em 100, e uma coleção maior que isso volta
+ * cortada **sem sinal nenhum**: status 200, lista bem-formada, e os itens além
+ * do centésimo simplesmente não existem para quem chamou. Foi o que aconteceria
+ * com o Almanaque ao passar de 100 verbetes — o índice A–Z perderia as últimas
+ * letras e ninguém veria erro.
+ *
+ * A contagem vem do cabeçalho `X-WP-TotalPages`, não de tentativa e erro: pedir
+ * uma página além da última devolve **400**, não lista vazia (armadilha 9).
+ *
+ * As páginas seguintes vão em sequência, não em paralelo. O plano é compartilhado
+ * com o WordPress e outros 6 sites, e disparar N requisições simultâneas contra
+ * ele é exatamente o que o projeto evita. Com 141 verbetes são 2 páginas.
+ */
+export async function buscarTudo<T>(
+  recurso: string,
+  parametros: Parametros = {},
+  opcoes: Opcoes = {},
+): Promise<T[]> {
+  const primeira = await buscarLista<T>(
+    recurso,
+    { ...parametros, per_page: MAXIMO_POR_PAGINA, page: 1 },
+    opcoes,
+  );
+
+  const tudo = [...primeira.dados];
+
+  for (let pagina = 2; pagina <= primeira.totalPaginas; pagina += 1) {
+    const { dados } = await buscarLista<T>(
+      recurso,
+      { ...parametros, per_page: MAXIMO_POR_PAGINA, page: pagina },
+      opcoes,
+    );
+
+    // Página vazia no meio do caminho significa que a coleção encolheu entre uma
+    // requisição e outra. Parar evita laço longo à toa.
+    if (dados.length === 0) break;
+
+    tudo.push(...dados);
+  }
+
+  return tudo;
 }
 
 /**

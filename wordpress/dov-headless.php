@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: DOV — Headless
- * Description: CPTs, campos, tamanhos de imagem, CORS, endurecimento e revalidação do Descubra o Vinho. Sem dependências.
- * Version: 2.1.0
+ * Description: CPTs, campos, taxonomia de tipos, assinantes, tamanhos de imagem, CORS, endurecimento e revalidação do Descubra o Vinho. Sem dependências.
+ * Version: 2.3.0
  *
  * Instalar em: wp-content/mu-plugins/dov-headless.php
  *
@@ -37,6 +37,11 @@ function dov_esquema() {
 					'tipo'  => 'text',
 					'ajuda' => 'Ex.: substantivo masculino. Abre a linha logo abaixo do título.',
 				),
+				'dov_ordenacao' => array(
+					'label' => 'Ordenação no índice',
+					'tipo'  => 'text',
+					'ajuda' => 'Opcional. Define a letra e a posição no índice A–Z sem mudar o título exibido. Ex.: "Natural, vinho" coloca "Vinho Natural" em N. Vazio usa o título.',
+				),
 				'dov_definicao_curta' => array(
 					'label' => 'Definição curta',
 					'tipo'  => 'textarea',
@@ -56,6 +61,11 @@ function dov_esquema() {
 					'label' => 'Na prática',
 					'tipo'  => 'textarea',
 					'ajuda' => 'Conteúdo da caixa destacada. Opcional.',
+				),
+				'dov_curiosidade' => array(
+					'label' => 'Curiosidade',
+					'tipo'  => 'textarea',
+					'ajuda' => 'Exibida numa caixa própria, separada de "Na prática". Opcional.',
 				),
 				'dov_relacionados' => array(
 					'label' => 'Verbetes relacionados',
@@ -160,6 +170,26 @@ add_action( 'init', function () {
 		'rewrite'       => array( 'slug' => 'agenda', 'with_front' => false ),
 		'show_in_rest'  => true,
 		'rest_base'     => 'eventos',
+	) );
+
+	// Tipo de verbete: uvas, vinhos e estilos, países, produção, harmonização,
+	// denominações. Não aparece no design atual; é capturado agora porque
+	// reconstruir depois de centenas de verbetes custaria caro.
+	register_taxonomy( 'verbete_tipo', 'verbete', array(
+		'labels' => array(
+			'name'          => 'Tipos de verbete',
+			'singular_name' => 'Tipo de verbete',
+			'menu_name'     => 'Tipos',
+			'add_new_item'  => 'Adicionar tipo',
+			'edit_item'     => 'Editar tipo',
+			'search_items'  => 'Buscar tipos',
+		),
+		'hierarchical'      => true,   // caixa de seleção no editor
+		'public'            => true,
+		'rewrite'           => false,  // headless: sem URL própria no WordPress
+		'show_admin_column' => true,
+		'show_in_rest'      => true,
+		'rest_base'         => 'verbete_tipos', // campo sem hífen, fácil de ler em JS
 	) );
 } );
 
@@ -538,6 +568,77 @@ add_action( 'rest_api_init', function () {
 // 9 · REVALIDAÇÃO SOB DEMANDA
 // ===========================================================================
 
+/**
+ * Importação em lote: requisições REST autenticadas com ?dov_lote=1 não disparam
+ * revalidação a cada gravação. O importador revalida uma vez, no final.
+ * Sem isso, 124 verbetes gerariam ~370 chamadas saindo do WordPress, num plano
+ * que divide recursos com outros sites.
+ */
+function dov_em_lote() {
+	return defined( 'REST_REQUEST' ) && REST_REQUEST
+		&& ! empty( $_GET['dov_lote'] )
+		&& current_user_can( 'edit_posts' );
+}
+
+/**
+ * Envia os caminhos para a rota de revalidação do front.
+ *
+ * @param string[] $caminhos Lista de caminhos, começando com barra.
+ * @param string   $trava    Chave de trava, para não disparar em rajada.
+ */
+function dov_revalidar( array $caminhos, $trava = '' ) {
+
+	if ( dov_em_lote() ) {
+		return;
+	}
+	if ( ! defined( 'DOV_REVALIDATE_SECRET' ) || ! defined( 'DOV_FRONT_ORIGIN' ) ) {
+		return;
+	}
+
+	if ( $trava ) {
+		if ( get_transient( $trava ) ) {
+			return;
+		}
+		set_transient( $trava, 1, 10 );
+	}
+
+	foreach ( array_unique( $caminhos ) as $caminho ) {
+		wp_remote_post(
+			add_query_arg(
+				array(
+					'secret' => DOV_REVALIDATE_SECRET,
+					'path'   => $caminho,
+				),
+				DOV_FRONT_ORIGIN . '/api/revalidate'
+			),
+			array(
+				'timeout'  => 5,
+				'blocking' => false, // não deixa o editor esperando
+			)
+		);
+	}
+}
+
+/**
+ * Todos os arquivos de editoria. Usado quando um termo muda e não dá para saber
+ * quais listagens exibiam o nome antigo.
+ */
+function dov_caminhos_editorias() {
+	$slugs = get_terms( array(
+		'taxonomy'   => 'category',
+		'fields'     => 'slugs',
+		'hide_empty' => false,
+	) );
+
+	if ( is_wp_error( $slugs ) ) {
+		return array();
+	}
+
+	return array_map( function ( $s ) { return '/' . $s; }, $slugs );
+}
+
+// --- Publicação e edição de conteúdo --------------------------------------
+
 add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
 
 	if ( ! in_array( $post->post_type, array( 'post', 'verbete', 'evento', 'page' ), true ) ) {
@@ -549,16 +650,6 @@ add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
 	if ( wp_is_post_revision( $post->ID ) || wp_is_post_autosave( $post->ID ) ) {
 		return;
 	}
-	if ( ! defined( 'DOV_REVALIDATE_SECRET' ) || ! defined( 'DOV_FRONT_ORIGIN' ) ) {
-		return;
-	}
-
-	// Trava: uma rodada por post a cada 10 segundos.
-	$trava = 'dov_reval_' . $post->ID;
-	if ( get_transient( $trava ) ) {
-		return;
-	}
-	set_transient( $trava, 1, 10 );
 
 	$caminhos = array( '/' );
 
@@ -583,22 +674,37 @@ add_action( 'transition_post_status', function ( $novo, $antigo, $post ) {
 		$caminhos[] = '/' . $post->post_name;
 	}
 
-	foreach ( array_unique( $caminhos ) as $caminho ) {
-		wp_remote_post(
-			add_query_arg(
-				array(
-					'secret' => DOV_REVALIDATE_SECRET,
-					'path'   => $caminho,
-				),
-				DOV_FRONT_ORIGIN . '/api/revalidate'
-			),
-			array(
-				'timeout'  => 5,
-				'blocking' => false, // não deixa o editor esperando
-			)
-		);
-	}
+	dov_revalidar( $caminhos, 'dov_reval_post_' . $post->ID );
 }, 10, 3 );
+
+// --- Mudança de termo ------------------------------------------------------
+//
+// Editoria e tag aparecem no menu, no rodapé, nos kickers, nos chips e no pé das
+// matérias. Não há como mapear quais páginas exibiam o valor antigo, então
+// invalida-se a home e todos os arquivos de editoria. Tipo de verbete só aparece
+// no Almanaque. Termo muda raramente; o custo é irrelevante.
+
+function dov_revalidar_termo( $term_id, $tt_id = 0, $taxonomia = '' ) {
+
+	if ( 'verbete_tipo' === $taxonomia ) {
+		dov_revalidar( array( '/almanaque' ), 'dov_reval_tipo' );
+		return;
+	}
+
+	if ( ! in_array( $taxonomia, array( 'category', 'post_tag' ), true ) ) {
+		return;
+	}
+
+	dov_revalidar( array_merge( array( '/' ), dov_caminhos_editorias() ), 'dov_reval_termo' );
+}
+
+add_action( 'created_term', 'dov_revalidar_termo', 10, 3 );
+add_action( 'edited_term',  'dov_revalidar_termo', 10, 3 );
+
+// Em `delete_term` o termo já saiu do banco; os slugs vêm do gancho anterior.
+add_action( 'pre_delete_term', function ( $term_id, $taxonomia ) {
+	dov_revalidar_termo( $term_id, 0, $taxonomia );
+}, 10, 2 );
 
 // ===========================================================================
 // 10 · ASSINANTES DA NEWSLETTER

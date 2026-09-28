@@ -7,7 +7,7 @@
  * `content.rendered` é a exceção deliberada: sai cru, porque é HTML de verdade.
  */
 
-import { decodificarEntidades, letraInicial, paraTextoSimples } from './html';
+import { chaveDeOrdenacao, decodificarEntidades, letraInicial, paraTextoSimples } from './html';
 import type {
   Autor,
   BrutoAutor,
@@ -146,6 +146,8 @@ export function mapearMateriaCompleta(bruto: BrutoMateria): MateriaCompleta {
 
 export function mapearVerbete(bruto: BrutoVerbete): Verbete {
   const titulo = decodificarEntidades(bruto.title?.rendered ?? '');
+  const ordenacao = opcional(bruto.meta?.dov_ordenacao);
+  const chave = chaveDeOrdenacao(ordenacao, titulo);
 
   return {
     id: bruto.id,
@@ -156,9 +158,14 @@ export function mapearVerbete(bruto: BrutoVerbete): Verbete {
     etimologia: opcional(bruto.meta?.dov_etimologia),
     pronuncia: opcional(bruto.meta?.dov_pronuncia),
     naPratica: opcional(bruto.meta?.dov_na_pratica),
+    curiosidade: opcional(bruto.meta?.dov_curiosidade),
+    ordenacao,
     relacionados: inteiros(bruto.meta?.dov_relacionados),
     imagens: mapearImagens(bruto.dov_imagens),
-    letra: letraInicial(titulo),
+    // Letra e chave saem as duas de `chave`, nunca uma do título e outra da
+    // ordenação: separadas, "Vinho Natural" cairia em N e ordenaria entre os V.
+    letra: letraInicial(chave),
+    chaveOrdenacao: chave,
     data: bruto.date,
     dataUtc: bruto.date_gmt,
   };

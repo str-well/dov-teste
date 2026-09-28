@@ -2084,6 +2084,27 @@ a.etiqueta--verde:hover {
   color: var(--dov-texto-suave);
 }
 
+/**
+ * Três linhas na caixa "Do Almanaque", não duas como no card do índice.
+ *
+ * O mesmo conteúdo, contexto diferente: aqui é uma isca com "Ver verbete"
+ * logo abaixo, numa lateral de 300px. Medido com a definição real mais longa
+ * (240 caracteres), sem corte ela vai a **7 linhas** e a caixa de 245px para
+ * 334px — e a matéria pode listar mais de um verbete, empilhando o efeito na
+ * coluna sticky. Três linhas é a altura que as definições curtas já tinham,
+ * então o corte só age sobre as longas.
+ *
+ * Modificador, e não a classe inteira: `.caixa__texto` também é o texto da
+ * caixa de newsletter, que é frase fixa e curta.
+ */
+.caixa__texto--definicao {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+}
+
 .caixa--escura .caixa__texto {
   color: var(--dov-texto-suave-sobre-escuro);
 }
@@ -2975,7 +2996,23 @@ a.etiqueta--verde:hover {
   font-size: var(--dov-t-h4-cartao);
 }
 
+/**
+ * Duas linhas, com reticências no corte.
+ *
+ * A prancha mostra definições de uma linha, e os 22 verbetes de teste cabiam
+ * nisso. O conteúdo real do cliente não: **32 das 124 definições passam de 180
+ * caracteres**, e a mais longa tem 240. Sem o corte, um card de quatro linhas ao
+ * lado de um de uma linha desalinha a grade inteira do bloco da letra.
+ *
+ * `line-clamp` e não altura fixa: altura fixa cortaria no meio da linha e não
+ * poria reticências. O texto completo continua no verbete, a um clique.
+ */
 .verbete-item__definicao {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
   font-size: var(--dov-t-auxiliar);
   line-height: 1.55;
   color: var(--dov-texto-suave);
