@@ -505,6 +505,11 @@ certa e esconder o problema.
       seria medida
 - [ ] **Preencher a retenção do Analytics na política de privacidade** — está
       marcada em `<mark>`, como as outras pendências jurídicas
+- [ ] **Revogar a senha de aplicativo `importador-almanaque`** no WordPress
+      (Usuários → Perfil → Senhas da aplicação). Criada em 27/09/2026 para a
+      importação do Almanaque, que já rodou. Só faz sentido mantê-la se for
+      reimportar em breve — os 2 verbetes retidos ainda dependem de uma escolha
+      do cliente. É revogável e recriável em trinta segundos
 - [ ] Monitor externo de uptime (UptimeRobot free) apontado para `/api/health`
 - [ ] Domínio apontado, Cloudflare configurado
 - [ ] Documentar para o cliente: onde publicar, quanto tempo leva para aparecer

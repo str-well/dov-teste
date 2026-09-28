@@ -216,7 +216,11 @@ Newsletter e contato, as duas últimas rotas do `Anexo C`. `/api/newsletter`,
 ### Almanaque — a importação do cliente
 
 **Feita em 27/09/2026: 119 criados, 5 atualizados, 0 erros. O Almanaque tem 141
-verbetes em produção.** Os seis termos de `verbete_tipo` foram criados junto —
+verbetes em produção, e o front foi para o ar junto** — índice com 141, V com 7
+em vez de 27, vizinhos pela chave de ordenação e o sitemap de 59 para 176 URLs.
+**A ordem importou:** a importação entrou antes do deploy do front, e por algumas
+horas o índice mostrou 100 de 141 sem erro nenhum aparecer. Numa próxima, subir
+o código antes dos dados. Os seis termos de `verbete_tipo` foram criados junto —
 Uvas 31, Vinhos e estilos 30, Produção 19, Países e regiões 18, Denominações 15,
 Harmonização 11. O mu-plugin v2.3.0 está no ar; o que rodava antes está guardado
 em `wordpress/backup/`, que é o artefato de reversão.
