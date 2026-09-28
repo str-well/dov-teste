@@ -151,18 +151,26 @@ do doc 1, mais detalhada; a do doc 2 está no JSON com `"importar": false`.
 
 Para trocar: inverter o `importar` e rodar de novo.
 
-## Para revisão editorial
+## Revisão editorial — feita nos JSONs
 
-Importados como vieram, sem correção. Ajustar no JSON e reimportar:
+As sete correções abaixo **já estão aplicadas**, com edição mínima: o erro sai, a
+voz do cliente fica. Quem discordar de alguma reverte no JSON e reimporta.
 
-- **Lambrusco se contradiz**: a definição chama de vinho tinto; a curiosidade diz
-  que "não é um vinho, e sim uma família de uvas"
-- **Alemanha**: "inclinações de até 68 graus" — provavelmente 68%, não graus
-- **Rega (Irrigação)**: diz que a irrigação é proibida em Bordeaux e Rioja. A
-  Espanha libera desde os anos 1990 e a França admite em casos excepcionais
-- **Tannat**: a curiosidade associa o vinho a benefícios à saúde cardiovascular
-- **Digitação**: "massa mais acentuada" (Vinho Branco Encorpado, deveria ser
-  "acidez"); "tanico" (Taninos e Proteína/Gordura, deveria ser "tânico");
-  "Desengaçe" (deveria ser "Desengace")
-- **Página Quem Somos**: o texto diz "mais de 400 verbetes". Com a importação o
-  Almanaque tem 141. Está no conteúdo da página no WordPress
+| Verbete | O que mudou | Por quê |
+|---|---|---|
+| Alemanha | "68 graus" → "68%" | 68 graus é quase vertical; o Mosel é citado por ~65–68% de declive |
+| Vinho Branco Encorpado | "massa mais acentuada" → "acidez mais acentuada" | digitação |
+| Taninos e Proteína/Gordura | "tanico" → "tânico" | digitação |
+| Desengaçe | título → "Desengace" | digitação; o slug já era `desengace`, e os dois estavam divergentes |
+| Rega (Irrigação) | não diz mais que Rioja proíbe | a Espanha liberou nos anos 1990; ficou "a França só admite em casos excepcionais, a Espanha liberou nos anos 1990" |
+| Lambrusco | a curiosidade não nega mais a definição | o nome vale para a uva **e** para o vinho; o texto agora soma em vez de contradizer, e o dado sobre os etruscos fica |
+| Tannat | sai a associação com saúde cardiovascular | é alegação de saúde ligada a bebida alcoólica, e o site carrega aviso de moderação no rodapé. O dado sobre os compostos da uva fica |
+
+**As duas últimas são julgamento, não digitação** — se a redação preferir o texto
+original do cliente, é reverter as duas linhas nos JSONs.
+
+## Sem correção, por decisão sua
+
+- **Página Quem Somos**: o texto diz "mais de 400 verbetes" e o Almanaque terá
+  141. Fica como está por enquanto. O texto mora no conteúdo da página no
+  WordPress, não no repositório.
