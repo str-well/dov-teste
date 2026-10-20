@@ -87,6 +87,45 @@ export const BUSCA: ItemNav = { rotulo: 'Buscar', href: '/busca' };
 export const AGENDA: ItemNav = { rotulo: 'Agenda', href: '/agenda' };
 
 /**
+ * A animação de marca do hero da home.
+ *
+ * Arquivo hospedado na mídia do WordPress, por decisão sua — o motivo dado foi
+ * poder trocar sem deploy. **A URL fica aqui e em nenhum outro lugar**, então
+ * trocar o arquivo é mexer numa linha. Se o anexo for apagado no painel, o hero
+ * perde a animação e mostra só o pôster: degrada, não quebra.
+ *
+ * `LARGURA` é o canvas em que o Augusto entregou. O elemento renderiza entre
+ * ~313px (tela de 1280) e ~473px (1440+), sempre reduzindo — nunca ampliando,
+ * que é o que borraria o vídeo.
+ */
+export const HERO_MOTION = {
+  video: 'https://wp.descubraovinho.com.br/wp-content/uploads/2026/10/MOTION_SITE.mp4',
+
+  /**
+   * Quadro parado, para quem pede "reduzir movimento" no sistema e para o
+   * primeiro desenho da página. **Ainda não existe** — ver a pendência no
+   * `CLAUDE.md`. Enquanto for `null`, o vídeo entra sem pôster.
+   */
+  poster: null as string | null,
+
+  largura: 480,
+  altura: 480,
+} as const;
+
+/**
+ * A largura a partir da qual o hero vira duas colunas.
+ *
+ * Abaixo disso a animação sai da tela: medido, em 1280 sobram 313px para ela com
+ * o texto no piso de 640px, e em 1025 não sobra nada — o texto sozinho já ocupa
+ * a faixa inteira. Empilhar poria um quadrado de 480px entre o título e o campo
+ * de busca, que é o elemento principal da home.
+ *
+ * Mesmo número do menu, por coincidência de layout e não por dependência: são
+ * constantes separadas de propósito, para uma poder mudar sem arrastar a outra.
+ */
+export const LARGURA_HERO_DUAS_COLUNAS = 1280;
+
+/**
  * O interruptor de lançamento. **Trocar para `true` é o que põe o site no ar
  * para os buscadores.**
  *

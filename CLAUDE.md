@@ -280,6 +280,31 @@ rotas `dov/v1`** — ou seja, a newsletter pararia de gravar. O arquivo no repo 
 **v2.3.0**, mesclada: tudo que era nosso mais tudo que a v2.2.0 trouxe. Passa em
 `php -l` sob PHP 8.2.
 
+### Hero em duas colunas e a animação de marca
+
+O hero da home virou **duas colunas a partir de 1280**: texto 640px, vão 72px
+(`--dov-esp-13`), animação no que sobrar — ~473px em 1440+, ~313px em 1280.
+
+**640px é piso medido, não gosto.** Com 640 o H1 fecha em duas linhas e o bloco
+tem 428px; em 620 ele quebra para três e salta para 495px. Quem absorve a
+variação de largura é a animação, sempre reduzindo — ampliar borraria o vídeo,
+que é raster de 480px.
+
+**Abaixo de 1280 a coluna some.** Em 1025 o texto sozinho já ocupa a faixa
+inteira, e empilhar poria um quadrado de 480px entre o título e o campo de busca,
+que é o elemento principal da home.
+
+O arquivo mora na **mídia do WordPress**, por decisão sua — o motivo foi poder
+trocar sem deploy. A URL está em `HERO_MOTION`, em `lib/site.ts`, **e em nenhum
+outro lugar**: trocar o arquivo é mexer numa linha. Anexo apagado no painel faz o
+hero perder a animação e mostrar o pôster, não quebrar.
+
+**`components/hero-motion.tsx` não usa `autoplay`.** O servidor entrega o vídeo
+parado e o cliente é que manda tocar, por duas razões que só cabem juntas assim:
+`prefers-reduced-motion` não alcança vídeo (ver armadilha 18), e vídeo que não vai
+aparecer não deve ser baixado. `preload="none"` mais `play()` condicional resolve
+as duas — **verificado: em 1279px o arquivo não é requisitado nenhuma vez.**
+
 ### Pendências que precisam de decisão sua
 
 | O que | Por quê |
@@ -292,6 +317,10 @@ rotas `dov/v1`** — ou seja, a newsletter pararia de gravar. O arquivo no repo 
 | Dois verbetes retidos | "Rosé" e "Vinho Laranja" vêm em dois documentos com textos diferentes. Foi importada a versão do doc 1; a do doc 2 está no JSON com `importar: false`. Inverter e reimportar para trocar |
 | Seis correções editoriais | Listadas no fim de `almanaque/LEIA-ME.md` — Lambrusco se contradiz, Alemanha com "68 graus", Rega diz que irrigação é proibida em Rioja, e três erros de digitação. Importados como vieram, sem correção |
 | "Mais de 400 verbetes" em Quem Somos | O texto da página no WordPress promete 400. O Almanaque terá 141 |
+| **A animação do hero não fecha o loop** | Termina em marinho e recomeça em bege — corta duro a cada 10,8s. O trecho de 0 a 4,8s fecha sozinho (bege nas duas pontas) e é o ciclo completo do logo. Pede recorte e reenvio |
+| **A animação pesa 1,53 MB** | Cortada em 4,8s e sem a faixa de áudio, que entra muda de qualquer jeito, o mesmo arquivo fica em **35 KB**. É a primeira coisa que carrega na home |
+| **A animação repete o logo do cabeçalho** | Ela mostra o logo e a assinatura da marca, que já estão 100px acima. Decisão editorial: ou o hero tem dois logos, ou a peça vira outra coisa |
+| **Falta o pôster** | `HERO_MOTION.poster` está `null`. É o quadro que aparece para quem pede "reduzir movimento" e enquanto o vídeo carrega. Sem ele, o espaço fica vazio nesses casos |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
@@ -435,6 +464,13 @@ As duas seguintes vieram do template de matéria.
     esticado a 520px de altura, ele **exige** 924px de largura, e a capa saía
     500/924 em vez de meio a meio. `aspect-ratio: auto` no filho resolve, e vale
     igual para a foto de verdade, que tem proporção intrínseca.
+
+18. **`prefers-reduced-motion` não alcança vídeo.** O reset dos tokens zera
+    `animation-duration` e `transition-duration`, o que mata toda animação de
+    CSS do projeto de graça — e **não toca num `<video autoplay>`**, porque
+    vídeo não é animação de CSS. A animação do hero é a única peça que precisa do
+    tratamento na mão, em `components/hero-motion.tsx`. Qualquer vídeo novo que
+    entre tem o mesmo problema: não dá para confiar no reset.
 
 ---
 

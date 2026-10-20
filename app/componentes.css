@@ -3122,8 +3122,67 @@ a.etiqueta--verde:hover {
   bottom: -140px;
 }
 
+/**
+ * O hero em duas colunas, a partir de 1280.
+ *
+ * **640px é piso medido, não gosto.** Com 640 o H1 fecha em duas linhas e o
+ * bloco tem 428px de altura; em 620 ele quebra para três e salta para 495px. A
+ * coluna de texto para ali, e quem absorve a variação de largura é a animação —
+ * ela vai de ~473px em telas de 1440+ a ~313px num notebook de 1280, sempre
+ * reduzindo. Ampliar borraria o vídeo, que é raster de 480px.
+ *
+ * O vão é `--dov-esp-13` porque 72px é token; 80px, que fechava a conta redonda
+ * de 640+80+480, não existe na escala.
+ *
+ * Abaixo de 1280 volta a ser uma coluna só: em 1025 o texto sozinho já ocupa a
+ * faixa inteira, e empilhar poria um quadrado de 480px entre o título e o campo
+ * de busca, que é o elemento principal da home.
+ */
+.hero-busca__grade {
+  display: grid;
+}
+
 .hero-busca__conteudo {
   max-width: 840px;
+}
+
+.hero-busca__motion {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .hero-busca__grade {
+    grid-template-columns: 640px minmax(0, 1fr);
+    gap: var(--dov-esp-13);
+    align-items: center;
+  }
+
+  /* Dentro da grade o `max-width: 840px` perde o sentido: quem define a coluna
+     é a própria trilha de 640px. */
+  .hero-busca__conteudo {
+    max-width: none;
+  }
+
+  .hero-busca__motion {
+    display: block;
+  }
+}
+
+/**
+ * O vídeo ocupa a coluna inteira e nunca passa do canvas de entrega.
+ *
+ * Sem `width/height` no CSS o elemento usaria os atributos de 480×480 e
+ * estouraria a coluna de 313px no 1280. O `aspect-ratio` trava o quadrado para o
+ * espaço ser reservado antes de o arquivo chegar — sem isso o hero daria um
+ * salto de layout quando o vídeo carregasse.
+ */
+.hero-motion {
+  display: block;
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
 }
 
 .hero-busca__titulo {

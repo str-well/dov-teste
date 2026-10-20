@@ -3,6 +3,7 @@ import Link from 'next/link';
 
 import { BuscaComSugestoes } from '@/components/busca-com-sugestoes';
 import { CartaoCompacto, CartaoMateria } from '@/components/cartao';
+import { HeroMotion } from '@/components/hero-motion';
 import { IconeSetaDireita } from '@/components/icones';
 import { ImagemWp } from '@/components/imagem-wp';
 import { ItemDaAgenda } from '@/components/item-da-agenda';
@@ -101,35 +102,42 @@ export default async function Page() {
         />
 
         <div className="limite secao__conteudo">
-          <div className="hero-busca__conteudo">
-            <p className="kicker">Descubra o vinho</p>
+          <div className="hero-busca__grade">
+            <div className="hero-busca__conteudo">
+              <p className="kicker">Descubra o vinho</p>
 
-            <h1 className="hero-busca__titulo" id="hero-titulo">
-              O que você quer descobrir sobre vinho hoje?
-            </h1>
+              <h1 className="hero-busca__titulo" id="hero-titulo">
+                O que você quer descobrir sobre vinho hoje?
+              </h1>
 
-            <p className="lead hero-busca__lead">
-              Uvas, harmonizações, destinos, verbetes do almanaque — tudo em um só lugar.
-            </p>
+              <p className="lead hero-busca__lead">
+                Uvas, harmonizações, destinos, verbetes do almanaque — tudo em um só lugar.
+              </p>
 
-            <div className="hero-busca__form">
-              <BuscaComSugestoes id="busca-hero" />
+              <div className="hero-busca__form">
+                <BuscaComSugestoes id="busca-hero" />
+              </div>
+
+              {temas.length > 0 && (
+                <div className="chips hero-busca__sugestoes">
+                  <span className="hero-busca__rotulo">Comece por aqui:</span>
+                  {temas.map((tema) => (
+                    <Link
+                      key={tema.slug}
+                      className="chip chip--sugestao"
+                      href={`/busca?q=${encodeURIComponent(tema.nome)}`}
+                    >
+                      {tema.nome}
+                    </Link>
+                  ))}
+                </div>
+              )}
             </div>
 
-            {temas.length > 0 && (
-              <div className="chips hero-busca__sugestoes">
-                <span className="hero-busca__rotulo">Comece por aqui:</span>
-                {temas.map((tema) => (
-                  <Link
-                    key={tema.slug}
-                    className="chip chip--sugestao"
-                    href={`/busca?q=${encodeURIComponent(tema.nome)}`}
-                  >
-                    {tema.nome}
-                  </Link>
-                ))}
-              </div>
-            )}
+            {/* Coluna direita, só a partir de 1280 — ver `HeroMotion`. */}
+            <div className="hero-busca__motion">
+              <HeroMotion />
+            </div>
           </div>
         </div>
       </section>
