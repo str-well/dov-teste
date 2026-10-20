@@ -590,6 +590,17 @@ O `@theme` zera cada namespace com `initial` antes de preencher. **`bg-slate-500
 - **Nada de aviso de obra na tela.** Pendência de projeto mora no código e nos
   documentos, não num banner que o leitor lê. Havia três (`aviso-rascunho`) e
   foram removidos.
+- **O logo colorido foi corrigido contra o arquivo oficial** (20/10/2026). O
+  pacote do designer trazia o letreiro em **roxo** e as folhas externas em
+  **limão**; o oficial tem letreiro em **marinho** e folhas em **menta**.
+  Aplicado nos três SVGs coloridos — horizontal, vertical e o ícone do cacho,
+  que é o estado vazio de imagem e aparece em todo card sem foto (dez só na
+  home). As variantes branca e preta são monocromáticas e não mudaram.
+  **Pendência:** o arquivo oficial veio em WebP, não em SVG. As cores foram
+  aplicadas editando os vetores existentes, o que só é seguro porque as quatro
+  cores novas são tokens da marca — mas a **geometria não foi verificada**: o
+  centroide desloca 3px e a massa difere 2,4% num render de 900px. No tamanho do
+  header (58px de altura) isso é sub-pixel, e ainda assim vale pedir o SVG.
 - **Os endereços de Instagram e YouTube em `lib/site.ts` não foram confirmados.**
   São o handle da marca, e `instagram.com/descubraovinho` pode ser de outra
   pessoa. Conferir com o cliente antes do lançamento.

@@ -477,7 +477,20 @@ certa e esconder o problema.
 - [ ] Acessibilidade: contraste (paleta já validada em AAA), navegação por teclado,
       foco visível, `alt` em todas as imagens
 - [ ] **Fotografia real no lugar dos placeholders** — maior risco não técnico do projeto
-- [ ] **Cores do logo conferidas contra os arquivos oficiais da marca**
+- [x] **Cores do logo conferidas contra os arquivos oficiais da marca** — o
+      cliente mandou o horizontal colorido em 20/10/2026 e duas cores estavam
+      erradas no pacote: o letreiro era roxo e virou marinho, as folhas externas
+      eram limão e viraram menta. Aplicado nos três SVGs coloridos. O limão
+      continua válido como cor de interface (sublinhado de hover, filetes), só
+      saiu do logo
+- [ ] **Pedir ao designer o SVG do logo novo.** O arquivo veio em WebP de
+      7681×4320, e o header precisa de vetor — o rodapé usa a variante branca, que
+      um raster não entrega. As cores foram aplicadas editando os SVGs que já
+      existiam, e isso só é seguro porque as quatro cores novas são tokens da
+      marca. **A geometria não foi verificada como idêntica:** medido, o centroide
+      desloca 3px e a massa difere 2,4% num render de 900px de largura. Em 58px de
+      altura, que é o tamanho no header, isso é sub-pixel — mas se o Augusto
+      mexeu em espaçamento ou curva, o SVG daqui está desatualizado na forma
 - [ ] **Revisão jurídica da política de privacidade e dos termos de uso.** Os dois
       são rascunho, e trazem pendências marcadas em `<mark>` que aparecem na tela
       de propósito: razão social e CNPJ, encarregado de dados, prazo de retenção
