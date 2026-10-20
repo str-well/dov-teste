@@ -326,6 +326,27 @@ parado e o cliente é que manda tocar, por duas razões que só cabem juntas ass
 aparecer não deve ser baixado. `preload="none"` mais `play()` condicional resolve
 as duas — **verificado: em 1279px o arquivo não é requisitado nenhuma vez.**
 
+### Linha fina da matéria
+
+`dov_linha_fina` no post, acrescentado em 20/10/2026 a seu pedido. **Não é o
+mesmo que o resumo**, e a diferença é o motivo do campo existir: o `excerpt` do
+WordPress é gerado a partir do corpo quando ninguém escreve um, então ele emenda
+o começo do texto e corta em reticências. Era o que a página de matéria mostrava
+— no Malbec e picanha, o olho do editor colado ao primeiro parágrafo.
+
+Quem manda onde:
+
+| Lugar | Fonte |
+|---|---|
+| Lead da página de matéria | `linhaFina` → `resumo` |
+| Descrição de busca | `seo.descricao` → `linhaFina` → `resumo` |
+| Cards e resultados de busca | **`resumo`**, sempre |
+
+Cards continuam no resumo de propósito: linha fina e chamada de card são textos
+com funções diferentes, e o editor pode querer um em cada lugar. **A reserva para
+o `resumo` existe porque as 20 matérias antigas têm o campo vazio** — sem ela, o
+lead sumiria de todas até alguém preencher uma a uma.
+
 ### Pendências que precisam de decisão sua
 
 | O que | Por quê |

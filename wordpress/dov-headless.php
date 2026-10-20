@@ -103,6 +103,11 @@ function dov_esquema() {
 		'post' => array(
 			'titulo' => 'Dados da matéria',
 			'campos' => array(
+				'dov_linha_fina' => array(
+					'label' => 'Linha fina',
+					'tipo'  => 'textarea',
+					'ajuda' => 'Uma ou duas frases sob o título, que completam o que ele não diz. Vazio usa o resumo automático do WordPress — que costuma emendar o começo do texto e terminar em reticências.',
+				),
 				'dov_credito_foto' => array(
 					'label' => 'Crédito da foto de destaque',
 					'tipo'  => 'text',

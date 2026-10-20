@@ -88,8 +88,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!materia) return {};
 
   // Vazio significa "usar o título e o resumo" — a decisão é aqui, não na API.
+  // A linha fina entra antes do resumo também aqui: é texto escrito à mão para
+  // complementar o título, que é exatamente o que uma descrição de busca quer.
   const titulo = materia.seo.titulo || materia.titulo;
-  const descricao = materia.seo.descricao || materia.resumo;
+  const descricao = materia.seo.descricao || materia.linhaFina || materia.resumo;
   const capa = imagem(materia.imagens, 'dov_destaque', 'dov_card_4x3', 'dov_card');
 
   return {
@@ -166,7 +168,12 @@ export default async function Page({ params }: Props) {
 
             <h1 className="materia__titulo">{materia.titulo}</h1>
 
-            {materia.resumo && <p className="materia__lead">{materia.resumo}</p>}
+            {/* A linha fina manda; o resumo é a reserva. O resumo automático do
+                WordPress emenda o começo do corpo e corta em reticências, então
+                ele serve de rede, não de primeira escolha. */}
+            {(materia.linhaFina || materia.resumo) && (
+              <p className="materia__lead">{materia.linhaFina || materia.resumo}</p>
+            )}
 
             <div className="assinatura-autor">
               {autor?.retratoUrl && (

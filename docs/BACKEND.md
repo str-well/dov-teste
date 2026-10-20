@@ -47,6 +47,7 @@ Todos ficam sob a chave `meta`. Prefixo `dov_`.
 
 ```json
 "meta": {
+  "dov_linha_fina": "Por que o tinto argentino e a carne do churrasco combinam tanto — e o que fazer para não errar na hora de servir.",
   "dov_credito_foto": "O Vale dos Vinhedos visto da estrada do Alto Feliz, às 7h40. Foto: Ana Ferraz",
   "dov_verbetes_relacionados": [30, 24],
   "dov_seo_titulo": "",
@@ -55,8 +56,15 @@ Todos ficam sob a chave `meta`. Prefixo `dov_`.
 }
 ```
 
+- `dov_linha_fina` — o olho sob o título, escrito à mão. **Não confundir com
+  `excerpt`:** o resumo é gerado pelo WordPress a partir do corpo quando ninguém
+  escreve um, e aí emenda o começo do texto e corta em reticências. A linha fina
+  manda na página de matéria e na descrição de busca; o resumo continua
+  alimentando cards e resultados de busca
 - `dov_verbetes_relacionados` — IDs de verbete, alimenta a caixa "Do Almanaque"
-- `dov_seo_titulo` / `dov_seo_descricao` — vazios significam "usar título e resumo"
+- `dov_seo_titulo` / `dov_seo_descricao` — vazios significam "usar título e
+  resumo". A precedência da descrição é `dov_seo_descricao` → `dov_linha_fina` →
+  `excerpt`
 - `dov_tempo_leitura` — calculado na gravação, em minutos, mínimo 1
 
 ### Verbete (`/verbetes`)

@@ -76,6 +76,18 @@ export type Materia = {
   titulo: string;
   /** Texto puro, sem o `<p>` que o WordPress envolve. */
   resumo: string;
+  /**
+   * O olho da matéria: uma ou duas frases sob o título.
+   *
+   * Campo próprio, e não o `resumo`, porque os dois servem a coisas diferentes.
+   * O `resumo` é gerado pelo WordPress a partir do corpo quando ninguém escreve
+   * um — e aí ele emenda o começo do texto e corta em reticências, que é o que
+   * estava acontecendo na página de matéria. A linha fina é escrita à mão e
+   * complementa o título; o resumo alimenta cards e busca.
+   *
+   * Vazio nas matérias antigas: o template cai no `resumo`.
+   */
+  linhaFina: string;
   /** ISO 8601 no fuso de São Paulo. É o campo de exibição. */
   data: string;
   /** ISO 8601 em UTC. Para `<time dateTime>` e sitemap. */
@@ -244,6 +256,7 @@ export type BrutoMateria = {
   tags: number[];
   dov_imagens: BrutoImagens | null;
   meta: {
+    dov_linha_fina?: string;
     dov_credito_foto?: string;
     dov_verbetes_relacionados?: number[];
     dov_seo_titulo?: string;

@@ -118,6 +118,7 @@ export function mapearMateria(bruto: BrutoMateria): Materia {
     slug: bruto.slug,
     titulo: decodificarEntidades(bruto.title?.rendered ?? ''),
     resumo: paraTextoSimples(bruto.excerpt?.rendered),
+    linhaFina: opcional(bruto.meta?.dov_linha_fina),
     data: bruto.date,
     dataUtc: bruto.date_gmt,
     imagens: mapearImagens(bruto.dov_imagens),
