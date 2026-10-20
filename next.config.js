@@ -72,9 +72,16 @@ const nextConfig = {
      *
      * O plano é dividido com o WordPress e outros 6 sites de clientes, então
      * um build que satura a API não é só problema nosso: é lentidão nos outros
-     * durante o deploy. Quatro por vez alonga o build e é o preço certo.
+     * durante o deploy.
+     *
+     * **Começou em 4 e caiu para 2**, porque 4 não bastou: um deploy morreu com
+     * a API respondendo 500 em `posts`, `verbetes`, `pages` e `eventos` ao mesmo
+     * tempo. O build do servidor clona do zero, então o cache de fetch nasce
+     * vazio e a rajada inicial é a pior. O outro lado da correção é a repetição
+     * com espera crescente em `lib/wp/http.ts` — nenhum dos dois resolve
+     * sozinho.
      */
-    staticGenerationMaxConcurrency: 4,
+    staticGenerationMaxConcurrency: 2,
 
     /**
      * Uma segunda tentativa antes de desistir. O 500 do WordPress sob carga é

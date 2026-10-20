@@ -510,6 +510,26 @@ As duas seguintes vieram do template de matéria.
     esses, só recarga forçada. Com o site ainda em `noindex`, isso são umas
     poucas pessoas.
 
+20. **O build derruba o WordPress se não for segurado, e o retry do Next não
+    basta.** Um deploy morreu com a API respondendo **500 em tudo** — `posts`,
+    `verbetes`, `pages` e `eventos` ao mesmo tempo. Não era queda: minutos depois
+    a mesma API respondia 200 em 150ms.
+
+    A causa é a rajada inicial. O build do servidor **clona o repositório do
+    zero**, então o cache de fetch do Next nasce vazio: 50 páginas, vários fetches
+    cada, workers em paralelo, tudo caindo de uma vez num plano que divide
+    processos PHP com outros 6 sites.
+
+    `staticGenerationRetryCount` sozinho não resolve — ele repete a página
+    "shortly", sem esperar a fila do PHP desafogar. A correção tem dois lados, e
+    **nenhum funciona sozinho**: concorrência de 2 no `next.config.js`, e
+    repetição com espera crescente (400ms, 1200ms) em `lib/wp/http.ts`.
+
+    A repetição só pega **5xx e falha de rede**. 4xx lança na hora, porque pedido
+    malformado não melhora por insistência e repetir mascararia bug nosso —
+    verificado: 503 repete três vezes, 403 lança em 22ms, 404 continua virando
+    lista vazia.
+
 ---
 
 ## Variáveis de ambiente

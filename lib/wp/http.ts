@@ -174,6 +174,38 @@ export async function buscarPorId<T>(
  * Devolve `null` nos dois casos de "não existe" — 404 e página fora de
  * alcance. Qualquer outra falha vira `ErroWordPress`.
  */
+/**
+ * Quantas vezes insistir, e quanto esperar entre uma e outra.
+ *
+ * **Isto existe por causa de um build que morreu.** O `next build` clona o
+ * repositório do zero, então o cache de fetch nasce vazio: 50 páginas, vários
+ * fetches cada, workers em paralelo, tudo caindo de uma vez no WordPress — que
+ * divide processos PHP com outros 6 sites. Ele respondeu **500 em tudo**,
+ * `posts`, `verbetes`, `pages` e `eventos`, e o deploy parou.
+ *
+ * Não foi queda: minutos depois a mesma API respondia 200 em 150ms. Foi pico.
+ *
+ * O `staticGenerationRetryCount` do Next não resolve isso sozinho — ele repete a
+ * página "shortly", sem esperar o bastante para a fila do PHP desafogar. A
+ * espera precisa estar aqui, no transporte, e precisa crescer: a primeira
+ * tentativa adicional vem rápido para o caso de ter sido um tropeço isolado, e
+ * as seguintes dão tempo real de recuperação.
+ */
+const TENTATIVAS = 3;
+const ESPERA_MS = [400, 1200, 3000];
+
+const dormir = (ms: number) => new Promise((pronto) => setTimeout(pronto, ms));
+
+/**
+ * `true` para falha que vale repetir: o servidor engasgou, o pedido estava certo.
+ *
+ * 5xx e erro de rede entram. **4xx não** — pedido malformado ou recurso que não
+ * existe não melhora por insistência, e repetir só mascararia um bug nosso.
+ */
+function valeRepetir(status: number): boolean {
+  return status === 0 || status >= 500;
+}
+
 async function requisitar(
   caminho: string,
   parametros: Parametros,
@@ -182,6 +214,43 @@ async function requisitar(
   const query = montarQuery(parametros);
   const url = `${urlBase()}/${caminho}${query ? `?${query}` : ''}`;
 
+  let ultimoErro: ErroWordPress | null = null;
+
+  for (let tentativa = 0; tentativa < TENTATIVAS; tentativa += 1) {
+    if (tentativa > 0) await dormir(ESPERA_MS[tentativa - 1] ?? 3000);
+
+    const resultado = await umaTentativa(url, caminho, opcoes);
+
+    if (!(resultado instanceof ErroWordPress)) return resultado;
+
+    if (!valeRepetir(resultado.status)) throw resultado;
+
+    ultimoErro = resultado;
+
+    // Só avisa quando ainda vai insistir — o erro final já sobe com tudo.
+    if (tentativa < TENTATIVAS - 1) {
+      console.warn(
+        `[wp] ${caminho} respondeu ${resultado.status}; ` +
+          `tentativa ${tentativa + 2} de ${TENTATIVAS} em ${ESPERA_MS[tentativa]}ms`,
+      );
+    }
+  }
+
+  throw (
+    ultimoErro ??
+    new ErroWordPress(`Falha desconhecida em ${caminho}.`, 0, caminho)
+  );
+}
+
+/**
+ * Uma ida só. Devolve a resposta, `null` para "não existe", ou o erro **como
+ * valor** em vez de lançar — é o laço acima que decide se insiste ou desiste.
+ */
+async function umaTentativa(
+  url: string,
+  caminho: string,
+  opcoes: Opcoes,
+): Promise<Response | null | ErroWordPress> {
   let resposta: Response;
 
   try {
@@ -190,7 +259,7 @@ async function requisitar(
       headers: { Accept: 'application/json' },
     });
   } catch (erro) {
-    throw new ErroWordPress(
+    return new ErroWordPress(
       `Não foi possível falar com o WordPress: ${
         erro instanceof Error ? erro.message : 'falha de rede'
       }`,
@@ -214,7 +283,7 @@ async function requisitar(
     }
   }
 
-  throw new ErroWordPress(
+  return new ErroWordPress(
     `A API respondeu ${resposta.status} ${resposta.statusText} em ${caminho}.`,
     resposta.status,
     caminho,
