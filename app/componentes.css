@@ -3168,32 +3168,6 @@ a.etiqueta--verde:hover {
   }
 }
 
-/**
- * Quem pede "reduzir movimento" recebe o hero de uma coluna só.
- *
- * O JS já impede o vídeo de tocar e de ser baixado nesse caso, mas sozinho isso
- * deixaria uma coluna de 473px vazia ao lado do texto — um vão que parece
- * defeito de layout. Enquanto não houver pôster, o certo é recolher a coluna e
- * devolver o texto aos 840px: é exatamente o hero que esteve em produção até
- * agora, então é um layout que já sabemos que fecha.
- *
- * Precisa vir **depois** do bloco de 1280 para vencer na cascata, já que as duas
- * consultas têm a mesma especificidade.
- */
-@media (min-width: 1280px) and (prefers-reduced-motion: reduce) {
-  .hero-busca__grade {
-    grid-template-columns: 1fr;
-    gap: 0;
-  }
-
-  .hero-busca__conteudo {
-    max-width: 840px;
-  }
-
-  .hero-busca__motion {
-    display: none;
-  }
-}
 
 /**
  * O vídeo ocupa a coluna inteira e nunca passa do canvas de entrega.

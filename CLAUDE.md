@@ -312,6 +312,14 @@ O bege do vídeo saiu `#F3E8E7` contra o `#F3E8E8` do fundo: um valor de diferen
 em um canal, invisível. O risco de emenda visível que o formato MP4 trazia não se
 concretizou.
 
+**O pôster é um quadro do próprio vídeo, aos 3,5s** — o ponto em que o logo está
+resolvido. A janela estável vai de 3,2s a 3,8s e 3,5 fica no meio, para nenhuma
+variação de seek cair numa transição. WebP de 12,2 KB contra 42,7 KB em PNG, e o
+bege saiu `#F3E8E7`, mais perto do fundo do que o próprio PNG, que deu `#F3E7E7`.
+Está na mídia do WordPress como anexo 224. **Trocar junto com o vídeo:** se o
+arquivo mudar e o pôster não, quem pede menos movimento vê um quadro que não
+existe mais na animação.
+
 **`components/hero-motion.tsx` não usa `autoplay`.** O servidor entrega o vídeo
 parado e o cliente é que manda tocar, por duas razões que só cabem juntas assim:
 `prefers-reduced-motion` não alcança vídeo (ver armadilha 18), e vídeo que não vai
@@ -330,7 +338,6 @@ as duas — **verificado: em 1279px o arquivo não é requisitado nenhuma vez.**
 | Dois verbetes retidos | "Rosé" e "Vinho Laranja" vêm em dois documentos com textos diferentes. Foi importada a versão do doc 1; a do doc 2 está no JSON com `importar: false`. Inverter e reimportar para trocar |
 | Seis correções editoriais | Listadas no fim de `almanaque/LEIA-ME.md` — Lambrusco se contradiz, Alemanha com "68 graus", Rega diz que irrigação é proibida em Rioja, e três erros de digitação. Importados como vieram, sem correção |
 | "Mais de 400 verbetes" em Quem Somos | O texto da página no WordPress promete 400. O Almanaque terá 141 |
-| **Falta o pôster da animação do hero** | `HERO_MOTION.poster` está `null`. Enquanto for, quem pede "reduzir movimento" recebe o hero de uma coluna só, com o texto de volta aos 840px — ver o CSS. Funciona, mas é contorno: com pôster, essa pessoa veria a peça parada em vez de não ver nada |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.

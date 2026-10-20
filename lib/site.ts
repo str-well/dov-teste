@@ -103,10 +103,20 @@ export const HERO_MOTION = {
 
   /**
    * Quadro parado, para quem pede "reduzir movimento" no sistema e para o
-   * primeiro desenho da página. **Ainda não existe** — ver a pendência no
-   * `CLAUDE.md`. Enquanto for `null`, o vídeo entra sem pôster.
+   * primeiro desenho da página.
+   *
+   * Extraído do próprio vídeo aos **3,5s**, o ponto em que o logo está
+   * resolvido — a janela estável vai de 3,2s a 3,8s, e 3,5 fica no meio dela
+   * para nenhuma variação de seek cair numa transição. Não é peça nova: é um
+   * quadro do arquivo que o cliente entregou.
+   *
+   * WebP em vez de PNG: 12,2 KB contra 42,7 KB, e o bege saiu `#F3E8E7` — mais
+   * perto do `#F3E8E8` do fundo do que o próprio PNG, que deu `#F3E7E7`.
+   *
+   * **Trocar junto com o vídeo.** Se o arquivo mudar e o pôster não, quem pede
+   * menos movimento vê um quadro que não existe mais na animação.
    */
-  poster: null as string | null,
+  poster: 'https://wp.descubraovinho.com.br/wp-content/uploads/2026/10/MOTION_SITE-poster.webp' as string | null,
 
   largura: 480,
   altura: 480,
