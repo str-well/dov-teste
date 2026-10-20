@@ -1,3 +1,4 @@
+import { comVersao } from '@/lib/assets';
 import { SITE } from '@/lib/site';
 
 type Props = {
@@ -24,7 +25,7 @@ export function Logo({ className, branco = false, decorativo = false }: Props) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className={className}
-      src={`/logos/dov-logo-horizontal-${branco ? 'branco' : 'colorido'}.svg`}
+      src={comVersao(`/logos/dov-logo-horizontal-${branco ? 'branco' : 'colorido'}.svg`)}
       alt={decorativo ? '' : SITE.nome}
       aria-hidden={decorativo || undefined}
       width={900}

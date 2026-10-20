@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { EstadoVazio } from '@/components/estado-vazio';
 import { ItemDaAgenda } from '@/components/item-da-agenda';
 import { Migalhas } from '@/components/migalhas';
+import { comVersao } from '@/lib/assets';
 import { ALMANAQUE } from '@/lib/site';
 import { listarEventos } from '@/lib/wp';
 
@@ -47,7 +48,7 @@ export default async function Page() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--menta cabeca-institucional__blob"
-          src="/blobs/dov-blob-menta.svg"
+          src={comVersao('/blobs/dov-blob-menta.svg')}
           alt=""
           aria-hidden="true"
         />

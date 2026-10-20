@@ -5,6 +5,7 @@ import { BuscaComSugestoes } from '@/components/busca-com-sugestoes';
 import { EstadoVazio } from '@/components/estado-vazio';
 import { ImagemWp } from '@/components/imagem-wp';
 import { Realce } from '@/components/realce';
+import { comVersao } from '@/lib/assets';
 import { dataCurta, dataParaAtributo, plural, tempoDeLeitura } from '@/lib/formato';
 import { ALMANAQUE, ordenarEditorias } from '@/lib/site';
 import {
@@ -92,7 +93,7 @@ export default async function Page({ searchParams }: Props) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--lilas cabeca-busca__blob"
-          src="/blobs/dov-blob-lilas.svg"
+          src={comVersao('/blobs/dov-blob-lilas.svg')}
           alt=""
           aria-hidden="true"
         />
@@ -327,7 +328,7 @@ async function SemTermo() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--lilas cabeca-busca__blob"
-          src="/blobs/dov-blob-lilas.svg"
+          src={comVersao('/blobs/dov-blob-lilas.svg')}
           alt=""
           aria-hidden="true"
         />

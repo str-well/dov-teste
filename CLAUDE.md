@@ -489,26 +489,34 @@ As duas seguintes vieram do template de matéria.
     tratamento na mão, em `components/hero-motion.tsx`. Qualquer vídeo novo que
     entre tem o mesmo problema: não dá para confiar no reset.
 
-19. **Estático de `public/` não tinha `Cache-Control`, e brand asset velho
-    ficava preso no navegador.** A correção de cor do logo subiu, a produção
-    passou a servir o SVG novo — e o header continuou mostrando o antigo, porque
-    o navegador nem pediu: `transferSize: 0`, servido do cache.
+19. **Estático de `public/` não passa pelo Node em produção, e `headers()` do
+    Next não o alcança.** A correção de cor do logo subiu, a produção passou a
+    servir o SVG novo — e o header continuou mostrando o antigo, porque o
+    navegador nem pediu: `transferSize: 0`, servido do cache.
 
-    Sem o cabeçalho, o navegador calcula frescor por heurística a partir do
-    `Last-Modified`. E **arquivo em `public/` mantém o caminho exato, sem hash de
-    conteúdo** — ao contrário do JS e do CSS, que o Next versiona sozinho — então
-    a URL nunca muda e o cache nunca se invalida por conta.
+    Arquivo em `public/` mantém o caminho exato, **sem hash de conteúdo**, ao
+    contrário do JS e do CSS que o Next versiona sozinho. Sem `Cache-Control`, o
+    navegador calcula frescor por heurística e a URL nunca muda, então o cache
+    nunca se invalida por conta.
 
-    Resolvido com `headers()` no `next.config.js` para `/logos/` e `/blobs/`:
-    `max-age=0` faz o navegador revalidar a cada carga (304 de 0 byte, medido),
-    `s-maxage=300` segura na borda para a revalidação não chegar ao Node a cada
-    visita, e `stale-while-revalidate` de um dia serve a cópia da borda se a
-    origem cair.
+    **A primeira correção pareceu funcionar e não funcionou.** Pus um `headers()`
+    no `next.config.js`, verifiquei com `next start` local, saiu certinho — e em
+    produção o cabeçalho não apareceu. Os cabeçalhos explicam: a resposta de um
+    SVG não traz `X-Powered-By: Next.js` nem `x-nextjs-cache`, e o
+    `x-hcdn-upstream-rt` fica em **0,002s** contra 0,059s de uma rota HTML. **O
+    servidor web serve o arquivo direto do disco**; o processo Node nem é
+    consultado. Local o Node serve, e a diferença passa despercebida.
 
-    **O cabeçalho só vale daqui para frente.** Quem já tinha o arquivo antigo em
-    cache não faz requisição nenhuma, então não recebe o cabeçalho novo — para
-    esses, só recarga forçada. Com o site ainda em `noindex`, isso são umas
-    poucas pessoas.
+    O que resolve é mudar a URL, porque isso invalida cache em qualquer camada —
+    navegador, CDN e proxy. `comVersao()`, em `lib/assets.ts`, acrescenta
+    `?v=<BUILD_TIME>` e está aplicado nos **16** pontos que referenciam `/logos/`
+    e `/blobs/`. Como o `BUILD_TIME` é carimbado a cada build, não há nada para
+    lembrar de incrementar. **Esquecer num ponto devolve o problema só naquele
+    arquivo** — o header atualiza e o ícone do card não.
+
+    **A correção só vale daqui para frente.** Quem já tinha o arquivo antigo em
+    cache não faz requisição nenhuma, então nada o alcança — para esses, só
+    recarga forçada.
 
 20. **O build derruba o WordPress se não for segurado, e o retry do Next não
     basta.** Um deploy morreu com a API respondendo **500 em tudo** — `posts`,

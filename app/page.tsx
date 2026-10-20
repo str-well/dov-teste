@@ -7,6 +7,7 @@ import { HeroMotion } from '@/components/hero-motion';
 import { IconeSetaDireita } from '@/components/icones';
 import { ImagemWp } from '@/components/imagem-wp';
 import { ItemDaAgenda } from '@/components/item-da-agenda';
+import { comVersao } from '@/lib/assets';
 import { dataCurta, dataParaAtributo, plural, tempoDeLeitura } from '@/lib/formato';
 import {
   AGENDA,
@@ -89,14 +90,14 @@ export default async function Page() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--lilas hero-busca__blob--lilas"
-          src="/blobs/dov-blob-lilas.svg"
+          src={comVersao('/blobs/dov-blob-lilas.svg')}
           alt=""
           aria-hidden="true"
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--menta hero-busca__blob--menta"
-          src="/blobs/dov-blob-menta.svg"
+          src={comVersao('/blobs/dov-blob-menta.svg')}
           alt=""
           aria-hidden="true"
         />
@@ -183,7 +184,7 @@ export default async function Page() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--menta chamada-almanaque__blob"
-          src="/blobs/dov-blob-menta.svg"
+          src={comVersao('/blobs/dov-blob-menta.svg')}
           alt=""
           aria-hidden="true"
         />

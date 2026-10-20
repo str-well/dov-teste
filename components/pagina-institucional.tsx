@@ -1,3 +1,5 @@
+import { comVersao } from '@/lib/assets';
+
 type Props = {
   /** Rótulo em caixa-alta acima do título. */
   kicker: string;
@@ -23,7 +25,7 @@ export function PaginaInstitucional({ kicker, titulo, lead, children }: Props) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--lilas cabeca-institucional__blob"
-          src="/blobs/dov-blob-lilas.svg"
+          src={comVersao('/blobs/dov-blob-lilas.svg')}
           alt=""
           aria-hidden="true"
         />

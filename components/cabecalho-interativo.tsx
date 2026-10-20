@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+import { comVersao } from '@/lib/assets';
 import { BUSCA, LARGURA_MENU_DESKTOP, REDES, SITE, type ItemNav } from '@/lib/site';
 
 import {
@@ -193,7 +194,7 @@ export function CabecalhoInterativo({ editorias, utilitarios, almanaque }: Props
 
               <img
                 className="blob blob--lilas menu-tela-cheia__blob"
-                src="/blobs/dov-blob-lilas.svg"
+                src={comVersao('/blobs/dov-blob-lilas.svg')}
                 alt=""
                 aria-hidden="true"
               />

@@ -8,6 +8,7 @@ import { EstadoVazio } from '@/components/estado-vazio';
 import { Migalhas } from '@/components/migalhas';
 import { Ordenacao } from '@/components/ordenacao';
 import { Paginacao } from '@/components/paginacao';
+import { comVersao } from '@/lib/assets';
 import { ALMANAQUE, ordenarEditorias } from '@/lib/site';
 import { plural } from '@/lib/formato';
 import {
@@ -123,7 +124,7 @@ export default async function Page({ params, searchParams }: Props) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--lilas cabeca-categoria__blob"
-          src="/blobs/dov-blob-lilas.svg"
+          src={comVersao('/blobs/dov-blob-lilas.svg')}
           alt=""
           aria-hidden="true"
         />

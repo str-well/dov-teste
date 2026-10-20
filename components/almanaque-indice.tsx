@@ -4,6 +4,8 @@ import Fuse from 'fuse.js';
 import Link from 'next/link';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { comVersao } from '@/lib/assets';
+
 import { IconeBusca } from './icones';
 import { Realce } from './realce';
 
@@ -154,7 +156,7 @@ export function AlmanaqueIndice({ verbetes, cabeca }: Props) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--menta cabeca-almanaque__blob"
-          src="/blobs/dov-blob-menta.svg"
+          src={comVersao('/blobs/dov-blob-menta.svg')}
           alt=""
           aria-hidden="true"
         />

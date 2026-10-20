@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { IconeSetaDireita } from '@/components/icones';
 import { ItemDaAgenda } from '@/components/item-da-agenda';
 import { Migalhas } from '@/components/migalhas';
+import { comVersao } from '@/lib/assets';
 import { intervaloDeDatas } from '@/lib/formato';
 import { AGENDA, SITE } from '@/lib/site';
 import { eventoPorSlug, listarEventos } from '@/lib/wp';
@@ -69,7 +70,7 @@ export default async function Page({ params }: Props) {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--menta cabeca-institucional__blob"
-          src="/blobs/dov-blob-menta.svg"
+          src={comVersao('/blobs/dov-blob-menta.svg')}
           alt=""
           aria-hidden="true"
         />

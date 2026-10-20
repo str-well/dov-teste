@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 
+import { comVersao } from '@/lib/assets';
 import { ALMANAQUE } from '@/lib/site';
 
 export const metadata: Metadata = {
@@ -23,7 +24,7 @@ export default function NaoEncontrada() {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="blob blob--lilas erro__blob"
-        src="/blobs/dov-blob-lilas.svg"
+        src={comVersao('/blobs/dov-blob-lilas.svg')}
         alt=""
         aria-hidden="true"
       />

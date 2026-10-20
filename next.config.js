@@ -26,40 +26,6 @@ const nextConfig = {
     BUILD_TIME: new Date().toISOString(),
   },
 
-  /**
-   * Cache dos estáticos da marca — logos e blobs.
-   *
-   * **Eles não vinham com `Cache-Control` nenhum**, e isso mordeu: a correção de
-   * cor do logo subiu e continuou aparecendo o antigo. Sem o cabeçalho, o
-   * navegador decide por heurística a partir do `Last-Modified` — e como os SVGs
-   * estavam no repositório havia meses, a janela de frescor calculada era longa.
-   * Quem já tinha visitado o site ficou com o logo velho preso no cache, sem
-   * nada quebrar e sem nada avisar.
-   *
-   * Arquivo em `public/` mantém o caminho exato, sem hash de conteúdo — ao
-   * contrário do JS e do CSS, que o Next versiona sozinho. Então a URL nunca muda
-   * e o cache nunca é invalidado por si.
-   *
-   * `max-age=0` faz o navegador revalidar a cada carga: a resposta é um 304 de
-   * algumas centenas de bytes, não o arquivo inteiro. `s-maxage=300` segura isso
-   * na borda por cinco minutos — o mesmo número do ISR — para a revalidação não
-   * chegar ao processo Node a cada visita, num plano dividido com outros 6 sites.
-   * O `stale-while-revalidate` de um dia é a rede de segurança: se a origem cair,
-   * a borda serve a cópia que tem em vez de devolver erro.
-   */
-  async headers() {
-    return [
-      {
-        source: '/:pasta(logos|blobs)/:arquivo*',
-        headers: [
-          {
-            key: 'Cache-Control',
-            value: 'public, max-age=0, s-maxage=300, stale-while-revalidate=86400',
-          },
-        ],
-      },
-    ];
-  },
 
   experimental: {
     /**

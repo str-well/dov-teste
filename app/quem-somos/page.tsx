@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 
 import { IconeSetaDireita } from '@/components/icones';
 import { ImagemWp } from '@/components/imagem-wp';
+import { comVersao } from '@/lib/assets';
 import { separarLead } from '@/lib/artigo';
 import { contarVerbetes, listarCategorias, listarMaterias, paginaPorSlug } from '@/lib/wp';
 
@@ -70,7 +71,7 @@ export default async function Page() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="blob blob--roxo cabeca-institucional__blob"
-          src="/blobs/dov-blob-roxo.svg"
+          src={comVersao('/blobs/dov-blob-roxo.svg')}
           alt=""
           aria-hidden="true"
         />

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 
+import { comVersao } from '@/lib/assets';
 import { imagem, type Imagens, type NomeTamanho } from '@/lib/wp';
 
 type Props = {
@@ -65,7 +66,7 @@ export function SemImagem({ proporcao = '3x2' }: { proporcao?: Props['proporcao'
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         className="sem-imagem__cacho"
-        src="/logos/dov-icone-cacho-colorido.svg"
+        src={comVersao('/logos/dov-icone-cacho-colorido.svg')}
         alt=""
         width={630}
         height={900}
