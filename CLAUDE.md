@@ -299,6 +299,19 @@ trocar sem deploy. A URL está em `HERO_MOTION`, em `lib/site.ts`, **e em nenhum
 outro lugar**: trocar o arquivo é mexer numa linha. Anexo apagado no painel faz o
 hero perder a animação e mostrar o pôster, não quebrar.
 
+**O arquivo entra como o cliente entregou, e isso foi decidido.** Eu levantei
+quatro objeções e ele manteve o vídeo: o fundo vira roxo aos 5,2s e marinho aos
+7,5s, então por 5,6 dos 10,8 segundos a peça é um retângulo escuro sobre o bege;
+o loop não fecha, porque termina em marinho e recomeça em bege, cortando duro a
+cada ciclo; ela repete o logo e a assinatura que já estão no cabeçalho 100px
+acima; e pesa 1,53 MB com uma faixa de áudio que entra muda. Medi que o trecho de
+0 a 4,8s fecha sozinho e caberia em 35 KB, e a resposta foi manter o arquivo
+inteiro. **Não "corrigir" isso sem falar com ele** — é escolha, não esquecimento.
+
+O bege do vídeo saiu `#F3E8E7` contra o `#F3E8E8` do fundo: um valor de diferença
+em um canal, invisível. O risco de emenda visível que o formato MP4 trazia não se
+concretizou.
+
 **`components/hero-motion.tsx` não usa `autoplay`.** O servidor entrega o vídeo
 parado e o cliente é que manda tocar, por duas razões que só cabem juntas assim:
 `prefers-reduced-motion` não alcança vídeo (ver armadilha 18), e vídeo que não vai
@@ -317,10 +330,7 @@ as duas — **verificado: em 1279px o arquivo não é requisitado nenhuma vez.**
 | Dois verbetes retidos | "Rosé" e "Vinho Laranja" vêm em dois documentos com textos diferentes. Foi importada a versão do doc 1; a do doc 2 está no JSON com `importar: false`. Inverter e reimportar para trocar |
 | Seis correções editoriais | Listadas no fim de `almanaque/LEIA-ME.md` — Lambrusco se contradiz, Alemanha com "68 graus", Rega diz que irrigação é proibida em Rioja, e três erros de digitação. Importados como vieram, sem correção |
 | "Mais de 400 verbetes" em Quem Somos | O texto da página no WordPress promete 400. O Almanaque terá 141 |
-| **A animação do hero não fecha o loop** | Termina em marinho e recomeça em bege — corta duro a cada 10,8s. O trecho de 0 a 4,8s fecha sozinho (bege nas duas pontas) e é o ciclo completo do logo. Pede recorte e reenvio |
-| **A animação pesa 1,53 MB** | Cortada em 4,8s e sem a faixa de áudio, que entra muda de qualquer jeito, o mesmo arquivo fica em **35 KB**. É a primeira coisa que carrega na home |
-| **A animação repete o logo do cabeçalho** | Ela mostra o logo e a assinatura da marca, que já estão 100px acima. Decisão editorial: ou o hero tem dois logos, ou a peça vira outra coisa |
-| **Falta o pôster** | `HERO_MOTION.poster` está `null`. É o quadro que aparece para quem pede "reduzir movimento" e enquanto o vídeo carrega. Sem ele, o espaço fica vazio nesses casos |
+| **Falta o pôster da animação do hero** | `HERO_MOTION.poster` está `null`. Enquanto for, quem pede "reduzir movimento" recebe o hero de uma coluna só, com o texto de volta aos 840px — ver o CSS. Funciona, mas é contorno: com pôster, essa pessoa veria a peça parada em vez de não ver nada |
 | Tira de letras abaixo de 352px | Duas linhas de 13 letras dão 24,6px por célula em 360px (passa) e 21,5px em 320px (reprova o mínimo de 24px). O limiar é `13×24 + 40 = 352px` de viewport. Só três linhas resolveriam |
 
 - `lib/wp` ganhou `Fuse.js` como dependência, usada só no índice do Almanaque.
