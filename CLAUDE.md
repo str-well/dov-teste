@@ -489,6 +489,27 @@ As duas seguintes vieram do template de matéria.
     tratamento na mão, em `components/hero-motion.tsx`. Qualquer vídeo novo que
     entre tem o mesmo problema: não dá para confiar no reset.
 
+19. **Estático de `public/` não tinha `Cache-Control`, e brand asset velho
+    ficava preso no navegador.** A correção de cor do logo subiu, a produção
+    passou a servir o SVG novo — e o header continuou mostrando o antigo, porque
+    o navegador nem pediu: `transferSize: 0`, servido do cache.
+
+    Sem o cabeçalho, o navegador calcula frescor por heurística a partir do
+    `Last-Modified`. E **arquivo em `public/` mantém o caminho exato, sem hash de
+    conteúdo** — ao contrário do JS e do CSS, que o Next versiona sozinho — então
+    a URL nunca muda e o cache nunca se invalida por conta.
+
+    Resolvido com `headers()` no `next.config.js` para `/logos/` e `/blobs/`:
+    `max-age=0` faz o navegador revalidar a cada carga (304 de 0 byte, medido),
+    `s-maxage=300` segura na borda para a revalidação não chegar ao Node a cada
+    visita, e `stale-while-revalidate` de um dia serve a cópia da borda se a
+    origem cair.
+
+    **O cabeçalho só vale daqui para frente.** Quem já tinha o arquivo antigo em
+    cache não faz requisição nenhuma, então não recebe o cabeçalho novo — para
+    esses, só recarga forçada. Com o site ainda em `noindex`, isso são umas
+    poucas pessoas.
+
 ---
 
 ## Variáveis de ambiente
